@@ -1,14 +1,22 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
+import TrainTracking from "./pages/TrainTracking/Main";
+import Connector from "./operations/mqtt/Connector";
+import TrainData from "./model/TrainData";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <TrainData>
+      <Connector brokerUrl="wss://rata.digitraffic.fi:443/mqtt">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<TrainTracking />} />
+            <Route path="/home" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
+      </Connector>
+    </TrainData>
   );
 }
 

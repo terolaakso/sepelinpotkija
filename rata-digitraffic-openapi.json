@@ -1,0 +1,3171 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Digitraffic is a service operated by the [Fintraffic](https://www.fintraffic.fi) offering real time traffic information. \nCurrently the service covers *road, marine and rail* traffic. More information can be found at the [Digitraffic website](https://www.digitraffic.fi/) \n\n\nThe service has a public Google-group [rail.digitraffic.fi](https://groups.google.com/forum/#!forum/rata_digitraffic_fi) for \ncommunication between developers, service administrators and Fintraffic. \nThe discussion in the forum is mostly in Finnish, but you're welcome to communicate in English too. \n\n\n### General notes of the API\n\n* Many Digitraffic APIs use GeoJSON as data format. Definition of the GeoJSON format can be found at https://tools.ietf.org/html/rfc7946.\n\n* For dates and times [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format is used with \"Zulu\" zero offset from UTC unless otherwise specified \n(i.e., \"yyyy-mm-ddThh:mm:ss[.mmm]Z\"). E.g. 2019-11-01T06:30:00Z.",
+    "version": "1.0",
+    "title": "rata.digitraffic.fi",
+    "contact": {
+      "name": "Digitraffic / Fintraffic",
+      "url": "https://www.digitraffic.fi/"
+    },
+    "license": {
+      "name": "Digitraffic is an open data service. All content from the service and the service documentation is licenced under the Creative Commons 4.0 BY license.",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "host": "rata.digitraffic.fi",
+  "basePath": "/",
+  "tags": [
+    { "name": "compositions", "description": "Returns compositions of trains" },
+    {
+      "name": "live-trains",
+      "description": "Returns trains that have been recently active"
+    },
+    {
+      "name": "metadata",
+      "description": "Returns supporting metadata. For example list of stations"
+    },
+    { "name": "routesets", "description": "Returns routesets" },
+    {
+      "name": "track-work-notifications",
+      "description": "Returns track work notifications"
+    },
+    {
+      "name": "traffic-restriction-notifications",
+      "description": "Returns traffic restriction notifications"
+    },
+    { "name": "train-locations", "description": "Train locations" },
+    {
+      "name": "train-tracking",
+      "description": "Returns detailed information about train's location"
+    },
+    { "name": "trains", "description": "Returns trains as gtfs" }
+  ],
+  "paths": {
+    "/api/v1/compositions": {
+      "get": {
+        "tags": ["compositions"],
+        "summary": "Returns all compositions that are newer than {version}",
+        "operationId": "getCompositionsByVersionUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Composition" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/compositions/{departure_date}": {
+      "get": {
+        "tags": ["compositions"],
+        "summary": "Returns all compositions for trains run on {departure_date}",
+        "operationId": "getCompositionsByDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": false,
+            "type": "string",
+            "default": "2017-08-01",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Composition" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/compositions/{departure_date}/{train_number}": {
+      "get": {
+        "tags": ["compositions"],
+        "summary": "Returns composition for a specific train",
+        "operationId": "getCompositionByTrainNumberAndDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": false,
+            "type": "string",
+            "default": "2017-08-01",
+            "format": "date"
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Composition" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/live-trains": {
+      "get": {
+        "tags": ["live-trains"],
+        "summary": "Returns active trains that are newer than {version}",
+        "operationId": "getLiveTrainsByVersionUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Train" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/live-trains/station/{departure_station}/{arrival_station}": {
+      "get": {
+        "tags": ["live-trains"],
+        "summary": "Return trains that run from {arrival_station} to {departure_station}",
+        "operationId": "getTrainsFromDepartureToArrivalStationUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "arrival_station",
+            "in": "path",
+            "description": "arrival_station",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "departure_date",
+            "in": "query",
+            "description": "departure_date",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "departure_station",
+            "in": "path",
+            "description": "departure_station",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "endDate",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "include_nonstopping",
+            "in": "query",
+            "description": "include_nonstopping",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "startDate",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Train" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/live-trains/station/{station}": {
+      "get": {
+        "tags": ["live-trains"],
+        "summary": "Returns trains that travel trough {station}",
+        "operationId": "getStationsTrainsUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "arrived_trains",
+            "in": "query",
+            "description": "arrived_trains",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          },
+          {
+            "name": "arriving_trains",
+            "in": "query",
+            "description": "arriving_trains",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          },
+          {
+            "name": "departed_trains",
+            "in": "query",
+            "description": "departed_trains",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          },
+          {
+            "name": "departing_trains",
+            "in": "query",
+            "description": "departing_trains",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          },
+          {
+            "name": "include_nonstopping",
+            "in": "query",
+            "description": "include_nonstopping",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "minutes_after_arrival",
+            "in": "query",
+            "description": "minutes_after_arrival",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "minutes_after_departure",
+            "in": "query",
+            "description": "minutes_after_departure",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "minutes_before_arrival",
+            "in": "query",
+            "description": "minutes_before_arrival",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "minutes_before_departure",
+            "in": "query",
+            "description": "minutes_before_departure",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "station",
+            "in": "path",
+            "description": "station",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "train_categories",
+            "in": "query",
+            "description": "train_categories",
+            "required": false,
+            "type": "array",
+            "items": { "type": "string" },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Train" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/cause-category-codes": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of cause category codes",
+        "operationId": "getCauseCodesUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "show_inactive",
+            "in": "query",
+            "description": "show_inactive",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/CategoryCode" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/detailed-cause-category-codes": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of detailed cause category codes",
+        "operationId": "getDetailedCauseResourcesUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "show_inactive",
+            "in": "query",
+            "description": "show_inactive",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/DetailedCategoryCode" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/operators": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of operators",
+        "operationId": "getOperatorsUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Operator" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/stations": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of stations",
+        "operationId": "getStationsUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Station" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/stations.geojson": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of stations in geojson format",
+        "operationId": "getStationsAsGeoJsonUsingGET",
+        "produces": ["application/vnd.geo+json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/third-cause-category-codes": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of third cause category codes",
+        "operationId": "getThirdCauseResourcesUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "show_inactive",
+            "in": "query",
+            "description": "show_inactive",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ThirdCategoryCode" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/time-table-periods": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of time table periods",
+        "operationId": "getTimeTablePeriodsUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TimeTablePeriod" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/track-sections": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of track sections",
+        "operationId": "getTrackSectionsUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrackSection" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/train-categories": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns a list of train categories",
+        "operationId": "getTrainCategoriesUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainCategory" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/train-running-message-rules": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns list of train running message rules",
+        "operationId": "getTrainRunningMessageRulesUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainRunningMessageRule" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/metadata/train-types": {
+      "get": {
+        "tags": ["metadata"],
+        "summary": "Returns a list of train types",
+        "operationId": "getTrainTypesUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainType" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/routesets": {
+      "get": {
+        "tags": ["routesets"],
+        "summary": "Returns routesets that are newer than {version}",
+        "operationId": "getRoutesetsByVersionUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Routeset" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/routesets/station/{station}/{departure_date}": {
+      "get": {
+        "tags": ["routesets"],
+        "summary": "Returns routesets for {station} and {departure_date}",
+        "operationId": "getRoutesetsByStationAndDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "station",
+            "in": "path",
+            "description": "station",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Routeset" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/routesets/{departure_date}/{train_number}": {
+      "get": {
+        "tags": ["routesets"],
+        "summary": "Returns routesets for {train_number} and {departure_date}",
+        "operationId": "getRoutesetsByTrainNumberUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Routeset" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trackwork-notifications.geojson": {
+      "get": {
+        "tags": ["track-work-notifications"],
+        "summary": "Returns newest versions of trackwork notifications by state in GeoJSON format, limited to 500 results",
+        "operationId": "getTrackWorkNotificationsByStateGeoJsonUsingGET",
+        "produces": ["application/vnd.geo+json"],
+        "parameters": [
+          {
+            "name": "end",
+            "in": "query",
+            "description": "End time. If missing, current date is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-02-02T10:10:10.000Z"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start time. If missing, current date - 7 days is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-01-01T00:00:00.000Z"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State of track work notification",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PASSIVE",
+                "FINISHED",
+                "SENT",
+                "DRAFT",
+                "REMOVED",
+                "REJECTED"
+              ]
+            },
+            "collectionFormat": "multi",
+            "default": "SENT,ACTIVE,PASSIVE",
+            "allowEmptyValue": false,
+            "enum": [
+              "ACTIVE",
+              "PASSIVE",
+              "FINISHED",
+              "SENT",
+              "DRAFT",
+              "REMOVED",
+              "REJECTED"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trackwork-notifications.json": {
+      "get": {
+        "tags": ["track-work-notifications"],
+        "summary": "Returns newest versions of trackwork notifications by state in JSON format, limited to 500 results",
+        "operationId": "getTrackWorkNotificationsByStateJsonUsingGET",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "end",
+            "in": "query",
+            "description": "End time. If missing, current date is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-02-02T10:10:10.000Z"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start time. If missing, current date - 7 days is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-01-01T00:00:00.000Z"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State of track work notification",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PASSIVE",
+                "FINISHED",
+                "SENT",
+                "DRAFT",
+                "REMOVED",
+                "REJECTED"
+              ]
+            },
+            "collectionFormat": "multi",
+            "default": "SENT,ACTIVE,PASSIVE",
+            "allowEmptyValue": false,
+            "enum": [
+              "ACTIVE",
+              "PASSIVE",
+              "FINISHED",
+              "SENT",
+              "DRAFT",
+              "REMOVED",
+              "REJECTED"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpatialTrackWorkNotificationDto"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trackwork-notifications/status": {
+      "get": {
+        "tags": ["track-work-notifications"],
+        "summary": "Returns ids and latest versions of all trackwork notifications, limited to 500 results",
+        "operationId": "getAllTrackWorkNotificationsUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "end",
+            "in": "query",
+            "description": "End time. If missing, current date is used",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-02-02T10:10:10.000Z"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start time. If missing, current date - 7 days is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-01-01T00:00:00.000Z"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/RumaNotificationIdAndVersion" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trackwork-notifications/{id}": {
+      "get": {
+        "tags": ["track-work-notifications"],
+        "summary": "Returns all versions of a trackwork notification or an empty list if the notification does not exist",
+        "operationId": "getTrackWorkNotificationsByIdUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Track work notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TrackWorkNotificationWithVersions"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trackwork-notifications/{id}/latest.geojson": {
+      "get": {
+        "tags": ["track-work-notifications"],
+        "summary": "Returns the latest version of a trackwork notification in GeoJSON format or an empty FeatureCollection if the notification does not exist",
+        "operationId": "getLatestTrackWorkNotificationByIdGeoJsonUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Track work notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trackwork-notifications/{id}/latest.json": {
+      "get": {
+        "tags": ["track-work-notifications"],
+        "summary": "Returns the latest version of a trackwork notification in JSON format or an empty list if the notification does not exist",
+        "operationId": "getLatestTrackWorkNotificationByIdUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Track work notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpatialTrackWorkNotificationDto"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trackwork-notifications/{id}/{version}": {
+      "get": {
+        "tags": ["track-work-notifications"],
+        "summary": "Returns a specific version of a trackwork notification or an empty list if the notification does not exist",
+        "operationId": "getTrackWorkNotificationsByIdAndVersionUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Track work notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "description": "Track work notification version",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpatialTrackWorkNotificationDto"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trafficrestriction-notifications.geojson": {
+      "get": {
+        "tags": ["traffic-restriction-notifications"],
+        "summary": "Returns newest versions of trafficrestriction notifications by state in GeoJSON format, limited to 500 results",
+        "operationId": "getTrafficRestrictionNotificationsByStateGeoJsonUsingGET",
+        "produces": ["application/vnd.geo+json"],
+        "parameters": [
+          {
+            "name": "end",
+            "in": "query",
+            "description": "End time. If missing, current date is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-02-02T10:10:10.000Z"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start time. If missing, current date - 7 days is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-01-01T00:00:00.000Z"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State of traffic restriction notification",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["FINISHED", "SENT", "DRAFT", "REMOVED"]
+            },
+            "collectionFormat": "multi",
+            "default": "SENT, FINISHED",
+            "allowEmptyValue": false,
+            "enum": ["FINISHED", "SENT", "DRAFT", "REMOVED"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trafficrestriction-notifications.json": {
+      "get": {
+        "tags": ["traffic-restriction-notifications"],
+        "summary": "Returns newest versions of trafficrestriction notifications by state in JSON format, limited to 500 results",
+        "operationId": "getTrafficRestrictionNotificationsByStateJsonUsingGET",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "end",
+            "in": "query",
+            "description": "End time. If missing, current date is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-02-02T10:10:10.000Z"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start time. If missing, current date - 7 days.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-01-01T00:00:00.000Z"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State of traffic restriction notification",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["FINISHED", "SENT", "DRAFT", "REMOVED"]
+            },
+            "collectionFormat": "multi",
+            "default": "SENT, FINISHED",
+            "allowEmptyValue": false,
+            "enum": ["FINISHED", "SENT", "DRAFT", "REMOVED"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpatialTrafficRestrictionNotificationDto"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trafficrestriction-notifications/status": {
+      "get": {
+        "tags": ["traffic-restriction-notifications"],
+        "summary": "Returns ids and latest versions of all trafficrestriction notifications, limited to 500 results",
+        "operationId": "getAllTrafficRestrictionNotificationsUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "end",
+            "in": "query",
+            "description": "End time. If missing, current date is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-02-02T10:10:10.000Z"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start time. If missing, current date - 7 days is used.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false,
+            "x-example": "2019-01-01T00:00:00.000Z"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/RumaNotificationIdAndVersion" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trafficrestriction-notifications/{id}": {
+      "get": {
+        "tags": ["traffic-restriction-notifications"],
+        "summary": "Returns all versions of a trafficrestriction notification or an empty list if the notification does not exist",
+        "operationId": "getTrafficRestrictionNotificationsByIdUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Traffic restriction notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TrafficRestrictionNotificationWithVersions"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trafficrestriction-notifications/{id}/latest.geojson": {
+      "get": {
+        "tags": ["traffic-restriction-notifications"],
+        "summary": "Returns the latest version of a trafficrestriction notification in GeoJSON format or an empty FeatureCollection if the notification does not exist",
+        "operationId": "getLatestTrafficRestrictionNotificationByIdGeoJsonUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Traffic restriction notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trafficrestriction-notifications/{id}/latest.json": {
+      "get": {
+        "tags": ["traffic-restriction-notifications"],
+        "summary": "Returns the latest version of a trafficrestriction notification in JSON format or an empty list if the notification does not exist",
+        "operationId": "getLatestTrafficRestrictionNotificationByIdUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Traffic restriction notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpatialTrafficRestrictionNotificationDto"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trafficrestriction-notifications/{id}/{version}": {
+      "get": {
+        "tags": ["traffic-restriction-notifications"],
+        "summary": "Returns a specific version of a trafficrestriction notification or an empty list if the notification does not exist",
+        "operationId": "getTrafficRestrictionNotificationsByVersionUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Traffic restriction notification identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "description": "Show map or schema locations",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "allowEmptyValue": false,
+            "x-example": false
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "description": "Traffic restriction notification version",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpatialTrafficRestrictionNotificationDto"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-locations.geojson/latest": {
+      "get": {
+        "tags": ["train-locations"],
+        "summary": "Returns latest wsg84 coordinates for trains in geojson format",
+        "operationId": "getTrainLocationsAsGeoJsonUsingGET",
+        "produces": ["application/vnd.geo+json"],
+        "parameters": [
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "bbox",
+            "required": false,
+            "type": "array",
+            "items": { "type": "number", "format": "double" },
+            "collectionFormat": "multi",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-locations.geojson/latest/{train_number}": {
+      "get": {
+        "tags": ["train-locations"],
+        "summary": "Returns latest wsg84 coordinates for a train in geojson format",
+        "operationId": "getTrainLocationByTrainNumberAsGeoJsonUsingGET",
+        "produces": ["application/vnd.geo+json"],
+        "parameters": [
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "bbox",
+            "required": false,
+            "type": "array",
+            "items": { "type": "number", "format": "double" },
+            "collectionFormat": "multi",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "x-example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-locations.geojson/{departure_date}/{train_number}": {
+      "get": {
+        "tags": ["train-locations"],
+        "summary": "Returns wsg84 coordinates for a train run on departure date in geojson format",
+        "operationId": "getTrainLocationByTrainNumberAndDepartureDateAsGeoJsonUsingGET",
+        "produces": ["application/vnd.geo+json"],
+        "parameters": [
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "bbox",
+            "required": false,
+            "type": "array",
+            "items": { "type": "number", "format": "double" },
+            "collectionFormat": "multi",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "x-example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/FeatureCollection" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-locations/latest": {
+      "get": {
+        "tags": ["train-locations"],
+        "summary": "Returns latest wsg84 coordinates for trains",
+        "operationId": "getTrainLocationsUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "bbox",
+            "required": false,
+            "type": "array",
+            "items": { "type": "number", "format": "double" },
+            "collectionFormat": "multi",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainLocation" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-locations/latest/{train_number}": {
+      "get": {
+        "tags": ["train-locations"],
+        "summary": "Returns latest wsg84 coordinates for a train",
+        "operationId": "getTrainLocationByTrainNumberUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "bbox",
+            "required": false,
+            "type": "array",
+            "items": { "type": "number", "format": "double" },
+            "collectionFormat": "multi",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "x-example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainLocation" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-locations/{departure_date}/{train_number}": {
+      "get": {
+        "tags": ["train-locations"],
+        "summary": "Returns wsg84 coordinates for a train run on departure date",
+        "operationId": "getTrainLocationByTrainNumberAndDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "bbox",
+            "required": false,
+            "type": "array",
+            "items": { "type": "number", "format": "double" },
+            "collectionFormat": "multi",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "x-example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainLocation" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-tracking/": {
+      "get": {
+        "tags": ["train-tracking"],
+        "summary": "Returns train running messages newer than {version}",
+        "operationId": "getTrainTrackingByVersionUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainRunningMessage" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-tracking/latest/{train_number}": {
+      "get": {
+        "tags": ["train-tracking"],
+        "summary": "Returns latest train running messages for single train",
+        "operationId": "getTrainTrackingByTrainNumberUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainRunningMessage" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-tracking/station/{station}/latest/{track_section}": {
+      "get": {
+        "tags": ["train-tracking"],
+        "summary": "Returns train running messages for trains that have passed {station}, {track_section}",
+        "operationId": "getTrainTrackingByStationAndTrackSectionAndLimitUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit",
+            "required": false,
+            "type": "integer",
+            "default": 100,
+            "format": "int32"
+          },
+          {
+            "name": "station",
+            "in": "path",
+            "description": "station",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "track_section",
+            "in": "path",
+            "description": "track_section",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainRunningMessage" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-tracking/station/{station}/{departure_date}": {
+      "get": {
+        "tags": ["train-tracking"],
+        "summary": "Returns train running messages for trains that have passed {station} on {departure_date}",
+        "operationId": "getTrainTrackingByStationAndDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "station",
+            "in": "path",
+            "description": "station",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainRunningMessage" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-tracking/station/{station}/{departure_date}/{track_section}": {
+      "get": {
+        "tags": ["train-tracking"],
+        "summary": "Returns train running messages for trains that have passed {station}, {track_section} on {departure_date}",
+        "operationId": "getTrainTrackingByStationAndTrackSectionAndDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "station",
+            "in": "path",
+            "description": "station",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "track_section",
+            "in": "path",
+            "description": "track_section",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainRunningMessage" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/train-tracking/{departure_date}/{train_number}": {
+      "get": {
+        "tags": ["train-tracking"],
+        "summary": "Returns train running messages for single train",
+        "operationId": "getTrainTrackingByTrainNumberAndDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/TrainRunningMessage" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns trains that are newer than {version}",
+        "operationId": "getTrainsByVersionUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Train" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains/gtfs-all.zip": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns GTFS zip file",
+        "operationId": "getGtfsForAllTrainsUsingGET",
+        "produces": ["application/zip"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "type": "string", "format": "byte" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains/gtfs-passenger.zip": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns GTFS zip file",
+        "operationId": "getGtfsForPassengerTrainsUsingGET",
+        "produces": ["application/zip"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "type": "string", "format": "byte" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains/gtfs-rt-locations": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns GTFS Realtime locations",
+        "operationId": "getGtfsRtLocationsUsingGET",
+        "produces": ["application/protobuf"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "type": "string", "format": "byte" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains/gtfs-rt-updates": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns GTFS Realtime updates",
+        "operationId": "getGtfsRtUpdatesUsingGET",
+        "produces": ["application/protobuf"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "type": "string", "format": "byte" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains/latest/{train_number}": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns latest train",
+        "operationId": "getTrainByTrainNumberUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Train" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains/{departure_date}": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns trains run on {departure_date}",
+        "operationId": "getTrainsByDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "include_deleted",
+            "in": "query",
+            "description": "include_deleted",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Train" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/trains/{departure_date}/{train_number}": {
+      "get": {
+        "tags": ["trains"],
+        "summary": "Returns a specific train",
+        "operationId": "getTrainByTrainNumberAndDepartureDateUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "departure_date",
+            "in": "path",
+            "description": "departure_date",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "include_deleted",
+            "in": "query",
+            "description": "include_deleted",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "train_number",
+            "in": "path",
+            "description": "train_number",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "version",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Train" }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "CategoryCode": {
+      "type": "object",
+      "required": ["categoryCode", "categoryName", "validFrom"],
+      "properties": {
+        "categoryCode": {
+          "type": "string",
+          "example": "E",
+          "description": "Official code"
+        },
+        "categoryName": {
+          "type": "string",
+          "example": "Etuajassakulku",
+          "description": "Official name"
+        },
+        "id": { "type": "integer", "format": "int32" },
+        "passengerTerm": { "$ref": "#/definitions/PassengerTerm" },
+        "validFrom": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date when this code is used"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date",
+          "description": "End date when this code is used. Empty means category is used until further notice"
+        }
+      },
+      "title": "CategoryCode",
+      "description": "A code that is used to categorize reasons for a train not being on schedule"
+    },
+    "Cause": {
+      "type": "object",
+      "required": ["categoryCode", "categoryName", "validFrom"],
+      "properties": {
+        "categoryCode": {
+          "type": "string",
+          "example": "E",
+          "description": "Official code"
+        },
+        "categoryCodeId": { "type": "integer", "format": "int32" },
+        "categoryName": {
+          "type": "string",
+          "example": "Etuajassakulku",
+          "description": "Official name"
+        },
+        "description": {
+          "type": "string",
+          "example": "Jos kyseess� ei ole k��ntyv� juna ja se on valmis l�htem��n etuajassa. Esim. vaihtot�it� on selke�sti suunniteltua v�hemm�n.",
+          "description": "Detailed description"
+        },
+        "detailedCategoryCode": { "type": "string", "example": "E2" },
+        "detailedCategoryCodeId": { "type": "integer", "format": "int32" },
+        "detailedCategoryName": {
+          "type": "string",
+          "example": "Ajo- tai pys�hdysajan alitus"
+        },
+        "id": { "type": "integer", "format": "int32" },
+        "passengerTerm": { "$ref": "#/definitions/PassengerTerm" },
+        "thirdCategoryCode": { "type": "string", "example": "E103" },
+        "thirdCategoryCodeId": { "type": "integer", "format": "int32" },
+        "thirdCategoryName": {
+          "type": "string",
+          "example": "Valmistuminen etuajassa"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date when this code is used"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date",
+          "description": "End date when this code is used. Empty means category is used until further notice"
+        }
+      },
+      "title": "Cause",
+      "description": "Details why a train is not on schedule. Train-responses only have ids and codes populated."
+    },
+    "Composition": {
+      "type": "object",
+      "required": [
+        "departureDate",
+        "trainCategory",
+        "trainNumber",
+        "trainType"
+      ],
+      "properties": {
+        "departureDate": {
+          "type": "string",
+          "format": "date",
+          "example": "2017-12-01",
+          "description": "Date of the train's first departure"
+        },
+        "journeySections": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/JourneySection" }
+        },
+        "operatorShortCode": {
+          "type": "string",
+          "example": "vr",
+          "description": "Short code of the operator"
+        },
+        "operatorUICCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 10,
+          "description": "Official UIC code of the operator"
+        },
+        "trainCategory": { "type": "string", "example": "Long-distance" },
+        "trainNumber": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1,
+          "description": "Identifies the train inside a single departure date"
+        },
+        "trainType": { "type": "string", "example": "IC" },
+        "version": {
+          "type": "integer",
+          "format": "int64",
+          "example": 253328854733,
+          "description": "When was this data last modified"
+        }
+      },
+      "title": "Composition",
+      "description": "Describes train's locomotives and wagons"
+    },
+    "CompositionTimeTableRow": {
+      "type": "object",
+      "properties": {
+        "countryCode": { "type": "string", "example": "FI" },
+        "scheduledTime": { "type": "string", "format": "date-time" },
+        "stationShortCode": { "type": "string", "example": "HKI" },
+        "stationUICCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "type": { "type": "string", "enum": ["ARRIVAL", "DEPARTURE"] }
+      },
+      "title": "CompositionTimeTableRow",
+      "description": "Describes a point in a trains schedule where its composition changes"
+    },
+    "DetailedCategoryCode": {
+      "type": "object",
+      "required": ["validFrom"],
+      "properties": {
+        "detailedCategoryCode": { "type": "string", "example": "E2" },
+        "detailedCategoryName": {
+          "type": "string",
+          "example": "Ajo- tai pys�hdysajan alitus"
+        },
+        "id": { "type": "integer", "format": "int32" },
+        "passengerTerm": { "$ref": "#/definitions/PassengerTerm" },
+        "validFrom": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date when this category code is used"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date",
+          "description": "End date when this code is used. Empty means category is used until further notice"
+        }
+      },
+      "title": "DetailedCategoryCode",
+      "description": "Category code that is one step more detailed from its parent CategoryCode"
+    },
+    "ElementRangeDto": {
+      "type": "object",
+      "required": ["elementId1", "elementId2", "trackIds"],
+      "properties": {
+        "elementId1": {
+          "type": "string",
+          "description": "Identifier of element 1"
+        },
+        "elementId2": {
+          "type": "string",
+          "description": "Identifier of element 2"
+        },
+        "specifiers": {
+          "type": "array",
+          "description": "Specify a more detailed work area (track element)",
+          "items": { "type": "string" }
+        },
+        "trackIds": {
+          "type": "array",
+          "description": "Track identifiers",
+          "items": { "type": "string" }
+        },
+        "trackKilometerRange": {
+          "type": "string",
+          "description": "Track kilometer range, required if notification type is traffic restriction, e.g. (006) 754+0273 > 764+0771"
+        }
+      },
+      "title": "ElementRangeDto",
+      "description": "Two consecutive elements in an identifier range"
+    },
+    "FeatureCollection": {
+      "type": "object",
+      "properties": {
+        "features": { "$ref": "#/definitions/SwaggerObject" },
+        "type": { "type": "string" }
+      },
+      "title": "FeatureCollection"
+    },
+    "GeometryDto�object�": {
+      "type": "object",
+      "title": "GeometryDto�object�",
+      "description": "Returns properties: \n\"type\": corresponds with GeoJSON geometry types\n\"coordinates\": (nested) list(s) of floating point numbers "
+    },
+    "IdentifierRangeDto": {
+      "type": "object",
+      "required": ["notificationId"],
+      "properties": {
+        "elementId": {
+          "type": "string",
+          "description": "Identifier of element, required if element pair or ranges are not present"
+        },
+        "elementPairId1": {
+          "type": "string",
+          "description": "Identifier of element 1 in element pair, required if element or ranges are not present"
+        },
+        "elementPairId2": {
+          "type": "string",
+          "description": "Identifier of element 2 in element pair, required if element or ranges are not present"
+        },
+        "elementRanges": {
+          "type": "array",
+          "description": "Element ranges, required if element or element pair is not present",
+          "items": { "$ref": "#/definitions/ElementRangeDto" }
+        },
+        "notificationId": {
+          "type": "string",
+          "description": "Notification identifier"
+        },
+        "speedLimit": {
+          "description": "Speed limit, required if notification type is traffic restriction and it's type if speed limit",
+          "$ref": "#/definitions/SpeedLimit"
+        }
+      },
+      "title": "IdentifierRangeDto",
+      "description": "Place of work: between two track elements or a single track element"
+    },
+    "JourneySection": {
+      "type": "object",
+      "properties": {
+        "attapId": { "type": "integer", "format": "int64" },
+        "beginTimeTableRow": {
+          "description": "Point in schedule where composition starts",
+          "$ref": "#/definitions/CompositionTimeTableRow"
+        },
+        "endTimeTableRow": {
+          "description": "Point in schedule where composition ends",
+          "$ref": "#/definitions/CompositionTimeTableRow"
+        },
+        "locomotives": {
+          "type": "array",
+          "description": "List of locomotives used on this leg",
+          "items": { "$ref": "#/definitions/Locomotive" }
+        },
+        "maximumSpeed": { "type": "integer", "format": "int32" },
+        "saapAttapId": { "type": "integer", "format": "int64" },
+        "totalLength": { "type": "integer", "format": "int32" },
+        "wagons": {
+          "type": "array",
+          "description": "List of wagons used on this leg",
+          "items": { "$ref": "#/definitions/Wagon" }
+        }
+      },
+      "title": "JourneySection",
+      "description": "Describes a leg where train's composition is in effect"
+    },
+    "Locomotive": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "Location of the locomotive in the train. 1=start of the train"
+        },
+        "locomotiveType": { "type": "string", "example": "Sm3" },
+        "powerType": { "type": "string", "example": "S" },
+        "vehicleNumber": { "type": "string", "example": "94102081010-2" }
+      },
+      "title": "Locomotive"
+    },
+    "Operator": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer", "format": "int64" },
+        "operatorName": { "type": "string" },
+        "operatorShortCode": { "type": "string" },
+        "operatorUICCode": { "type": "integer", "format": "int32" },
+        "trainNumbers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/OperatorTrainNumber" }
+        }
+      },
+      "title": "Operator"
+    },
+    "OperatorTrainNumber": {
+      "type": "object",
+      "properties": {
+        "bottomLimit": {
+          "type": "integer",
+          "format": "int32",
+          "example": 76050,
+          "description": "Where operator's train numbers start"
+        },
+        "id": { "type": "integer", "format": "int64" },
+        "topLimit": {
+          "type": "integer",
+          "format": "int32",
+          "example": 76219,
+          "description": "Where operator's train numbers end"
+        },
+        "trainCategory": { "type": "string", "example": "On-track machines" }
+      },
+      "title": "OperatorTrainNumber",
+      "description": "Operators own a range of train numbers"
+    },
+    "PassengerTerm": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string",
+          "description": "English passenger friendly term for the code"
+        },
+        "fi": {
+          "type": "string",
+          "description": "Finnish passenger friendly term for the code"
+        },
+        "sv": {
+          "type": "string",
+          "description": "Swedish passenger friendly term for the code"
+        }
+      },
+      "title": "PassengerTerm"
+    },
+    "Routesection": {
+      "type": "object",
+      "properties": {
+        "commercialTrackId": { "type": "string" },
+        "sectionId": { "type": "string" },
+        "stationCode": { "type": "string" }
+      },
+      "title": "Routesection"
+    },
+    "Routeset": {
+      "type": "object",
+      "required": ["departureDate", "trainNumber"],
+      "properties": {
+        "clientSystem": { "type": "string" },
+        "departureDate": {
+          "type": "string",
+          "format": "date",
+          "example": "2017-12-01",
+          "description": "Date of the train's first departure"
+        },
+        "messageId": { "type": "string" },
+        "messageTime": { "type": "string", "format": "date-time" },
+        "routeType": { "type": "string" },
+        "routesections": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Routesection" }
+        },
+        "trainNumber": {
+          "type": "string",
+          "example": 1,
+          "description": "Identifies the train inside a single departure date"
+        },
+        "version": { "type": "integer", "format": "int64" }
+      },
+      "title": "Routeset"
+    },
+    "RumaLocationDto": {
+      "type": "object",
+      "required": ["locationType", "notificationId", "workPartIndex"],
+      "properties": {
+        "locationType": {
+          "type": "string",
+          "description": "Type",
+          "enum": ["WORK", "FIREWORK", "SPEED_LIMIT"]
+        },
+        "notificationId": {
+          "type": "string",
+          "description": "Notification identifier"
+        },
+        "operatingPointId": {
+          "type": "string",
+          "description": "Identifier of operating point, required if section is not present"
+        },
+        "sectionBetweenOperatingPointsId": {
+          "type": "string",
+          "description": "Identifier of section between operating points, required if operating point is not present"
+        },
+        "workPartIndex": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Track work part index"
+        }
+      },
+      "title": "RumaLocationDto",
+      "description": "Location of work, either an operating point or a section between operating points"
+    },
+    "RumaNotificationIdAndVersion": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Id" },
+        "modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last modified"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Version"
+        }
+      },
+      "title": "RumaNotificationIdAndVersion"
+    },
+    "SpatialRumaLocationDto": {
+      "type": "object",
+      "required": ["locationType", "notificationId", "workPartIndex"],
+      "properties": {
+        "identifierRanges": {
+          "type": "array",
+          "description": "Identifier ranges",
+          "items": { "$ref": "#/definitions/IdentifierRangeDto" }
+        },
+        "location": {
+          "description": "Location if no identifer ranges are present",
+          "$ref": "#/definitions/GeometryDto�object�"
+        },
+        "locationType": {
+          "type": "string",
+          "description": "Type",
+          "enum": ["WORK", "FIREWORK", "SPEED_LIMIT"]
+        },
+        "notificationId": {
+          "type": "string",
+          "description": "Notification identifier"
+        },
+        "operatingPointId": {
+          "type": "string",
+          "description": "Identifier of operating point, required if section is not present"
+        },
+        "sectionBetweenOperatingPointsId": {
+          "type": "string",
+          "description": "Identifier of section between operating points, required if operating point is not present"
+        },
+        "workPartIndex": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Track work part index"
+        }
+      },
+      "title": "SpatialRumaLocationDto",
+      "description": "Location of work, either an operating point or a section between operating points"
+    },
+    "SpatialTrackWorkNotificationDto": {
+      "type": "object",
+      "required": [
+        "created",
+        "electricitySafetyPlan",
+        "id",
+        "location",
+        "organization",
+        "personInChargePlan",
+        "speedLimitPlan",
+        "speedLimitRemovalPlan",
+        "state",
+        "trafficSafetyPlan",
+        "version",
+        "workParts"
+      ],
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this notification was created"
+        },
+        "electricitySafetyPlan": {
+          "type": "boolean",
+          "description": "Does the notification contain a electricity safety plan"
+        },
+        "id": { "type": "string", "description": "Id" },
+        "location": {
+          "description": "Approximate location",
+          "$ref": "#/definitions/GeometryDto�object�"
+        },
+        "modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this notification last modified"
+        },
+        "organization": {
+          "type": "string",
+          "description": "Which organization created this notification"
+        },
+        "personInChargePlan": {
+          "type": "boolean",
+          "description": "Does the notification contain a plan for persons in charge"
+        },
+        "speedLimitPlan": {
+          "type": "boolean",
+          "description": "Does the notification contain a speed limit plan"
+        },
+        "speedLimitRemovalPlan": {
+          "type": "boolean",
+          "description": "Does the notification contain a speed limit removal plan"
+        },
+        "state": {
+          "type": "string",
+          "description": "State",
+          "enum": [
+            "ACTIVE",
+            "PASSIVE",
+            "FINISHED",
+            "SENT",
+            "DRAFT",
+            "REMOVED",
+            "REJECTED"
+          ]
+        },
+        "trafficSafetyPlan": {
+          "type": "boolean",
+          "description": "Does the notification contain a traffic safety plan"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Version"
+        },
+        "workParts": {
+          "type": "array",
+          "description": "Work parts",
+          "items": { "$ref": "#/definitions/TrackWorkPartDto" }
+        }
+      },
+      "title": "SpatialTrackWorkNotificationDto",
+      "description": "Describes planned, in-progress or finished track work"
+    },
+    "SpatialTrafficRestrictionNotificationDto": {
+      "type": "object",
+      "required": [
+        "created",
+        "id",
+        "limitation",
+        "location",
+        "locations",
+        "organization",
+        "startDate",
+        "state",
+        "version"
+      ],
+      "properties": {
+        "axleWeightMax": {
+          "type": "number",
+          "format": "double",
+          "description": "Max axle weight, required if limitation type is max axle weight"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this notification was created"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End datetime"
+        },
+        "finished": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Finished datetime, required if state is finished"
+        },
+        "id": { "type": "string", "description": "Id" },
+        "limitation": {
+          "type": "string",
+          "description": "Limitation type",
+          "enum": [
+            "CLOSED_FROM_TRAFFIC",
+            "CLOSED_FROM_ELECTRIC_ROLLING_STOCK",
+            "TEMPORARY_SPEED_LIMIT",
+            "AXLE_WEIGHT_MAX",
+            "ATP_CONSTRUCTION_ZONE",
+            "SWITCH_LOCKED",
+            "FIREWORK_DANGER_ZONE",
+            "OTHER"
+          ]
+        },
+        "location": {
+          "description": "Approximate location",
+          "$ref": "#/definitions/GeometryDto�object�"
+        },
+        "locations": {
+          "type": "array",
+          "description": "Locations",
+          "items": { "$ref": "#/definitions/SpatialRumaLocationDto" }
+        },
+        "modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this notification last modified"
+        },
+        "organization": {
+          "type": "string",
+          "description": "Which organization created this notification"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start datetime"
+        },
+        "state": {
+          "type": "string",
+          "description": "State",
+          "enum": ["FINISHED", "SENT", "DRAFT", "REMOVED"]
+        },
+        "trackWorkNotificationId": {
+          "type": "string",
+          "description": "Track work notification identifier"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Version"
+        }
+      },
+      "title": "SpatialTrafficRestrictionNotificationDto",
+      "description": "Describes a restriction affecting the use of a railway infrastructure part"
+    },
+    "SpeedLimit": {
+      "type": "object",
+      "required": ["balises", "signs", "speed"],
+      "properties": {
+        "balises": { "type": "boolean", "description": "Balises used?" },
+        "signs": {
+          "type": "boolean",
+          "description": "Speed limit signs used?"
+        },
+        "speed": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Speed limit value"
+        }
+      },
+      "title": "SpeedLimit",
+      "description": "Speed limit set for a part of a track"
+    },
+    "Station": {
+      "type": "object",
+      "properties": {
+        "countryCode": { "type": "string", "example": "FI" },
+        "latitude": { "type": "number", "example": 60.17212991202909 },
+        "longitude": { "type": "number", "example": 24.94166179681815 },
+        "passengerTraffic": {
+          "type": "boolean",
+          "example": true,
+          "description": "Does this station have passenger traffic"
+        },
+        "stationName": { "type": "string", "example": "Helsinki asema" },
+        "stationShortCode": { "type": "string", "example": "HKI" },
+        "stationUICCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "type": {
+          "type": "string",
+          "example": "STATION,STOPPING_POINT",
+          "description": "Type of station",
+          "enum": ["STATION", "STOPPING_POINT", "TURNOUT_IN_THE_OPEN_LINE"]
+        }
+      },
+      "title": "Station"
+    },
+    "SwaggerObject": { "type": "object", "title": "SwaggerObject" },
+    "SwaggerPoint": {
+      "type": "object",
+      "properties": {
+        "coordinates": {
+          "type": "array",
+          "items": { "type": "number", "format": "double" }
+        },
+        "type": { "type": "string" }
+      },
+      "title": "SwaggerPoint"
+    },
+    "ThirdCategoryCode": {
+      "type": "object",
+      "required": ["validFrom"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "Jos kyseess� ei ole k��ntyv� juna ja se on valmis l�htem��n etuajassa. Esim. vaihtot�it� on selke�sti suunniteltua v�hemm�n.",
+          "description": "Detailed description"
+        },
+        "id": { "type": "integer", "format": "int32" },
+        "passengerTerm": { "$ref": "#/definitions/PassengerTerm" },
+        "thirdCategoryCode": { "type": "string", "example": "E103" },
+        "thirdCategoryName": {
+          "type": "string",
+          "example": "Valmistuminen etuajassa"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date when this category code is used"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date",
+          "description": "End date when this code is used. Empty means category is used until further notice"
+        }
+      },
+      "title": "ThirdCategoryCode",
+      "description": "Most detailed category code for a Cause"
+    },
+    "TimeTablePeriod": {
+      "type": "object",
+      "properties": {
+        "capacityAllocationConfirmDate": { "type": "string", "format": "date" },
+        "capacityRequestSubmissionDeadline": {
+          "type": "string",
+          "format": "date"
+        },
+        "changeDates": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TimeTablePeriodChangeDate" }
+        },
+        "effectiveFrom": { "type": "string", "format": "date" },
+        "effectiveTo": { "type": "string", "format": "date" },
+        "id": { "type": "integer", "format": "int64" },
+        "name": { "type": "string" }
+      },
+      "title": "TimeTablePeriod"
+    },
+    "TimeTablePeriodChangeDate": {
+      "type": "object",
+      "properties": {
+        "capacityRequestSubmissionDeadline": {
+          "type": "string",
+          "format": "date"
+        },
+        "effectiveFrom": { "type": "string", "format": "date" },
+        "id": { "type": "integer", "format": "int64" }
+      },
+      "title": "TimeTablePeriodChangeDate"
+    },
+    "TimeTableRow": {
+      "type": "object",
+      "properties": {
+        "actualTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Actual time when train departured or arrived on the station"
+        },
+        "cancelled": {
+          "type": "boolean",
+          "description": "Is the schedule part cancelled"
+        },
+        "causes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Cause" }
+        },
+        "commercialStop": {
+          "type": "boolean",
+          "description": "Is the stop 'commercial' ie. loading/unloading of passengers or cargo"
+        },
+        "commercialTrack": {
+          "type": "string",
+          "example": 1,
+          "description": "Track where the train stops"
+        },
+        "countryCode": { "type": "string", "example": "FI" },
+        "differenceInMinutes": {
+          "type": "integer",
+          "format": "int64",
+          "example": 5,
+          "description": "Difference between schedule and actual time in minutes"
+        },
+        "estimateSource": {
+          "type": "string",
+          "example": "LIIKE_USER",
+          "description": "Source for the estimate",
+          "enum": [
+            "LIIKE_USER",
+            "MIKU_USER",
+            "LIIKE_AUTOMATIC",
+            "UNKNOWN",
+            "COMBOCALC"
+          ]
+        },
+        "liveEstimateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Estimated time for departure/arrival of the train"
+        },
+        "scheduledTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Scheduled time for departure/arrival of the train"
+        },
+        "stationShortCode": { "type": "string", "example": "HKI" },
+        "stationUICCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "trainReady": { "$ref": "#/definitions/TrainReady" },
+        "trainStopping": {
+          "type": "boolean",
+          "description": "Does the train actual stop on the station"
+        },
+        "type": { "type": "string", "enum": ["ARRIVAL", "DEPARTURE"] },
+        "unknownDelay": {
+          "type": "boolean",
+          "description": "Set if the train is delayed, but it is impossible to estimate for how long"
+        }
+      },
+      "title": "TimeTableRow",
+      "description": "A part of train's schedule"
+    },
+    "TrackLocation": {
+      "type": "object",
+      "properties": {
+        "kilometres": { "type": "integer", "format": "int32", "example": 34 },
+        "metres": { "type": "integer", "format": "int32", "example": 940 },
+        "track": { "type": "string", "example": "003" }
+      },
+      "title": "TrackLocation",
+      "description": "A location on the track. Kilometres and meters are distance from the start of the track"
+    },
+    "TrackRange": {
+      "type": "object",
+      "properties": {
+        "endLocation": { "$ref": "#/definitions/TrackLocation" },
+        "id": { "type": "integer", "format": "int64" },
+        "startLocation": { "$ref": "#/definitions/TrackLocation" }
+      },
+      "title": "TrackRange"
+    },
+    "TrackSection": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer", "format": "int64" },
+        "ranges": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TrackRange" }
+        },
+        "station": { "type": "string", "example": "JNS" },
+        "trackSectionCode": { "type": "string", "example": "JNS_ERV40" }
+      },
+      "title": "TrackSection"
+    },
+    "TrackWorkNotificationWithVersions": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Track work notification id" },
+        "versions": {
+          "type": "array",
+          "description": "Track work notification versions",
+          "items": { "$ref": "#/definitions/SpatialTrackWorkNotificationDto" }
+        }
+      },
+      "title": "TrackWorkNotificationWithVersions"
+    },
+    "TrackWorkPartDto": {
+      "type": "object",
+      "required": [
+        "containsFireWork",
+        "locations",
+        "partIndex",
+        "permissionMinimumDuration",
+        "startDay"
+      ],
+      "properties": {
+        "advanceNotifications": {
+          "type": "array",
+          "description": "Related advance notifications",
+          "items": { "type": "string" }
+        },
+        "containsFireWork": {
+          "type": "boolean",
+          "description": "Contains fire work"
+        },
+        "locations": {
+          "type": "array",
+          "description": "Locations",
+          "items": { "$ref": "#/definitions/RumaLocationDto" }
+        },
+        "partIndex": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Index number"
+        },
+        "permissionMinimumDuration": {
+          "type": "string",
+          "description": "Requested minimum duration for work permission in ISO 8601 format, e.g. PT30M"
+        },
+        "plannedWorkingGap": {
+          "type": "string",
+          "description": "Planned working gap in local time with no time zone, e.g. 11:43:00"
+        },
+        "startDay": {
+          "type": "string",
+          "format": "date",
+          "description": "Planned (not necessarily actual) start day"
+        }
+      },
+      "title": "TrackWorkPartDto",
+      "description": "A logical part of a track work"
+    },
+    "TrafficRestrictionNotificationWithVersions": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Traffic restriction notification id"
+        },
+        "versions": {
+          "type": "array",
+          "description": "Traffic resctriction notification versions",
+          "items": {
+            "$ref": "#/definitions/SpatialTrafficRestrictionNotificationDto"
+          }
+        }
+      },
+      "title": "TrafficRestrictionNotificationWithVersions"
+    },
+    "Train": {
+      "type": "object",
+      "required": ["departureDate", "trainNumber"],
+      "properties": {
+        "cancelled": {
+          "type": "boolean",
+          "description": "Is the train wholly cancelled"
+        },
+        "commuterLineID": { "type": "string", "example": "Z" },
+        "deleted": {
+          "type": "boolean",
+          "description": "Is the train deleted which means cancelled 10 days before its departure date"
+        },
+        "departureDate": {
+          "type": "string",
+          "format": "date",
+          "example": "2017-12-01",
+          "description": "Date of the train's first departure"
+        },
+        "operatorShortCode": {
+          "type": "string",
+          "example": "vr",
+          "description": "Short code of the operator"
+        },
+        "operatorUICCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 10,
+          "description": "Official UIC code of the operator"
+        },
+        "runningCurrently": {
+          "type": "boolean",
+          "description": "Is the train running currently or does it have actual times"
+        },
+        "timeTableRows": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TimeTableRow" }
+        },
+        "timetableAcceptanceDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When was this train accepted to run on Finnish railways by the FTA"
+        },
+        "timetableType": {
+          "type": "string",
+          "description": "Is the train ADHOC or REGULAR. REGULAR trains are run for example every monday, ADHOC trains are one-time trains",
+          "enum": ["REGULAR", "ADHOC"]
+        },
+        "trainCategory": { "type": "string", "example": "Long-distance" },
+        "trainNumber": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1,
+          "description": "Identifies the train inside a single departure date"
+        },
+        "trainType": { "type": "string", "example": "IC" },
+        "version": {
+          "type": "integer",
+          "format": "int64",
+          "description": "When was train last modified"
+        }
+      },
+      "title": "Train"
+    },
+    "TrainCategory": {
+      "type": "object",
+      "properties": { "name": { "type": "string", "example": "Commuter" } },
+      "title": "TrainCategory"
+    },
+    "TrainLocation": {
+      "type": "object",
+      "properties": {
+        "departureDate": { "type": "string", "format": "date" },
+        "location": { "$ref": "#/definitions/SwaggerPoint" },
+        "speed": { "type": "integer", "format": "int32" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "trainNumber": { "type": "integer", "format": "int64" }
+      },
+      "title": "TrainLocation"
+    },
+    "TrainReady": {
+      "type": "object",
+      "properties": {
+        "accepted": {
+          "type": "boolean",
+          "description": "Was the permission given"
+        },
+        "source": {
+          "type": "string",
+          "description": "How was the permission given",
+          "enum": ["PHONE", "LIIKE", "UNKNOWN", "KUPLA"]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When was the permission given"
+        }
+      },
+      "title": "TrainReady",
+      "description": "Operator has to ask permission (=TrainReady) to leave certain stations"
+    },
+    "TrainRunningMessage": {
+      "type": "object",
+      "required": ["departureDate", "trainNumber"],
+      "properties": {
+        "departureDate": {
+          "type": "string",
+          "format": "date",
+          "example": "2017-12-01",
+          "description": "Date of the train's first departure"
+        },
+        "id": { "type": "integer", "format": "int64" },
+        "nextStation": { "type": "string" },
+        "nextTrackSection": { "type": "string" },
+        "previousStation": { "type": "string" },
+        "previousTrackSection": { "type": "string" },
+        "station": { "type": "string" },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the message was generated"
+        },
+        "trackSection": { "type": "string" },
+        "trainNumber": {
+          "type": "string",
+          "example": 1,
+          "description": "Identifies the train inside a single departure date"
+        },
+        "type": {
+          "type": "string",
+          "description": "OCCUPY = train entered TrackSection, RELEASE=train exited TrackSection",
+          "enum": ["OCCUPY", "RELEASE"]
+        },
+        "version": { "type": "integer", "format": "int64" }
+      },
+      "title": "TrainRunningMessage",
+      "description": "TrainRunMessages are generated when a train either enters or exists a TrackSection"
+    },
+    "TrainRunningMessageRule": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer", "format": "int64" },
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "description": "TrainRunningMessages timestamp is adjusted for offset when generating actual time"
+        },
+        "timeTableRowStationShortCode": {
+          "type": "string",
+          "description": "For which station is the actual time generated"
+        },
+        "timeTableRowType": {
+          "type": "string",
+          "description": "For which TimeTableRow is the actual time generated",
+          "enum": ["ARRIVAL", "DEPARTURE"]
+        },
+        "trainRunningMessageNextStationShortCode": { "type": "string" },
+        "trainRunningMessageStationShortCode": { "type": "string" },
+        "trainRunningMessageTrackSection": { "type": "string" },
+        "trainRunningMessageType": {
+          "type": "string",
+          "enum": ["OCCUPY", "RELEASE"]
+        }
+      },
+      "title": "TrainRunningMessageRule",
+      "description": "These rules define how TrainRunningMessages trigger actual times for TimeTableRows"
+    },
+    "TrainType": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "example": "HL" },
+        "trainCategory": { "$ref": "#/definitions/TrainCategory" }
+      },
+      "title": "TrainType"
+    },
+    "Wagon": {
+      "type": "object",
+      "properties": {
+        "catering": { "type": "boolean" },
+        "disabled": { "type": "boolean" },
+        "length": {
+          "type": "integer",
+          "format": "int32",
+          "example": 2640,
+          "description": "Wagon length in decimeters"
+        },
+        "location": { "type": "integer", "format": "int32", "example": 1 },
+        "luggage": { "type": "boolean" },
+        "pet": { "type": "boolean" },
+        "playground": { "type": "boolean" },
+        "salesNumber": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "wagon number in customer's ticket"
+        },
+        "smoking": { "type": "boolean" },
+        "vehicleNumber": { "type": "string", "example": "94102081010-2" },
+        "video": { "type": "boolean" },
+        "wagonType": { "type": "string", "example": "Ed" }
+      },
+      "title": "Wagon"
+    }
+  }
+}

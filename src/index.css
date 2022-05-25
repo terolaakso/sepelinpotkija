@@ -1,17 +1,166 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+@tailwind components;
+
+button:disabled,
+input:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+button,
+input,
+select {
+  @apply border-gray-600 border;
+}
+
+@tailwind utilities;
+
+.min-h-10 {
+  min-height: 2.5rem;
+}
+
+.border-4rem {
+  border-width: 0.25rem;
+}
+
+.scrollbar-0 {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+}
+
+.scrollbar-0::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+.border-1 {
+  border-width: 1px;
+}
+
+.modest-text {
+  overflow: hidden;
+  max-width: 0;
+  text-overflow: ellipsis;
+}
+
+.spin {
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+.responsive-font-size {
+  font-size: 16px;
+}
+
+
+/* Small (sm) */
+
+@media (min-width: 640px) and (orientation: portrait),
+(min-width: 768px) {
+  .responsive-font-size {
+    font-size: 20px;
+  }
+
+  .border-1 {
+    border-width: 2px;
+  }
+}
+
+
+/* Medium (md) */
+
+@media (min-width: 768px) and (orientation: portrait),
+(min-width: 1024px) {
+  .responsive-font-size {
+    font-size: 24px;
+  }
+}
+
+
+/* Large (lg) */
+
+@media (min-width: 1024px) and (orientation: portrait),
+(min-width: 1280px) {
+  .responsive-font-size {
+    font-size: 28px;
+  }
+}
+
+
+/* Extra Large (xl) */
+
+@media (min-width: 1280px) and (orientation: portrait),
+(min-width: 1920px) {
+  .responsive-font-size {
+    font-size: 32px;
+  }
+}
+
+
+/* Wikipedia styles */
+
+div.mw-parser-output table.infobox,
+div.mw-parser-output ul.gallery,
+div.mw-parser-output .noprint,
+div.mw-parser-output table.metadata,
+div.mw-parser-output div.NavFrame,
+div.mw-parser-output span.mw-cite-backlink div.mv-parser-output sup.plainlinks {
+  display: none;
+}
+
+div.mw-parser-output h2 {
+  font-size: 1rem;
+}
+
+div.mw-parser-output h3 {
+  font-size: 0.9rem;
+}
+
+div.mw-parser-output div.thumbcaption {
+  font-style: italic
+}
+
+
+/* Material Design overrides */
+
+.material-icons {
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
