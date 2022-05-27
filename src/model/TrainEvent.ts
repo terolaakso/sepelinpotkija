@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 export interface TrainEvent {
   name: string;
   time: DateTime;
-  // departureTime: DateTime | null;
+  departureTime: DateTime | null;
   eventType: TrainEventType;
   lineId: string | null;
   lateMinutes: number | null;

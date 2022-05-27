@@ -6,58 +6,96 @@ import { TrainEvent, TrainEventType } from "./TrainEvent";
 
 export function calculateCurrentEventsForTrain(train: Train) {
   const nextRowIndex = nextTimetableRowIndex(train);
-  const commercialStops = getStops(
+  const commercialStops = getCurrentCommercialStops(train, nextRowIndex);
+  const allStations = getCurrentStations(train, nextRowIndex);
+  // TODO: Generate infos for "extra" stations
+  // TODO: Encounters
+  const uniqueEvents = _.unionBy(
+    [...commercialStops, ...allStations],
+    (row) => row.name
+  );
+  const sortedEvents = _.sortBy(uniqueEvents, (row) => row.time);
+  return sortedEvents;
+}
+
+export function getCurrentCommercialStops(
+  train: Train,
+  nextRowIndex: number
+): TrainEvent[] {
+  return getStops(
     train,
     nextRowIndex,
     (row) => row.stopType === StopType.Commercial,
     false
   );
-  const allStations = getStops(train, nextRowIndex, () => true, true);
-  // TODO: Generate infos for "extra" stations
-  // TODO: Encounters
-  const rowsForEvents = _.unionBy(
-    [...commercialStops, ...allStations],
-    (row) => row.stationShortCode
-  );
-  const sortedRows = _.sortBy(rowsForEvents, (row) => row.time);
-  const events = sortedRows.map(createEvent);
-  return events;
+}
+
+export function getCurrentStations(
+  train: Train,
+  nextRowIndex: number
+): TrainEvent[] {
+  return getStops(train, nextRowIndex, () => true, true);
 }
 
 export function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
   const result = events.map((event, i) => {
-    const countdown = countdownUntilTime(event.time);
+    const countdown = countdownUntilTime(getRelevantTimeOfEvent(event));
+    const previousEvent = i > 0 ? events[i - 1] : null;
     return {
       ...event,
       countdown,
       relativeProgress: calculateRelativeProgress(
         event.time,
-        i > 0 ? events[i - 1].time : null
+        previousEvent?.departureTime ?? previousEvent?.time ?? null
       ),
     };
   });
+  console.log(
+    result.map((r) => ({
+      station: r.name,
+      countdown: r.countdown,
+      time: r.time.toISO(),
+      departureTime: r.departureTime?.toISO(),
+    }))
+  );
   return result;
 }
 
-function createEvent(row: TimetableRow): TrainEvent {
+function createEvent(rows: TimetableRow[], index: number): TrainEvent {
+  const row = rows[index];
+  const now = DateTime.now();
+  const departureTime =
+    index > 0 && index + 1 < rows.length && +row.time !== +rows[index + 1].time
+      ? rows[index + 1].time
+      : null;
   return {
     name: row.stationShortCode,
     time: row.time,
+    departureTime,
     eventType:
       row.stopType === StopType.Commercial
         ? TrainEventType.Stop
         : TrainEventType.Station,
     lineId: null,
     lateMinutes: null,
-    countdown: countdownUntilTime(row.time),
+    countdown: countdownUntilTime(
+      departureTime && row.time < now ? departureTime : row.time
+    ),
     relativeProgress: calculateRelativeProgress(row.time, null),
   };
+}
+
+function getRelevantTimeOfEvent(event: TrainEvent): DateTime {
+  const now = DateTime.now();
+  const time =
+    event.departureTime && event.time < now ? event.departureTime : event.time;
+  return time;
 }
 
 function calculateRelativeProgress(
   time: DateTime,
   previousTime: DateTime | null
-) {
+): number {
   const now = DateTime.now();
   if (previousTime !== null) {
     if (time >= now && previousTime <= now) {
@@ -94,7 +132,7 @@ function getStops(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TimetableRow[] {
+): TrainEvent[] {
   const rows = train.timetableRows;
   const previous = findPrevious(rows, nextRowIndex, criteria, includePast);
   const current = findCurrent(rows, nextRowIndex, criteria, includePast);
@@ -107,18 +145,25 @@ function findPrevious(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TimetableRow | null {
-  if (includePast && nextRowIndex < rows.length) {
+): TrainEvent | null {
+  if (includePast && nextRowIndex > 0 && nextRowIndex < rows.length) {
+    const stepToPrevious =
+      nextRowIndex < rows.length &&
+      rows[nextRowIndex].stationShortCode ===
+        rows[nextRowIndex - 1].stationShortCode
+        ? 2
+        : 1;
     const index = _.findLastIndex(
       rows,
       (row, i) =>
         criteria(row) &&
-        (i + 1 >= rows.length ||
-          row.stationShortCode !== rows[i + 1].stationShortCode),
-      nextRowIndex - 1
+        (i === 0 ||
+          i + 1 >= rows.length ||
+          row.stationShortCode === rows[i + 1].stationShortCode),
+      nextRowIndex - stepToPrevious
     );
     if (index >= 0) {
-      return rows[index];
+      return createEvent(rows, index);
     }
   }
   return null;
@@ -129,7 +174,7 @@ function findCurrent(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TimetableRow | null {
+): TrainEvent | null {
   if (
     nextRowIndex === 0 ||
     (nextRowIndex >= rows.length && includePast) ||
@@ -139,7 +184,7 @@ function findCurrent(
         rows[nextRowIndex - 1].stationShortCode)
   ) {
     const arrivalIndex = nextRowIndex === 0 ? 0 : nextRowIndex - 1;
-    return rows[arrivalIndex];
+    return createEvent(rows, arrivalIndex);
   }
   return null;
 }
@@ -149,7 +194,7 @@ function findNext(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TimetableRow | null {
+): TrainEvent | null {
   const index = _.findIndex(
     rows,
     (row, i) =>
@@ -159,7 +204,7 @@ function findNext(
     nextRowIndex
   );
   if (index >= 0) {
-    return rows[index];
+    return createEvent(rows, index);
   }
   return null;
 }
