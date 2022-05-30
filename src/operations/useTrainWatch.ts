@@ -1,28 +1,53 @@
-import { useContext } from "react";
-import { GpsLocation } from "../model/digitraffic";
+import { useContext, useEffect, useRef } from "react";
+import { Train as DigitrafficTrain } from "../model/digitraffic";
 import { adjustTimetableByLocation } from "../model/timetableCalculation";
 import { Train } from "../model/Train";
-import { TrainContext } from "../model/TrainData";
-import { transformLocation } from "../model/transform";
+import {
+  getLocationFromContext,
+  TrainContext,
+  TrainContextProps,
+} from "../components/TrainData";
+import { transformTrains } from "../model/transform";
 import useSubscription from "./mqtt/useSubscription";
+import { isNotNil } from "../utils/misc";
+import { isNil } from "lodash";
 
 export default function useTrainWatch(
-  train: Train | null,
-  onReceivedNewLocation: (train: Train) => void
+  departureDate: string | null,
+  trainNumber: number | null,
+  onReceivedNewTrain: (train: Train) => void
 ) {
-  const { stations } = useContext(TrainContext);
+  const trainDataRef = useRef<TrainContextProps>();
+  const trainDataContext = useContext(TrainContext);
 
-  useSubscription<GpsLocation>(
-    train
-      ? "train-locations/" + train.departureDate + "/" + train.trainNumber
+  useEffect(() => {
+    trainDataRef.current = trainDataContext;
+  }, [trainDataContext]);
+
+  useSubscription<DigitrafficTrain>(
+    isNotNil(departureDate) && isNotNil(trainNumber)
+      ? `trains/${departureDate}/${trainNumber}/#`
       : null,
-    (receivedLocation) => {
-      if (!train) {
+    (receivedTrain) => {
+      if (isNil(departureDate) || isNil(trainNumber)) {
         return;
       }
-      const location = transformLocation(receivedLocation);
-      const fixedTrain = adjustTimetableByLocation(train, location, stations);
-      onReceivedNewLocation(fixedTrain);
+      console.log(new Date().toLocaleTimeString(), "Got new train in watch");
+      const transformedTrain = transformTrains([receivedTrain])[0];
+      const location = getLocationFromContext(
+        transformedTrain.departureDate,
+        transformedTrain.trainNumber,
+        trainDataRef.current ?? null
+      );
+      const fixedTrain = location
+        ? adjustTimetableByLocation(
+            transformedTrain,
+            location,
+            trainDataRef.current?.stations ?? {}
+          )
+        : transformedTrain;
+      trainDataRef.current?.setTrain(fixedTrain);
+      onReceivedNewTrain(fixedTrain);
     }
   );
 }

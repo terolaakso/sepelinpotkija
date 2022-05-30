@@ -8,3 +8,7 @@ export interface TrainLocation {
   location: LatLon;
   speed: number;
 }
+
+export interface LocationCollection {
+  [departureDate_number: string]: TrainLocation | undefined;
+}

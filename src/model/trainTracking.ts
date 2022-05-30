@@ -50,14 +50,6 @@ export function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
       ),
     };
   });
-  console.log(
-    result.map((r) => ({
-      station: r.name,
-      countdown: r.countdown,
-      time: r.time.toISO(),
-      departureTime: r.departureTime?.toISO(),
-    }))
-  );
   return result;
 }
 

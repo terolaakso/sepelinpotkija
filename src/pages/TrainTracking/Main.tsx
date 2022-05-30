@@ -1,30 +1,30 @@
 import { useEffect, useState } from "react";
-import { getTrain } from "../../model/digitrafficClient";
-import { Train } from "../../model/Train";
 import { TrainEvent } from "../../model/TrainEvent";
 import {
   calculateCountdown,
   calculateCurrentEventsForTrain,
 } from "../../model/trainTracking";
 import { useInterval } from "../../operations/useInterval";
-import useTrainWatch from "../../operations/useTrainWatch";
+import useTrain from "../../operations/useTrain";
 import BottomBar from "./BottomBar";
 import Content from "./Content";
 import TopBar from "./TopBar";
 
 export default function TrainTracking() {
-  const [train, setTrain] = useState<Train | null>(null);
+  // const [train, setTrain] = useState<Train | null>(null);
+  const [trainNumber, setTrainNumber] = useState(1);
   const [events, setEvents] = useState<TrainEvent[]>([]);
   const [isTracking, setIsTracking] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function startTracking(trainNumber: number) {
-    const train = await getTrain(trainNumber);
-    setTrain(train);
-    if (!train) {
-      setErrorMessage("Junan tietoja ei löydy");
-      return;
-    }
+    setTrainNumber(trainNumber);
+    // const train = await getTrain(trainNumber);
+    // setTrain(train);
+    // if (!train) {
+    //   setErrorMessage("Junan tietoja ei löydy");
+    //   return;
+    // }
     setErrorMessage(null);
     setIsTracking(true);
   }
@@ -33,7 +33,14 @@ export default function TrainTracking() {
     setIsTracking(false);
   }
 
+  const train = useTrain(isTracking ? trainNumber ?? null : null);
+
   useEffect(() => {
+    console.log(
+      new Date().toLocaleTimeString(),
+      "Got new train to Main",
+      !!train
+    );
     const events = train ? calculateCurrentEventsForTrain(train) : [];
     const withCountdown = calculateCountdown(events);
     setEvents(withCountdown);
@@ -46,11 +53,6 @@ export default function TrainTracking() {
     },
     isTracking ? 1000 : null
   );
-
-  useTrainWatch(isTracking ? train : null, (updatedTrain) => {
-    console.log("train updated with new location");
-    setTrain(updatedTrain);
-  });
 
   return (
     <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">

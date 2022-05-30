@@ -74,6 +74,12 @@ export default function Connector({
         }));
       }
     });
+    mqtt.on("message", (topic) => {
+      console.log(
+        new Date().toLocaleTimeString(),
+        `Message received: ${topic}`
+      );
+    });
 
     return () => {
       console.log("useEffect teardown", "client: ", !!clientRef.current);
@@ -89,8 +95,6 @@ export default function Connector({
       mountedRef.current = false;
     };
   }, [brokerUrl]);
-
-  console.log("Connector contextState", contextState);
 
   return (
     <MqttContext.Provider value={contextState}>{children}</MqttContext.Provider>
