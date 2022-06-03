@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { Duration } from "luxon";
 import { timetableExpirationDuration, Train } from "../../model/Train";
+import TrainHeader from "./TrainHeader";
 import TrainNumberInputForm from "./TrainNumberInputForm";
 
 export interface TopBarProps {
@@ -33,6 +34,7 @@ export default function TopBar({
           onSubmit={startTracking}
         />
       )}
+      <TrainHeader train={train} isExpired={isTimetableExpired} />
     </div>
   );
 }

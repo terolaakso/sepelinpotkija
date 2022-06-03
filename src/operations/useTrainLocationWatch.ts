@@ -38,7 +38,6 @@ export default function useTrainLocationWatch(
       if (isNil(departureDate) || isNil(trainNumber)) {
         return;
       }
-      console.log(new Date().toLocaleTimeString(), "Got new location");
       const location = transformLocation(receivedLocation);
       trainDataRef.current?.setLocation(location);
       const train = getTrainFromContext(
@@ -76,7 +75,6 @@ export default function useTrainLocationWatch(
         trainDataRef.current ?? null
       );
       if (train) {
-        console.log(new Date().toLocaleTimeString(), "Fixing it!!!!!!!!!!!!");
         const fixedTrain = adjustTimetableByLocation(
           train,
           latestLocation,

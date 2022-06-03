@@ -7,5 +7,5 @@ export interface Station {
 }
 
 export interface StationCollection {
-  [key: string]: Station;
+  [key: string]: Station | undefined;
 }

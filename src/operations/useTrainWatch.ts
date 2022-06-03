@@ -32,7 +32,6 @@ export default function useTrainWatch(
       if (isNil(departureDate) || isNil(trainNumber)) {
         return;
       }
-      console.log(new Date().toLocaleTimeString(), "Got new train in watch");
       const transformedTrain = transformTrains([receivedTrain])[0];
       const location = getLocationFromContext(
         transformedTrain.departureDate,

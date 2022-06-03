@@ -7,6 +7,7 @@ import {
   Train as DigiTrafficTrain,
 } from "./digitraffic";
 import { Station } from "./Station";
+import { calculateLateMins } from "./timetableCalculation";
 import { StopType, TimetableRow, TimeType, Train } from "./Train";
 import { TrainLocation } from "./TrainLocation";
 
@@ -30,12 +31,18 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
   const latestActualTimeIndex = fixedRows
     .map((r) => r.timeType)
     .lastIndexOf(TimeType.Actual);
-
+  const isReady =
+    latestActualTimeIndex < fixedRows.length - 1 &&
+    fixedRows[latestActualTimeIndex + 1].isTrainReady;
   const result: Train = {
     trainNumber: train.trainNumber,
     departureDate: train.departureDate,
+    name: `${train.trainType} ${train.trainNumber}`,
     timetableRows: fixedRows,
+    lineId: train.commuterLineID ?? null,
     currentSpeed: null,
+    lateMinutes: calculateLateMins(fixedRows, latestActualTimeIndex),
+    isReady,
     latestActualTimeIndex,
     latestGpsIndex: null,
     timestamp: DateTime.now(),
@@ -73,6 +80,7 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
       : row.trainStopping
       ? StopType.OtherTraffic
       : StopType.None,
+    isTrainReady: row.trainReady?.accepted ?? false,
   };
   return result;
 }
@@ -114,7 +122,7 @@ function fixErrorsByType(
       result.unshift(row);
     }
   }
-  return rows;
+  return result;
 }
 
 function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
@@ -148,6 +156,10 @@ function fixFutureTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
     .lastIndexOf(TimeType.Actual);
 
   const futureRows: TimetableRow[] = [];
+
+  if (latestInThePastIndex < 0) {
+    futureRows.push(rows[0]);
+  }
 
   for (let i = Math.max(latestInThePastIndex + 1, 1); i < rows.length; i++) {
     const row = rows[i];

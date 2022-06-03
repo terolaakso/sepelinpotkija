@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { DateTime, DurationLike } from "luxon";
+import { DateTime } from "luxon";
+import { isNotNil } from "../utils/misc";
 import {
   distanceBetweenCoordsInKm,
   LatLon,
@@ -25,22 +26,41 @@ export function adjustTimetableByLocation(
   location: TrainLocation | null,
   stations: StationCollection
 ): Train {
-  const LOCATION_USABLE_MAX_AGE: DurationLike = { minutes: 1 };
+  const LOCATION_USABLE_MAX_MINUTES = 1;
+  if (location) {
+    console.log(
+      "AGE MINUTES",
+      DateTime.now().diff(location.timestamp).as("minutes")
+    );
+  }
   if (
     !location ||
-    DateTime.now().diff(location.timestamp) > LOCATION_USABLE_MAX_AGE
+    DateTime.now().diff(location.timestamp).as("minutes") >
+      LOCATION_USABLE_MAX_MINUTES
   ) {
     return train;
   }
-  if (isTrainAtStation(train, location, stations)) {
-    const withoutLocationAdjustment = resetTimes(train);
+  const filledWithNewData = {
+    ...train,
+    lateMinutes: calculateLateMins(
+      train.timetableRows,
+      train.latestActualTimeIndex
+    ),
+    currentSpeed: location.speed,
+  };
+  if (isTrainAtStation(filledWithNewData, location, stations)) {
+    const withoutLocationAdjustment = resetTimes(filledWithNewData);
     return withoutLocationAdjustment;
   }
-  const segment = findClosestStationSegment(train, location, stations);
+  const segment = findClosestStationSegment(
+    filledWithNewData,
+    location,
+    stations
+  );
   if (!segment) {
-    return train;
+    return filledWithNewData;
   }
-  const fixed = fixTimetable(train, location, segment);
+  const fixed = fixTimetable(filledWithNewData, location, segment);
   return fixed;
 }
 
@@ -77,11 +97,30 @@ export function isTrainAtStation(
   if (result && location) {
     const station =
       stations[rows[prevRowIndex > 0 ? prevRowIndex : 0].stationShortCode];
-    const distance = distanceBetweenCoordsInKm(
-      location.location,
-      station.location
+    if (station) {
+      const distance = distanceBetweenCoordsInKm(
+        location.location,
+        station.location
+      );
+      if (distance < MAX_STATION_RANGE_KM) {
+        console.log(
+          new Date().toLocaleTimeString(),
+          "Train is at station",
+          distance,
+          isAtStationAccordingToDigitrafficTimes,
+          isAtStationAccordingToActualTimes
+        );
+      }
+      return distance < MAX_STATION_RANGE_KM;
+    }
+  }
+  if (result) {
+    console.log(
+      new Date().toLocaleTimeString(),
+      "Train is at station",
+      isAtStationAccordingToDigitrafficTimes,
+      isAtStationAccordingToActualTimes
     );
-    return distance < MAX_STATION_RANGE_KM;
   }
   return result;
 }
@@ -105,6 +144,19 @@ function resetTimes(train: Train): Train {
   };
 }
 
+export function calculateLateMins(
+  rows: TimetableRow[],
+  latestActualTimeIndex: number
+): number | null {
+  if (latestActualTimeIndex < 0) {
+    return null;
+  }
+  const nextRowIndex = Math.min(latestActualTimeIndex + 1, rows.length - 1);
+  const row = rows[nextRowIndex];
+  const lateMins = Math.round(row.time.diff(row.scheduledTime).as("minutes"));
+  return lateMins;
+}
+
 function digitrafficTime(row: TimetableRow): DateTime {
   return row.actualTime ?? row.estimatedTime ?? row.scheduledTime;
 }
@@ -120,13 +172,18 @@ function findClosestFutureStation(
       const code = row.stationShortCode;
       if (code !== acc.prevStation) {
         const station = stations[code];
-        const distance = distanceBetweenCoordsInKm(station.location, location);
-        if (distance < acc.distance) {
-          return {
-            prevStation: code,
-            distance,
-            index: startIndex + i,
-          };
+        if (isNotNil(station)) {
+          const distance = distanceBetweenCoordsInKm(
+            station.location,
+            location
+          );
+          if (distance < acc.distance) {
+            return {
+              prevStation: code,
+              distance,
+              index: startIndex + i,
+            };
+          }
         }
       }
       return {
@@ -138,7 +195,9 @@ function findClosestFutureStation(
   );
   return {
     index: closest.index,
-    station: stations[train.timetableRows[closest.index].stationShortCode],
+    station: stations[
+      train.timetableRows[closest.index].stationShortCode
+    ] as Station,
   };
 }
 
@@ -153,10 +212,11 @@ function findPreviousStation(
       row.stationShortCode !== train.timetableRows[index].stationShortCode,
     index - 1
   );
-  if (i >= 0) {
+  const station = stations[train.timetableRows[i].stationShortCode];
+  if (i >= 0 && isNotNil(station)) {
     return {
       index: i,
-      station: stations[train.timetableRows[i].stationShortCode],
+      station: station,
     };
   }
   return null;
@@ -173,7 +233,7 @@ function findNextStation(
       row.stationShortCode !== train.timetableRows[index].stationShortCode,
     index + 1
   );
-  if (i < train.timetableRows.length) {
+  if (i >= 0 && i < train.timetableRows.length) {
     return {
       index: i,
       station: stations[train.timetableRows[i].stationShortCode],
@@ -205,7 +265,7 @@ function findClosestStationSegment(
       )
     : null;
   const nextStation = findNextStation(train, closestStation.index, stations);
-  const nextSegment = nextStation
+  const nextSegment = nextStation?.station
     ? nearestPointSegment(
         closestStation.station.location,
         nextStation.station.location,

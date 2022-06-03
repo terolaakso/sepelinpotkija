@@ -16,8 +16,12 @@ export enum StopType {
 export interface Train {
   trainNumber: number;
   departureDate: string;
+  name: string;
   timetableRows: TimetableRow[];
+  lineId: string | null;
   currentSpeed: number | null;
+  lateMinutes: number | null;
+  isReady: boolean;
   latestGpsIndex: number | null;
   latestActualTimeIndex: number;
   timestamp: DateTime;
@@ -39,6 +43,7 @@ export interface TimetableRow {
   actualTime: DateTime | null;
   differenceInMinutes: number;
   stopType: StopType;
+  isTrainReady: boolean;
 }
 
 // this is old timetableGpsAge

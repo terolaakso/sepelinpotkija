@@ -36,11 +36,6 @@ export default function TrainTracking() {
   const train = useTrain(isTracking ? trainNumber ?? null : null);
 
   useEffect(() => {
-    console.log(
-      new Date().toLocaleTimeString(),
-      "Got new train to Main",
-      !!train
-    );
     const events = train ? calculateCurrentEventsForTrain(train) : [];
     const withCountdown = calculateCountdown(events);
     setEvents(withCountdown);

@@ -159,8 +159,12 @@ describe("selecting events", () => {
         latestActualTimeIndex: 0,
         timestamp: DateTime.now(),
         trainNumber: 1948,
+        name: "MUS 1948",
         currentSpeed: 0,
         latestGpsIndex: 0,
+        lateMinutes: 0,
+        isReady: false,
+        lineId: null,
         timetableRows: [
           {
             stationShortCode: "TKU",
@@ -171,6 +175,7 @@ describe("selecting events", () => {
             differenceInMinutes: -19,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: true,
           },
           {
             stationShortCode: "KUT",
@@ -181,6 +186,7 @@ describe("selecting events", () => {
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "KUT",
@@ -191,6 +197,7 @@ describe("selecting events", () => {
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "PIK",
@@ -201,6 +208,7 @@ describe("selecting events", () => {
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "PIK",
@@ -211,6 +219,7 @@ describe("selecting events", () => {
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "PO",
@@ -221,6 +230,7 @@ describe("selecting events", () => {
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "PO",
@@ -231,6 +241,7 @@ describe("selecting events", () => {
             differenceInMinutes: 2,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "SLO",
@@ -241,6 +252,7 @@ describe("selecting events", () => {
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "SLO",
@@ -251,6 +263,7 @@ describe("selecting events", () => {
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "ERV",
@@ -261,6 +274,7 @@ describe("selecting events", () => {
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "ERV",
@@ -271,6 +285,7 @@ describe("selecting events", () => {
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "PKU",
@@ -281,6 +296,7 @@ describe("selecting events", () => {
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "PKU",
@@ -291,6 +307,7 @@ describe("selecting events", () => {
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
           {
             stationShortCode: "HKI",
@@ -301,6 +318,7 @@ describe("selecting events", () => {
             time: DateTime.fromISO("2018-12-30T10:44:00.000Z"),
             timeType: TimeType.Actual,
             estimatedTime: null,
+            isTrainReady: false,
           },
         ],
       },
