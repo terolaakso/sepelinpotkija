@@ -27,12 +27,6 @@ export function adjustTimetableByLocation(
   stations: StationCollection
 ): Train {
   const LOCATION_USABLE_MAX_MINUTES = 1;
-  if (location) {
-    console.log(
-      "AGE MINUTES",
-      DateTime.now().diff(location.timestamp).as("minutes")
-    );
-  }
   if (
     !location ||
     DateTime.now().diff(location.timestamp).as("minutes") >
@@ -40,7 +34,7 @@ export function adjustTimetableByLocation(
   ) {
     return train;
   }
-  const filledWithNewData = {
+  const filledWithNewData: Train = {
     ...train,
     lateMinutes: calculateLateMins(
       train.timetableRows,
@@ -61,7 +55,14 @@ export function adjustTimetableByLocation(
     return filledWithNewData;
   }
   const fixed = fixTimetable(filledWithNewData, location, segment);
-  return fixed;
+  const result = {
+    ...fixed,
+    lateMinutes: calculateLateMins(
+      fixed.timetableRows,
+      fixed.latestActualTimeIndex
+    ),
+  };
+  return result;
 }
 
 /**
@@ -75,25 +76,25 @@ export function isTrainAtStation(
 ): boolean {
   const MAX_STATION_RANGE_KM = 1;
   const now = DateTime.now();
-  const prevRowIndex = nextTimetableRowByTimeWithoutCorrectionIndex(train) - 1;
+  const prevRowIndex = nextTimetableRowIndexByTime(train) - 1;
   const rows = train.timetableRows;
-  const isAtStationAccordingToDigitrafficTimes =
+  const isAtStationAccordingToTime =
     prevRowIndex < 0 ||
     prevRowIndex >= rows.length - 1 ||
     (rows[prevRowIndex].stationShortCode ===
       rows[prevRowIndex + 1].stationShortCode &&
       rows[prevRowIndex].stopType !== StopType.None);
   const actualIndex = train.latestActualTimeIndex;
-  const isAtStationAccordingToActualTimes =
+  const isAtStationAccordingToActualTime =
     (actualIndex === -1 && now < digitrafficTime(rows[0])) ||
     actualIndex === rows.length - 1 ||
-    (actualIndex + 1 < rows.length &&
+    (actualIndex >= 0 &&
+      actualIndex + 1 < rows.length &&
       rows[actualIndex].stationShortCode ===
         rows[actualIndex + 1].stationShortCode &&
       rows[actualIndex].stopType !== StopType.None &&
       now < digitrafficTime(rows[actualIndex + 1]));
-  const result =
-    isAtStationAccordingToDigitrafficTimes || isAtStationAccordingToActualTimes;
+  const result = isAtStationAccordingToTime || isAtStationAccordingToActualTime;
   if (result && location) {
     const station =
       stations[rows[prevRowIndex > 0 ? prevRowIndex : 0].stationShortCode];
@@ -107,8 +108,7 @@ export function isTrainAtStation(
           new Date().toLocaleTimeString(),
           "Train is at station",
           distance,
-          isAtStationAccordingToDigitrafficTimes,
-          isAtStationAccordingToActualTimes
+          isAtStationAccordingToActualTime
         );
       }
       return distance < MAX_STATION_RANGE_KM;
@@ -118,19 +118,15 @@ export function isTrainAtStation(
     console.log(
       new Date().toLocaleTimeString(),
       "Train is at station",
-      isAtStationAccordingToDigitrafficTimes,
-      isAtStationAccordingToActualTimes
+      isAtStationAccordingToActualTime
     );
   }
   return result;
 }
 
-function nextTimetableRowByTimeWithoutCorrectionIndex(train: Train): number {
+function nextTimetableRowIndexByTime(train: Train): number {
   const now = DateTime.now();
-  const index = _.findIndex(
-    train.timetableRows,
-    (row) => digitrafficTime(row) > now
-  );
+  const index = _.findIndex(train.timetableRows, (row) => row.time > now);
   return index >= 0 ? index : train.timetableRows.length;
 }
 

@@ -364,3 +364,24 @@ export interface Station {
   longitude: number;
   latitude: number;
 }
+
+export interface FirstLevelCause {
+  categoryCode: string;
+  categoryName: string;
+  validFrom: string;
+  id: number;
+}
+
+export interface SecondLevelCause {
+  detailedCategoryCode: string;
+  detailedCategoryName: string;
+  validFrom: string;
+  id: number;
+}
+
+export interface ThirdLevelCause {
+  thirdCategoryCode: string;
+  thirdCategoryName: string;
+  validFrom: string;
+  id: number;
+}

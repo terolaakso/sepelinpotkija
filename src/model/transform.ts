@@ -1,6 +1,7 @@
 import { DateTime, Duration } from "luxon";
 import { isNotNil } from "../utils/misc";
 import {
+  Cause,
   GpsLocation,
   Station as DigiTrafficStation,
   TimeTableRow,
@@ -8,16 +9,13 @@ import {
 } from "./digitraffic";
 import { Station } from "./Station";
 import { calculateLateMins } from "./timetableCalculation";
-import { StopType, TimetableRow, TimeType, Train } from "./Train";
+import { RowCause, StopType, TimetableRow, TimeType, Train } from "./Train";
 import { TrainLocation } from "./TrainLocation";
 
 const ESTIMATE_ERROR_TOLERANCE = 0.5;
 
 export function transformTrains(trains: DigiTrafficTrain[]): Train[] {
-  const result = trains
-    .map(transformTrain)
-    .filter(isNotNil)
-    .sort((t1, t2) => t1.trainNumber - t2.trainNumber);
+  const result = trains.map(transformTrain).filter(isNotNil);
   return result;
 }
 
@@ -41,6 +39,7 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
     timetableRows: fixedRows,
     lineId: train.commuterLineID ?? null,
     currentSpeed: null,
+    currentLateCauses: [],
     lateMinutes: calculateLateMins(fixedRows, latestActualTimeIndex),
     isReady,
     latestActualTimeIndex,
@@ -81,8 +80,17 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
       ? StopType.OtherTraffic
       : StopType.None,
     isTrainReady: row.trainReady?.accepted ?? false,
+    lateCauses: (row.causes ?? []).map(transformCause),
   };
   return result;
+}
+
+function transformCause(cause: Cause): RowCause {
+  return {
+    level1CodeId: cause.categoryCodeId ?? null,
+    level2CodeId: cause.detailedCategoryCodeId ?? null,
+    level3CodeId: cause.thirdCategoryCodeId ?? null,
+  };
 }
 
 function fixTimetableErrors(rows: TimetableRow[]): TimetableRow[] {

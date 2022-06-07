@@ -2,6 +2,7 @@ import { isNil } from "lodash";
 import { useContext, useEffect, useRef, useState } from "react";
 import { TrainContext, TrainContextProps } from "../components/TrainData";
 import { getTrain } from "../model/digitrafficClient";
+import { calculateCauses } from "../model/lateCauses";
 import { Train } from "../model/Train";
 import useTrainLocationWatch from "./useTrainLocationWatch";
 import useTrainWatch from "./useTrainWatch";
@@ -34,8 +35,19 @@ export default function useTrain(
         setTrain(null);
         return;
       }
-      setTrain(train);
-      trainDataRef.current?.setTrain(train);
+      const trainWithLateCauses: Train = trainDataRef.current
+        ? {
+            ...train,
+            currentLateCauses: calculateCauses(
+              train,
+              trainDataRef.current.firstLevelCauses,
+              trainDataRef.current.secondLevelCauses,
+              trainDataRef.current.thirdLevelCauses
+            ),
+          }
+        : train;
+      setTrain(trainWithLateCauses);
+      trainDataRef.current?.setTrain(trainWithLateCauses);
     }
     fetchTrain();
   }, [departureDate, trainNumber]);

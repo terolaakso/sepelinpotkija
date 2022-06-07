@@ -11,6 +11,7 @@ import { transformTrains } from "../model/transform";
 import useSubscription from "./mqtt/useSubscription";
 import { isNotNil } from "../utils/misc";
 import { isNil } from "lodash";
+import { calculateCauses } from "../model/lateCauses";
 
 export default function useTrainWatch(
   departureDate: string | null,
@@ -45,8 +46,19 @@ export default function useTrainWatch(
             trainDataRef.current?.stations ?? {}
           )
         : transformedTrain;
-      trainDataRef.current?.setTrain(fixedTrain);
-      onReceivedNewTrain(fixedTrain);
+      const trainWithLateCauses: Train = trainDataRef.current
+        ? {
+            ...fixedTrain,
+            currentLateCauses: calculateCauses(
+              fixedTrain,
+              trainDataRef.current.firstLevelCauses,
+              trainDataRef.current.secondLevelCauses,
+              trainDataRef.current.thirdLevelCauses
+            ),
+          }
+        : fixedTrain;
+      trainDataRef.current?.setTrain(trainWithLateCauses);
+      onReceivedNewTrain(trainWithLateCauses);
     }
   );
 }

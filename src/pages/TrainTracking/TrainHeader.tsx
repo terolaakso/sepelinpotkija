@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import CommuterBadge from "../../components/CommuterBadge";
 import DifferenceBadge from "../../components/DifferenceBadge";
+import LateCauses from "../../components/LateCauses";
 import { TrainContext, TrainContextProps } from "../../components/TrainData";
 import TrainReadyBadge from "../../components/TrainReadyBadge";
 import { Train } from "../../model/Train";
@@ -29,21 +30,26 @@ export default function TrainHeader({ train, isExpired }: TrainHeaderProps) {
     ]?.name ?? "";
 
   return (
-    <div className="flex">
-      <DifferenceBadge difference={train.lateMinutes} />
-      {isExpired && <div>❗️</div>}
-      <div className="flex-grow">
-        <CommuterBadge lineId={train.lineId} />
-        <span>
-          {train.name} {origin} - {destination}
-        </span>
+    <>
+      <div className="flex">
+        <DifferenceBadge difference={train.lateMinutes} />
+        {isExpired && <div>❗️</div>}
+        <div className="flex-grow">
+          <CommuterBadge lineId={train.lineId} />
+          <span>
+            {train.name} {origin} - {destination}
+          </span>
+        </div>
+        <div>
+          {(train.currentSpeed ?? 0) > 0 && (
+            <div className="text-right">{train.currentSpeed} km/h</div>
+          )}
+          <TrainReadyBadge isReady={train.isReady} />
+        </div>
       </div>
       <div>
-        {(train.currentSpeed ?? 0) > 0 && (
-          <div className="text-right">{train.currentSpeed} km/h</div>
-        )}
-        <TrainReadyBadge isReady={train.isReady} />
+        <LateCauses causes={train.currentLateCauses} />
       </div>
-    </div>
+    </>
   );
 }

@@ -161,6 +161,7 @@ describe("selecting events", () => {
         trainNumber: 1948,
         name: "MUS 1948",
         currentSpeed: 0,
+        currentLateCauses: [],
         latestGpsIndex: 0,
         lateMinutes: 0,
         isReady: false,
@@ -176,6 +177,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: true,
+            lateCauses: [],
           },
           {
             stationShortCode: "KUT",
@@ -187,6 +189,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "KUT",
@@ -198,6 +201,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "PIK",
@@ -209,6 +213,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "PIK",
@@ -220,6 +225,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "PO",
@@ -231,6 +237,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "PO",
@@ -242,6 +249,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "SLO",
@@ -253,6 +261,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "SLO",
@@ -264,6 +273,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "ERV",
@@ -275,6 +285,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "ERV",
@@ -286,6 +297,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "PKU",
@@ -297,6 +309,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "PKU",
@@ -308,6 +321,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
           {
             stationShortCode: "HKI",
@@ -319,6 +333,7 @@ describe("selecting events", () => {
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,
+            lateCauses: [],
           },
         ],
       },

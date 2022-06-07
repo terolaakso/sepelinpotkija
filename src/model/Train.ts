@@ -1,4 +1,5 @@
 import { DateTime, Duration } from "luxon";
+import { LateCause } from "./lateCauses";
 
 export enum TimeType {
   None = "None",
@@ -20,6 +21,7 @@ export interface Train {
   timetableRows: TimetableRow[];
   lineId: string | null;
   currentSpeed: number | null;
+  currentLateCauses: LateCause[];
   lateMinutes: number | null;
   isReady: boolean;
   latestGpsIndex: number | null;
@@ -44,6 +46,13 @@ export interface TimetableRow {
   differenceInMinutes: number;
   stopType: StopType;
   isTrainReady: boolean;
+  lateCauses: RowCause[];
+}
+
+export interface RowCause {
+  level1CodeId: number | null;
+  level2CodeId: number | null;
+  level3CodeId: number | null;
 }
 
 // this is old timetableGpsAge

@@ -1,8 +1,17 @@
 import {
+  FirstLevelCauseCollection,
+  SecondLevelCauseCollection,
+  ThirdLevelCauseCollection,
+} from "../components/TrainData";
+import {
   Station as DigitrafficStation,
   Train as DigitrafficTrain,
   GpsLocation as DigitrafficGpsLocation,
+  FirstLevelCause,
+  SecondLevelCause,
+  ThirdLevelCause,
 } from "./digitraffic";
+
 import { StationCollection } from "./Station";
 import { Train } from "./Train";
 import { TrainLocation } from "./TrainLocation";
@@ -52,6 +61,42 @@ export async function getStations(): Promise<StationCollection> {
     const result = Object.fromEntries(
       stations.map((station) => [station.shortCode, station])
     );
+    return result;
+  } catch (error) {
+    return {};
+  }
+}
+
+export async function get1stLevelCauses(): Promise<FirstLevelCauseCollection> {
+  try {
+    const url = `${DIGITRAFFIC_API_URL}/metadata/cause-category-codes`;
+    const response = await fetch(url);
+    const causes = (await response.json()) as FirstLevelCause[];
+    const result = Object.fromEntries(causes.map((cause) => [cause.id, cause]));
+    return result;
+  } catch (error) {
+    return {};
+  }
+}
+
+export async function get2ndLevelCauses(): Promise<SecondLevelCauseCollection> {
+  try {
+    const url = `${DIGITRAFFIC_API_URL}/metadata/detailed-cause-category-codes`;
+    const response = await fetch(url);
+    const causes = (await response.json()) as SecondLevelCause[];
+    const result = Object.fromEntries(causes.map((cause) => [cause.id, cause]));
+    return result;
+  } catch (error) {
+    return {};
+  }
+}
+
+export async function get3rdLevelCauses(): Promise<ThirdLevelCauseCollection> {
+  try {
+    const url = `${DIGITRAFFIC_API_URL}/metadata/third-cause-category-codes`;
+    const response = await fetch(url);
+    const causes = (await response.json()) as ThirdLevelCause[];
+    const result = Object.fromEntries(causes.map((cause) => [cause.id, cause]));
     return result;
   } catch (error) {
     return {};
