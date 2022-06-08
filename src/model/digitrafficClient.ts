@@ -31,8 +31,20 @@ export async function getTrain(trainNumber: number): Promise<Train | null> {
     const trains = transformTrains(digitrafficTrains);
     return trains.length > 0 ? trains[0] : null;
   } catch (error) {
-    // TODO: Do we need some reaction to lost connections?
     return null;
+  }
+}
+
+export async function getTrainsOfStation(
+  stationCode: string
+): Promise<Train[]> {
+  try {
+    const url = `${DIGITRAFFIC_API_URL}/live-trains?include_nonstopping=true&station=${stationCode}`;
+    const response = await fetch(url);
+    const digitrafficTrains = (await response.json()) as DigitrafficTrain[];
+    return transformTrains(digitrafficTrains);
+  } catch (error) {
+    return [];
   }
 }
 

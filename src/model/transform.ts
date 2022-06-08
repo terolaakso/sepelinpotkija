@@ -45,6 +45,7 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
     latestActualTimeIndex,
     latestGpsIndex: null,
     timestamp: DateTime.now(),
+    version: train.version ?? 0,
   };
   return result;
 }

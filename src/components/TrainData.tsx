@@ -65,10 +65,13 @@ export default function TrainData({ children }: TrainDataProps) {
   function setTrain(train: Train) {
     const { departureDate, trainNumber } = train;
     const key = `${departureDate}-${trainNumber}`;
-    setState((prevState) => ({
-      ...prevState,
-      trains: { ...prevState.trains, [key]: train },
-    }));
+    const oldVersion = state.trains[key];
+    if ((oldVersion?.version ?? 0) <= train.version) {
+      setState((prevState) => ({
+        ...prevState,
+        trains: { ...prevState.trains, [key]: train },
+      }));
+    }
   }
 
   const [state, setState] = useState<TrainContextProps>({

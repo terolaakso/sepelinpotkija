@@ -1,5 +1,9 @@
 import _ from "lodash";
 import { DateTime } from "luxon";
+import {
+  getLocationFromContext,
+  TrainContextProps,
+} from "../components/TrainData";
 import { isNotNil } from "../utils/misc";
 import {
   distanceBetweenCoordsInKm,
@@ -7,6 +11,7 @@ import {
   nearestPointSegment,
   StationSegmentLocation,
 } from "./geography";
+import { calculateCauses } from "./lateCauses";
 import { Station, StationCollection } from "./Station";
 import { StopType, TimetableRow, Train } from "./Train";
 import { TrainLocation } from "./TrainLocation";
@@ -76,14 +81,14 @@ export function isTrainAtStation(
 ): boolean {
   const MAX_STATION_RANGE_KM = 1;
   const now = DateTime.now();
-  const prevRowIndex = nextTimetableRowIndexByTime(train) - 1;
+  // const prevRowIndex = nextTimetableRowIndexByTime(train) - 1;
   const rows = train.timetableRows;
-  const isAtStationAccordingToTime =
-    prevRowIndex < 0 ||
-    prevRowIndex >= rows.length - 1 ||
-    (rows[prevRowIndex].stationShortCode ===
-      rows[prevRowIndex + 1].stationShortCode &&
-      rows[prevRowIndex].stopType !== StopType.None);
+  // const isAtStationAccordingToTime =
+  //   prevRowIndex < 0 ||
+  //   prevRowIndex >= rows.length - 1 ||
+  //   (rows[prevRowIndex].stationShortCode ===
+  //     rows[prevRowIndex + 1].stationShortCode &&
+  //     rows[prevRowIndex].stopType !== StopType.None);
   const actualIndex = train.latestActualTimeIndex;
   const isAtStationAccordingToActualTime =
     (actualIndex === -1 && now < digitrafficTime(rows[0])) ||
@@ -94,16 +99,29 @@ export function isTrainAtStation(
         rows[actualIndex + 1].stationShortCode &&
       rows[actualIndex].stopType !== StopType.None &&
       now < digitrafficTime(rows[actualIndex + 1]));
-  const result = isAtStationAccordingToTime || isAtStationAccordingToActualTime;
+  if (actualIndex >= 0 && actualIndex + 1 < rows.length) {
+    console.log(
+      new Date().toLocaleTimeString(),
+      "index",
+      actualIndex,
+      "actualRow",
+      rows[actualIndex].stationShortCode,
+      "nextRow",
+      rows[actualIndex + 1].stationShortCode,
+      "nextTime",
+      digitrafficTime(rows[actualIndex + 1]).toFormat("HH:mm:ss")
+    );
+  }
+  // const result = isAtStationAccordingToTime || isAtStationAccordingToActualTime;
+  const result = isAtStationAccordingToActualTime;
   if (result && location) {
-    const station =
-      stations[rows[prevRowIndex > 0 ? prevRowIndex : 0].stationShortCode];
+    const station = stations[rows[Math.max(actualIndex, 0)].stationShortCode];
     if (station) {
       const distance = distanceBetweenCoordsInKm(
         location.location,
         station.location
       );
-      if (distance < MAX_STATION_RANGE_KM) {
+      if (isAtStationAccordingToActualTime) {
         console.log(
           new Date().toLocaleTimeString(),
           "Train is at station",
@@ -124,11 +142,11 @@ export function isTrainAtStation(
   return result;
 }
 
-function nextTimetableRowIndexByTime(train: Train): number {
-  const now = DateTime.now();
-  const index = _.findIndex(train.timetableRows, (row) => row.time > now);
-  return index >= 0 ? index : train.timetableRows.length;
-}
+// function nextTimetableRowIndexByTime(train: Train): number {
+//   const now = DateTime.now();
+//   const index = _.findIndex(train.timetableRows, (row) => row.time > now);
+//   return index >= 0 ? index : train.timetableRows.length;
+// }
 
 function resetTimes(train: Train): Train {
   return {
@@ -430,4 +448,28 @@ function doFutureTimesFix(
     ...train,
     timetableRows: fixed,
   };
+}
+
+export function fillNewTrainWithDetails(
+  train: Train,
+  context: TrainContextProps
+): Train {
+  const location = getLocationFromContext(
+    train.departureDate,
+    train.trainNumber,
+    context
+  );
+  const fixedTrain = location
+    ? adjustTimetableByLocation(train, location, context.stations)
+    : train;
+  const trainWithLateCauses: Train = {
+    ...fixedTrain,
+    currentLateCauses: calculateCauses(
+      fixedTrain,
+      context.firstLevelCauses,
+      context.secondLevelCauses,
+      context.thirdLevelCauses
+    ),
+  };
+  return trainWithLateCauses;
 }

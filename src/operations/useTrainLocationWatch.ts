@@ -1,7 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
 import { GpsLocation } from "../model/digitraffic";
 import { getLocation } from "../model/digitrafficClient";
-import { adjustTimetableByLocation } from "../model/timetableCalculation";
+import {
+  adjustTimetableByLocation,
+  fillNewTrainWithDetails,
+} from "../model/timetableCalculation";
 import { Train } from "../model/Train";
 import {
   getTrainFromContext,
@@ -46,11 +49,9 @@ export default function useTrainLocationWatch(
         trainDataRef.current ?? null
       );
       if (train) {
-        const fixedTrain = adjustTimetableByLocation(
-          train,
-          location,
-          trainDataRef.current?.stations ?? {}
-        );
+        const fixedTrain = trainDataRef.current
+          ? fillNewTrainWithDetails(train, trainDataRef.current)
+          : train;
         trainDataRef.current?.setTrain(fixedTrain);
         callbackRef.current(fixedTrain);
       }

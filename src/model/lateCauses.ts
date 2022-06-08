@@ -145,9 +145,9 @@ function getCauseName(
     );
   return `${nameStructure.name}${
     nameStructure.categories.length > 0
-      ? ` (${nameStructure.categories.join(": ")}`
+      ? ` (${nameStructure.categories.reverse().join(": ")})`
       : ""
-  })`;
+  }`;
 }
 
 function timetableRowLateMin(rows: TimetableRow[], startIndex: number): number {

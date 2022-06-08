@@ -27,13 +27,14 @@ export interface Train {
   latestGpsIndex: number | null;
   latestActualTimeIndex: number;
   timestamp: DateTime;
+  version: number;
 }
 
 /**
  * key is "{departureDate}-{trainNumber}"
  */
 export interface TrainCollection {
-  [key: string]: Train;
+  [key: string]: Train | undefined;
 }
 
 export interface TimetableRow {

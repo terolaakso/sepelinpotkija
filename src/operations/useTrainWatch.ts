@@ -1,17 +1,12 @@
 import { useContext, useEffect, useRef } from "react";
 import { Train as DigitrafficTrain } from "../model/digitraffic";
-import { adjustTimetableByLocation } from "../model/timetableCalculation";
+import { fillNewTrainWithDetails } from "../model/timetableCalculation";
 import { Train } from "../model/Train";
-import {
-  getLocationFromContext,
-  TrainContext,
-  TrainContextProps,
-} from "../components/TrainData";
+import { TrainContext, TrainContextProps } from "../components/TrainData";
 import { transformTrains } from "../model/transform";
 import useSubscription from "./mqtt/useSubscription";
 import { isNotNil } from "../utils/misc";
 import { isNil } from "lodash";
-import { calculateCauses } from "../model/lateCauses";
 
 export default function useTrainWatch(
   departureDate: string | null,
@@ -34,31 +29,11 @@ export default function useTrainWatch(
         return;
       }
       const transformedTrain = transformTrains([receivedTrain])[0];
-      const location = getLocationFromContext(
-        transformedTrain.departureDate,
-        transformedTrain.trainNumber,
-        trainDataRef.current ?? null
-      );
-      const fixedTrain = location
-        ? adjustTimetableByLocation(
-            transformedTrain,
-            location,
-            trainDataRef.current?.stations ?? {}
-          )
+      const fixedTrain = trainDataRef.current
+        ? fillNewTrainWithDetails(transformedTrain, trainDataRef.current)
         : transformedTrain;
-      const trainWithLateCauses: Train = trainDataRef.current
-        ? {
-            ...fixedTrain,
-            currentLateCauses: calculateCauses(
-              fixedTrain,
-              trainDataRef.current.firstLevelCauses,
-              trainDataRef.current.secondLevelCauses,
-              trainDataRef.current.thirdLevelCauses
-            ),
-          }
-        : fixedTrain;
-      trainDataRef.current?.setTrain(trainWithLateCauses);
-      onReceivedNewTrain(trainWithLateCauses);
+      trainDataRef.current?.setTrain(fixedTrain);
+      onReceivedNewTrain(fixedTrain);
     }
   );
 }

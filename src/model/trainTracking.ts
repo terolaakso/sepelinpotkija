@@ -4,10 +4,17 @@ import _ from "lodash";
 import { isNotNil } from "../utils/misc";
 import { TrainEvent, TrainEventType } from "./TrainEvent";
 
-export function calculateCurrentEventsForTrain(train: Train) {
+export function calculateCurrentEventsForTrain(train: Train): {
+  events: TrainEvent[];
+  nextStationCode: string | null;
+} {
   const nextRowIndex = nextTimetableRowIndex(train);
   const commercialStops = getCurrentCommercialStops(train, nextRowIndex);
   const allStations = getCurrentStations(train, nextRowIndex);
+
+  const now = DateTime.now();
+  const nextStationCode =
+    allStations.find((event) => event.time > now)?.name ?? null;
   // TODO: Generate infos for "extra" stations
   // TODO: Encounters
   const uniqueEvents = _.unionBy(
@@ -15,7 +22,7 @@ export function calculateCurrentEventsForTrain(train: Train) {
     (row) => row.name
   );
   const sortedEvents = _.sortBy(uniqueEvents, (row) => row.time);
-  return sortedEvents;
+  return { events: sortedEvents, nextStationCode };
 }
 
 export function getCurrentCommercialStops(

@@ -1,30 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TrainEvent } from "../../model/TrainEvent";
 import {
   calculateCountdown,
   calculateCurrentEventsForTrain,
 } from "../../model/trainTracking";
 import { useInterval } from "../../operations/useInterval";
+import useStationWatch from "../../operations/useStationWatch";
 import useTrain from "../../operations/useTrain";
 import BottomBar from "./BottomBar";
 import Content from "./Content";
 import TopBar from "./TopBar";
 
 export default function TrainTracking() {
-  // const [train, setTrain] = useState<Train | null>(null);
   const [trainNumber, setTrainNumber] = useState(1);
   const [events, setEvents] = useState<TrainEvent[]>([]);
   const [isTracking, setIsTracking] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [nextStationCode, setNextStationCode] = useState<string | null>(null);
 
   async function startTracking(trainNumber: number) {
     setTrainNumber(trainNumber);
-    // const train = await getTrain(trainNumber);
-    // setTrain(train);
-    // if (!train) {
-    //   setErrorMessage("Junan tietoja ei löydy");
-    //   return;
-    // }
     setErrorMessage(null);
     setIsTracking(true);
   }
@@ -34,17 +29,16 @@ export default function TrainTracking() {
   }
 
   const train = useTrain(isTracking ? trainNumber ?? null : null);
-
-  useEffect(() => {
-    const events = train ? calculateCurrentEventsForTrain(train) : [];
-    const withCountdown = calculateCountdown(events);
-    setEvents(withCountdown);
-  }, [train]);
+  useStationWatch(isTracking ? nextStationCode : null);
 
   useInterval(
     () => {
-      const updated = calculateCountdown(events);
-      setEvents(updated);
+      const { events, nextStationCode } = train
+        ? calculateCurrentEventsForTrain(train)
+        : { events: [], nextStationCode: null };
+      const withCountdown = calculateCountdown(events);
+      setEvents(withCountdown);
+      setNextStationCode(nextStationCode);
     },
     isTracking ? 1000 : null
   );
