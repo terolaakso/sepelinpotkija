@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { Train as DigitrafficTrain } from "../model/digitraffic";
 import { fillNewTrainWithDetails } from "../model/timetableCalculation";
-import { Train } from "../model/Train";
 import { TrainContext, TrainContextProps } from "../components/TrainData";
 import { transformTrains } from "../model/transform";
 import useSubscription from "./mqtt/useSubscription";
@@ -10,8 +9,7 @@ import { isNil } from "lodash";
 
 export default function useTrainWatch(
   departureDate: string | null,
-  trainNumber: number | null,
-  onReceivedNewTrain: (train: Train) => void
+  trainNumber: number | null
 ) {
   const trainDataRef = useRef<TrainContextProps>();
   const trainDataContext = useContext(TrainContext);
@@ -33,7 +31,6 @@ export default function useTrainWatch(
         ? fillNewTrainWithDetails(transformedTrain, trainDataRef.current)
         : transformedTrain;
       trainDataRef.current?.setTrain(fixedTrain);
-      onReceivedNewTrain(fixedTrain);
     }
   );
 }

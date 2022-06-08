@@ -20,9 +20,11 @@ export default function DifferenceBadge({ difference }: DifferenceBadgeProps) {
     }
   );
   return (
-    <small className={classes}>
-      {difference > 0 ? "+" : ""}
-      {difference}
-    </small>
+    <div>
+      <small className={classes}>
+        {difference > 0 ? "+" : ""}
+        {difference}
+      </small>
+    </div>
   );
 }

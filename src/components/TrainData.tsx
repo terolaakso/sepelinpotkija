@@ -65,13 +65,23 @@ export default function TrainData({ children }: TrainDataProps) {
   function setTrain(train: Train) {
     const { departureDate, trainNumber } = train;
     const key = `${departureDate}-${trainNumber}`;
-    const oldVersion = state.trains[key];
-    if ((oldVersion?.version ?? 0) <= train.version) {
-      setState((prevState) => ({
-        ...prevState,
-        trains: { ...prevState.trains, [key]: train },
-      }));
-    }
+
+    setState((prevState) => {
+      const oldVersion = prevState.trains[key];
+      if ((oldVersion?.version ?? 0) <= train.version) {
+        return {
+          ...prevState,
+          trains: { ...prevState.trains, [key]: train },
+        };
+      } else {
+        console.log(
+          new Date().toLocaleTimeString(),
+          "Rejected new train!",
+          key
+        );
+        return prevState;
+      }
+    });
   }
 
   const [state, setState] = useState<TrainContextProps>({
@@ -125,11 +135,11 @@ export default function TrainData({ children }: TrainDataProps) {
 }
 
 export function getTrainFromContext(
-  departureDate: string,
-  trainNumber: number,
+  departureDate: string | null,
+  trainNumber: number | null,
   context: TrainContextProps | null
 ): Train | null {
-  if (isNil(context)) {
+  if (isNil(departureDate) || isNil(trainNumber) || isNil(context)) {
     return null;
   }
   const { trains } = context;

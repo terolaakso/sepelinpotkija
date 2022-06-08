@@ -5,7 +5,6 @@ import {
   adjustTimetableByLocation,
   fillNewTrainWithDetails,
 } from "../model/timetableCalculation";
-import { Train } from "../model/Train";
 import {
   getTrainFromContext,
   TrainContext,
@@ -18,20 +17,14 @@ import { isNil } from "lodash";
 
 export default function useTrainLocationWatch(
   departureDate: string | null,
-  trainNumber: number | null,
-  onReceivedNewLocation: (train: Train) => void
+  trainNumber: number | null
 ) {
   const trainDataRef = useRef<TrainContextProps>();
-  const callbackRef = useRef<(train: Train) => void>(() => {});
   const trainDataContext = useContext(TrainContext);
 
   useEffect(() => {
     trainDataRef.current = trainDataContext;
   }, [trainDataContext]);
-
-  useEffect(() => {
-    callbackRef.current = onReceivedNewLocation;
-  }, [onReceivedNewLocation]);
 
   useSubscription<GpsLocation>(
     isNotNil(departureDate) && isNotNil(trainNumber)
@@ -53,7 +46,6 @@ export default function useTrainLocationWatch(
           ? fillNewTrainWithDetails(train, trainDataRef.current)
           : train;
         trainDataRef.current?.setTrain(fixedTrain);
-        callbackRef.current(fixedTrain);
       }
     }
   );
@@ -82,7 +74,6 @@ export default function useTrainLocationWatch(
           trainDataRef.current?.stations ?? {}
         );
         trainDataRef.current?.setTrain(fixedTrain);
-        callbackRef.current(fixedTrain);
       }
     }
     fetchLocation();

@@ -14,7 +14,8 @@ export function calculateCurrentEventsForTrain(train: Train): {
 
   const now = DateTime.now();
   const nextStationCode =
-    allStations.find((event) => event.time > now)?.name ?? null;
+    allStations.find((event) => (event.departureTime ?? event.time) > now)
+      ?.name ?? null;
   // TODO: Generate infos for "extra" stations
   // TODO: Encounters
   const uniqueEvents = _.unionBy(

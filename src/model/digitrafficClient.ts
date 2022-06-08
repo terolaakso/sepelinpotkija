@@ -23,9 +23,14 @@ import {
 
 const DIGITRAFFIC_API_URL = "https://rata.digitraffic.fi/api/v1";
 
-export async function getTrain(trainNumber: number): Promise<Train | null> {
+export async function getTrain(
+  trainNumber: number,
+  departureDate?: string
+): Promise<Train | null> {
   try {
-    const url = `${DIGITRAFFIC_API_URL}/live-trains/${trainNumber}`;
+    const url = `${DIGITRAFFIC_API_URL}/trains/${
+      departureDate ?? "latest"
+    }/${trainNumber}`;
     const response = await fetch(url);
     const digitrafficTrains = (await response.json()) as DigitrafficTrain[];
     const trains = transformTrains(digitrafficTrains);
@@ -39,7 +44,7 @@ export async function getTrainsOfStation(
   stationCode: string
 ): Promise<Train[]> {
   try {
-    const url = `${DIGITRAFFIC_API_URL}/live-trains?include_nonstopping=true&station=${stationCode}`;
+    const url = `${DIGITRAFFIC_API_URL}/live-trains/station/${stationCode}?include_nonstopping=true`;
     const response = await fetch(url);
     const digitrafficTrains = (await response.json()) as DigitrafficTrain[];
     return transformTrains(digitrafficTrains);
