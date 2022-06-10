@@ -16,6 +16,7 @@ const defaultTimetableRow: TimetableRow = {
   scheduledTime: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
   actualTime: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
   time: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
+  bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
   differenceInMinutes: 0,
   timeType: TimeType.Actual,
   estimatedTime: null,

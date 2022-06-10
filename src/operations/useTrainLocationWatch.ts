@@ -57,7 +57,7 @@ export default function useTrainLocationWatch(
       }
       console.log(new Date().toLocaleTimeString(), "Fetching initial location");
 
-      const latestLocation = await getLocation(departureDate, trainNumber);
+      const latestLocation = await getLocation(trainNumber);
       if (!latestLocation) {
         return;
       }

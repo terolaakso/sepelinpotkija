@@ -1,10 +1,7 @@
 import { useContext, useState } from "react";
 import { getTrainFromContext, TrainContext } from "../../components/TrainData";
 import { TrainEvent } from "../../model/TrainEvent";
-import {
-  calculateCountdown,
-  calculateCurrentEventsForTrain,
-} from "../../model/trainTracking";
+import { calculateCurrentEventsForTrain } from "../../model/trainTracking";
 import { useInterval } from "../../operations/useInterval";
 import useStationWatch from "../../operations/useStationWatch";
 import useTrain from "../../operations/useTrain";
@@ -44,8 +41,7 @@ export default function TrainTracking() {
       const { events, nextStationCode } = train
         ? calculateCurrentEventsForTrain(train)
         : { events: [], nextStationCode: null };
-      const withCountdown = calculateCountdown(events);
-      setEvents(withCountdown);
+      setEvents(events);
       setNextStationCode(nextStationCode);
     },
     isTracking ? 1000 : null

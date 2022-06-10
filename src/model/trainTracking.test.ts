@@ -51,7 +51,9 @@ describe("selecting events", () => {
     expect(result.length).toBe(2);
 
     expect(result[0].name).toBe("TKU");
+    expect(result[0].departureTime).toBeNull();
     expect(result[1].name).toBe("KUT");
+    expect(result[1].departureTime).not.toBeNull();
   });
 
   it("should return correct commercial stops when stopped", () => {
@@ -78,8 +80,11 @@ describe("selecting events", () => {
     expect(result.length).toBe(3);
 
     expect(result[0].name).toBe("TKU");
+    expect(result[0].departureTime).toBeNull();
     expect(result[1].name).toBe("KUT");
+    expect(result[1].departureTime).not.toBeNull();
     expect(result[2].name).toBe("PIK");
+    expect(result[2].departureTime).not.toBeNull(); // Piikkiö has different arrival and departure times by couple of seconds
   });
 
   it("should return correct commercial stops after passing a station", () => {
@@ -174,6 +179,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T05:44:00.000Z"),
             time: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
             differenceInMinutes: -19,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -186,6 +192,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T06:09:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T06:09:44.000Z"),
             time: DateTime.fromISO("2018-12-30T06:09:44.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:09:44.000Z"),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -198,6 +205,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T06:11:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T06:11:30.000Z"),
             time: DateTime.fromISO("2018-12-30T06:11:30.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:11:30.000Z"),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -210,6 +218,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T06:26:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T06:25:53.000Z"),
             time: DateTime.fromISO("2018-12-30T06:25:53.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:25:53.000Z"),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -222,6 +231,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T06:26:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T06:26:03.000Z"),
             time: DateTime.fromISO("2018-12-30T06:26:03.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:26:03.000Z"),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -234,6 +244,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T06:38:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T06:37:55.000Z"),
             time: DateTime.fromISO("2018-12-30T06:37:55.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:37:55.000Z"),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -246,6 +257,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T06:45:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T06:47:21.000Z"),
             time: DateTime.fromISO("2018-12-30T06:47:21.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:47:21.000Z"),
             differenceInMinutes: 2,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -258,6 +270,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T07:13:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T07:12:58.000Z"),
             time: DateTime.fromISO("2018-12-30T07:12:58.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:12:58.000Z"),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -270,6 +283,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T07:15:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T07:15:35.000Z"),
             time: DateTime.fromISO("2018-12-30T07:15:35.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:15:35.000Z"),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -282,6 +296,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T07:41:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T07:41:47.000Z"),
             time: DateTime.fromISO("2018-12-30T07:41:47.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:41:47.000Z"),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -294,6 +309,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T07:45:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T07:46:09.000Z"),
             time: DateTime.fromISO("2018-12-30T07:46:09.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:46:09.000Z"),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -306,6 +322,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T08:08:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
             time: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -318,6 +335,7 @@ describe("selecting events", () => {
             scheduledTime: DateTime.fromISO("2018-12-30T08:08:00.000Z"),
             actualTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
             time: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -331,6 +349,7 @@ describe("selecting events", () => {
             actualTime: DateTime.fromISO("2018-12-30T10:50:07.000Z"),
             differenceInMinutes: 6,
             time: DateTime.fromISO("2018-12-30T10:44:00.000Z"),
+            bestDigitrafficTime: DateTime.fromISO("2018-12-30T10:44:00.000Z"),
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,

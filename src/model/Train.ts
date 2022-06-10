@@ -40,6 +40,7 @@ export interface TrainCollection {
 export interface TimetableRow {
   stationShortCode: string;
   time: DateTime; // our best guess for the time
+  bestDigitrafficTime: DateTime; // keep track of the best digitraffic time after it has been logically fixed
   timeType: TimeType;
   scheduledTime: DateTime;
   estimatedTime: DateTime | null;

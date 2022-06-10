@@ -28,9 +28,8 @@ export async function getTrain(
   departureDate?: string
 ): Promise<Train | null> {
   try {
-    const url = `${DIGITRAFFIC_API_URL}/trains/${
-      departureDate ?? "latest"
-    }/${trainNumber}`;
+    const dateForUrl = departureDate ?? "latest";
+    const url = `${DIGITRAFFIC_API_URL}/trains/${dateForUrl}/${trainNumber}`;
     const response = await fetch(url);
     const digitrafficTrains = (await response.json()) as DigitrafficTrain[];
     const trains = transformTrains(digitrafficTrains);
@@ -54,11 +53,10 @@ export async function getTrainsOfStation(
 }
 
 export async function getLocation(
-  departureDate: string,
   trainNumber: number
 ): Promise<TrainLocation | null> {
   try {
-    const url = `${DIGITRAFFIC_API_URL}/train-locations/${departureDate}/${trainNumber}`;
+    const url = `${DIGITRAFFIC_API_URL}/train-locations/latest/${trainNumber}`;
     const response = await fetch(url);
     const digitrafficLocations =
       (await response.json()) as DigitrafficGpsLocation[];

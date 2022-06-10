@@ -47,6 +47,7 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
     timestamp: DateTime.now(),
     version: train.version ?? 0,
   };
+
   return result;
 }
 
@@ -67,6 +68,7 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
     estimatedTime,
     actualTime,
     time: bestTime,
+    bestDigitrafficTime: bestTime,
     timeType: actualTime
       ? TimeType.Actual
       : estimatedTime
@@ -107,10 +109,10 @@ function fixErrorsByType(
   fixType: TimeType
 ): TimetableRow[] {
   let isFixing = false;
-  const result: TimetableRow[] = [];
+  const result: TimetableRow[] = [...rows];
 
-  for (let i = rows.length - 1; i >= 0; i--) {
-    const row = rows[i];
+  for (let i = result.length - 1; i >= 0; i--) {
+    const row = result[i];
     isFixing = isFixing || row.timeType === fixType;
 
     if (
@@ -118,7 +120,7 @@ function fixErrorsByType(
       ((fixType === TimeType.Actual && row.timeType !== TimeType.Actual) ||
         (fixType === TimeType.Estimated && row.timeType === TimeType.Scheduled))
     ) {
-      const nextRow = rows[i + 1];
+      const nextRow = result[i + 1];
       const isBetweenStations =
         row.stationShortCode !== nextRow.stationShortCode;
       const durationBetweenRows =
@@ -126,9 +128,11 @@ function fixErrorsByType(
           ? nextRow.scheduledTime.diff(row.scheduledTime)
           : Duration.fromMillis(0);
       const fixedTime = nextRow.time.minus(durationBetweenRows);
-      result.unshift({ ...row, time: fixedTime });
-    } else {
-      result.unshift(row);
+      result[i] = {
+        ...row,
+        time: fixedTime,
+        bestDigitrafficTime: fixedTime,
+      };
     }
   }
   return result;
@@ -139,23 +143,20 @@ function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
     .map((r) => r.timeType)
     .lastIndexOf(TimeType.Actual);
 
-  const pastRows: TimetableRow[] = [];
+  const pastRows: TimetableRow[] = [...rows];
 
   for (let i = latestInThePastIndex - 1; i >= 0; i--) {
-    const row = rows[i];
-    const nextRow = rows[i + 1];
+    const row = pastRows[i];
+    const nextRow = pastRows[i + 1];
     if (row.time > nextRow.time) {
-      pastRows.unshift({
+      pastRows[i] = {
         ...row,
         time: nextRow.time,
-      });
-    } else {
-      pastRows.unshift(row);
+        bestDigitrafficTime: nextRow.time,
+      };
     }
   }
-  if (latestInThePastIndex >= 0) {
-    pastRows.push(rows[latestInThePastIndex]);
-  }
+
   return pastRows;
 }
 
@@ -164,22 +165,22 @@ function fixFutureTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
     .map((r) => r.timeType)
     .lastIndexOf(TimeType.Actual);
 
-  const futureRows: TimetableRow[] = [];
+  const futureRows: TimetableRow[] = [...rows];
 
-  if (latestInThePastIndex < 0) {
-    futureRows.push(rows[0]);
-  }
-
-  for (let i = Math.max(latestInThePastIndex + 1, 1); i < rows.length; i++) {
-    const row = rows[i];
-    const previousRow = rows[i - 1];
+  for (
+    let i = Math.max(latestInThePastIndex + 1, 1);
+    i < futureRows.length;
+    i++
+  ) {
+    const row = futureRows[i];
+    const previousRow = futureRows[i - 1];
 
     const isBetweenStations =
       row.stationShortCode !== previousRow.stationShortCode;
     const time = isBetweenStations
       ? fixedTimeBetweenStations(previousRow, row)
       : fixedTimeAtStation(previousRow, row);
-    futureRows.push({ ...row, time });
+    futureRows[i] = { ...row, time, bestDigitrafficTime: time };
   }
   return futureRows;
 }

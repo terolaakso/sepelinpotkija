@@ -23,7 +23,14 @@ export function calculateCurrentEventsForTrain(train: Train): {
     (row) => row.name
   );
   const sortedEvents = _.sortBy(uniqueEvents, (row) => row.time);
-  return { events: sortedEvents, nextStationCode };
+  const withCountdown = calculateCountdown(sortedEvents);
+  withCountdown.forEach((event, i) => {
+    if (event.departureTime && event.time > event.departureTime) {
+      console.log(train);
+      debugger;
+    }
+  });
+  return { events: withCountdown, nextStationCode };
 }
 
 export function getCurrentCommercialStops(
@@ -45,7 +52,7 @@ export function getCurrentStations(
   return getStops(train, nextRowIndex, () => true, true);
 }
 
-export function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
+function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
   const result = events.map((event, i) => {
     const countdown = countdownUntilTime(getRelevantTimeOfEvent(event));
     const previousEvent = i > 0 ? events[i - 1] : null;
@@ -63,7 +70,6 @@ export function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
 
 function createEvent(rows: TimetableRow[], index: number): TrainEvent {
   const row = rows[index];
-  const now = DateTime.now();
   const departureTime =
     index > 0 && index + 1 < rows.length && +row.time !== +rows[index + 1].time
       ? rows[index + 1].time
@@ -78,10 +84,8 @@ function createEvent(rows: TimetableRow[], index: number): TrainEvent {
         : TrainEventType.Station,
     lineId: null,
     lateMinutes: null,
-    countdown: countdownUntilTime(
-      departureTime && row.time < now ? departureTime : row.time
-    ),
-    relativeProgress: calculateRelativeProgress(row.time, null),
+    countdown: "",
+    relativeProgress: 0,
   };
 }
 
