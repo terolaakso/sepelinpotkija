@@ -3,6 +3,7 @@ import {
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
 } from '../components/TrainData';
+
 import {
   Station as DigitrafficStation,
   Train as DigitrafficTrain,
@@ -11,7 +12,6 @@ import {
   SecondLevelCause,
   ThirdLevelCause,
 } from './digitraffic';
-
 import { StationCollection } from './Station';
 import { Train } from './Train';
 import { TrainLocation } from './TrainLocation';

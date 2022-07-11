@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+
 import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
@@ -6,6 +7,7 @@ import {
 } from '../components/TrainData';
 import { timetableRowFixture } from '../test/timetablerow.fixture';
 import { trainFixture } from '../test/train.fixture';
+
 import { calculateCauses } from './lateCauses';
 import { RowCause } from './Train';
 

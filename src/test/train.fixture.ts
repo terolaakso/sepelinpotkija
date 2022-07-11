@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon';
+
 import { Train } from '../model/Train';
+
 import { timetableRowFixture } from './timetablerow.fixture';
 
 export function trainFixture(props?: Partial<Train>): Train {

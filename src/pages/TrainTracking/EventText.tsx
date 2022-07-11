@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import { TrainEvent } from '../../model/TrainEvent';
 
 export interface EventTextProps {

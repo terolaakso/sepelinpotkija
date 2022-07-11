@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
 import { connect, MqttClient } from 'mqtt';
+import { useState, useEffect, useRef } from 'react';
+
 import MqttContext from './Context';
 import { ConnectorProps, IMqttContext } from './types';
 

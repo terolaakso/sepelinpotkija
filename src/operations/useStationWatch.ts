@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon';
 import { useContext, useEffect, useRef, useState } from 'react';
+
 import { TrainContext, TrainContextProps } from '../components/TrainData';
 import { getTrainsOfStation } from '../model/digitrafficClient';
 import { fillNewTrainWithDetails } from '../model/timetableCalculation';
+
 import { useInterval } from './useInterval';
 
 const FETCH_INTERVAL_MINUTES = 1;

@@ -1,7 +1,9 @@
-import { DateTime } from 'luxon';
-import { StopType, TimetableRow, Train } from './Train';
 import _ from 'lodash';
+import { DateTime } from 'luxon';
+
 import { isNotNil } from '../utils/misc';
+
+import { StopType, TimetableRow, Train } from './Train';
 import { TrainEvent, TrainEventType } from './TrainEvent';
 
 export function calculateCurrentEventsForTrain(train: Train): {

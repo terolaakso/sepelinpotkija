@@ -1,5 +1,6 @@
 import { isNil } from 'lodash';
 import { createContext, useEffect, useState } from 'react';
+
 import { FirstLevelCause, SecondLevelCause, ThirdLevelCause } from '../model/digitraffic';
 import {
   get1stLevelCauses,

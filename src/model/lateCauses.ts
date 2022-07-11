@@ -1,10 +1,12 @@
 import _ from 'lodash';
+
 import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
 } from '../components/TrainData';
 import { isNotNil } from '../utils/misc';
+
 import { RowCause, TimetableRow, Train } from './Train';
 
 export interface LateCause {
