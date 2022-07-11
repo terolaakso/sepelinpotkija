@@ -1,19 +1,12 @@
-import { useContext, useEffect, useRef } from "react";
-import { GpsLocation } from "../model/digitraffic";
-import { getLocation } from "../model/digitrafficClient";
-import {
-  adjustTimetableByLocation,
-  fillNewTrainWithDetails,
-} from "../model/timetableCalculation";
-import {
-  getTrainFromContext,
-  TrainContext,
-  TrainContextProps,
-} from "../components/TrainData";
-import { transformLocation } from "../model/transform";
-import useSubscription from "./mqtt/useSubscription";
-import { isNotNil } from "../utils/misc";
-import { isNil } from "lodash";
+import { useContext, useEffect, useRef } from 'react';
+import { GpsLocation } from '../model/digitraffic';
+import { getLocation } from '../model/digitrafficClient';
+import { adjustTimetableByLocation, fillNewTrainWithDetails } from '../model/timetableCalculation';
+import { getTrainFromContext, TrainContext, TrainContextProps } from '../components/TrainData';
+import { transformLocation } from '../model/transform';
+import useSubscription from './mqtt/useSubscription';
+import { isNotNil } from '../utils/misc';
+import { isNil } from 'lodash';
 
 export default function useTrainLocationWatch(
   departureDate: string | null,
@@ -36,11 +29,7 @@ export default function useTrainLocationWatch(
       }
       const location = transformLocation(receivedLocation);
       trainDataRef.current?.setLocation(location);
-      const train = getTrainFromContext(
-        departureDate,
-        trainNumber,
-        trainDataRef.current ?? null
-      );
+      const train = getTrainFromContext(departureDate, trainNumber, trainDataRef.current ?? null);
       if (train) {
         const fixedTrain = trainDataRef.current
           ? fillNewTrainWithDetails(train, trainDataRef.current)
@@ -55,18 +44,14 @@ export default function useTrainLocationWatch(
       if (isNil(departureDate) || isNil(trainNumber)) {
         return;
       }
-      console.log(new Date().toLocaleTimeString(), "Fetching initial location");
+      console.log(new Date().toLocaleTimeString(), 'Fetching initial location');
 
       const latestLocation = await getLocation(trainNumber);
       if (!latestLocation) {
         return;
       }
       trainDataRef.current?.setLocation(latestLocation);
-      const train = getTrainFromContext(
-        departureDate,
-        trainNumber,
-        trainDataRef.current ?? null
-      );
+      const train = getTrainFromContext(departureDate, trainNumber, trainDataRef.current ?? null);
       if (train) {
         const fixedTrain = adjustTimetableByLocation(
           train,

@@ -726,28 +726,12 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "ACTIVE",
-                "PASSIVE",
-                "FINISHED",
-                "SENT",
-                "DRAFT",
-                "REMOVED",
-                "REJECTED"
-              ]
+              "enum": ["ACTIVE", "PASSIVE", "FINISHED", "SENT", "DRAFT", "REMOVED", "REJECTED"]
             },
             "collectionFormat": "multi",
             "default": "SENT,ACTIVE,PASSIVE",
             "allowEmptyValue": false,
-            "enum": [
-              "ACTIVE",
-              "PASSIVE",
-              "FINISHED",
-              "SENT",
-              "DRAFT",
-              "REMOVED",
-              "REJECTED"
-            ]
+            "enum": ["ACTIVE", "PASSIVE", "FINISHED", "SENT", "DRAFT", "REMOVED", "REJECTED"]
           }
         ],
         "responses": {
@@ -804,28 +788,12 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "ACTIVE",
-                "PASSIVE",
-                "FINISHED",
-                "SENT",
-                "DRAFT",
-                "REMOVED",
-                "REJECTED"
-              ]
+              "enum": ["ACTIVE", "PASSIVE", "FINISHED", "SENT", "DRAFT", "REMOVED", "REJECTED"]
             },
             "collectionFormat": "multi",
             "default": "SENT,ACTIVE,PASSIVE",
             "allowEmptyValue": false,
-            "enum": [
-              "ACTIVE",
-              "PASSIVE",
-              "FINISHED",
-              "SENT",
-              "DRAFT",
-              "REMOVED",
-              "REJECTED"
-            ]
+            "enum": ["ACTIVE", "PASSIVE", "FINISHED", "SENT", "DRAFT", "REMOVED", "REJECTED"]
           }
         ],
         "responses": {
@@ -2110,12 +2078,7 @@
     },
     "Composition": {
       "type": "object",
-      "required": [
-        "departureDate",
-        "trainCategory",
-        "trainNumber",
-        "trainType"
-      ],
+      "required": ["departureDate", "trainCategory", "trainNumber", "trainType"],
       "properties": {
         "departureDate": {
           "type": "string",
@@ -2547,15 +2510,7 @@
         "state": {
           "type": "string",
           "description": "State",
-          "enum": [
-            "ACTIVE",
-            "PASSIVE",
-            "FINISHED",
-            "SENT",
-            "DRAFT",
-            "REMOVED",
-            "REJECTED"
-          ]
+          "enum": ["ACTIVE", "PASSIVE", "FINISHED", "SENT", "DRAFT", "REMOVED", "REJECTED"]
         },
         "trafficSafetyPlan": {
           "type": "boolean",
@@ -2819,13 +2774,7 @@
           "type": "string",
           "example": "LIIKE_USER",
           "description": "Source for the estimate",
-          "enum": [
-            "LIIKE_USER",
-            "MIKU_USER",
-            "LIIKE_AUTOMATIC",
-            "UNKNOWN",
-            "COMBOCALC"
-          ]
+          "enum": ["LIIKE_USER", "MIKU_USER", "LIIKE_AUTOMATIC", "UNKNOWN", "COMBOCALC"]
         },
         "liveEstimateTime": {
           "type": "string",

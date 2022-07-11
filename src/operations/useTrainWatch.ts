@@ -1,16 +1,13 @@
-import { useContext, useEffect, useRef } from "react";
-import { Train as DigitrafficTrain } from "../model/digitraffic";
-import { fillNewTrainWithDetails } from "../model/timetableCalculation";
-import { TrainContext, TrainContextProps } from "../components/TrainData";
-import { transformTrains } from "../model/transform";
-import useSubscription from "./mqtt/useSubscription";
-import { isNotNil } from "../utils/misc";
-import { isNil } from "lodash";
+import { useContext, useEffect, useRef } from 'react';
+import { Train as DigitrafficTrain } from '../model/digitraffic';
+import { fillNewTrainWithDetails } from '../model/timetableCalculation';
+import { TrainContext, TrainContextProps } from '../components/TrainData';
+import { transformTrains } from '../model/transform';
+import useSubscription from './mqtt/useSubscription';
+import { isNotNil } from '../utils/misc';
+import { isNil } from 'lodash';
 
-export default function useTrainWatch(
-  departureDate: string | null,
-  trainNumber: number | null
-) {
+export default function useTrainWatch(departureDate: string | null, trainNumber: number | null) {
   const trainDataRef = useRef<TrainContextProps>();
   const trainDataContext = useContext(TrainContext);
 

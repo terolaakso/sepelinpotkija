@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
 export interface TrainEvent {
   name: string;
@@ -12,8 +12,8 @@ export interface TrainEvent {
 }
 
 export enum TrainEventType {
-  Stop = "Stop",
-  Station = "Station",
-  Detail = "Detail",
-  Train = "Train",
+  Stop = 'Stop',
+  Station = 'Station',
+  Detail = 'Detail',
+  Train = 'Train',
 }

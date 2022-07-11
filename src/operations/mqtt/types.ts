@@ -1,4 +1,4 @@
-import { MqttClient, IClientOptions } from "mqtt";
+import { MqttClient, IClientOptions } from 'mqtt';
 
 export interface Error {
   name: string;

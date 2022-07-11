@@ -1,6 +1,6 @@
-import { DateTime } from "luxon";
-import { Train } from "../model/Train";
-import { timetableRowFixture } from "./timetablerow.fixture";
+import { DateTime } from 'luxon';
+import { Train } from '../model/Train';
+import { timetableRowFixture } from './timetablerow.fixture';
 
 export function trainFixture(props?: Partial<Train>): Train {
   return {
@@ -10,12 +10,12 @@ export function trainFixture(props?: Partial<Train>): Train {
 }
 
 const defaultTrain: Train = {
-  departureDate: "2018-12-30",
+  departureDate: '2018-12-30',
   latestActualTimeIndex: 1,
   timestamp: DateTime.now(),
   version: 1,
   trainNumber: 1948,
-  name: "MUS 1948",
+  name: 'MUS 1948',
   currentSpeed: 0,
   currentLateCauses: [],
   latestGpsIndex: 0,
@@ -25,10 +25,10 @@ const defaultTrain: Train = {
   timetableRows: [
     timetableRowFixture(),
     timetableRowFixture({
-      stationShortCode: "KUT",
-      scheduledTime: DateTime.fromISO("2018-12-30T06:00:00.000Z"),
-      actualTime: DateTime.fromISO("2018-12-30T06:00:00.000Z"),
-      time: DateTime.fromISO("2018-12-30T06:00:00.000Z"),
+      stationShortCode: 'KUT',
+      scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+      actualTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+      time: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
     }),
   ],
 };

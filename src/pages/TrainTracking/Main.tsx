@@ -1,13 +1,13 @@
-import { useContext, useState } from "react";
-import { getTrainFromContext, TrainContext } from "../../components/TrainData";
-import { TrainEvent } from "../../model/TrainEvent";
-import { calculateCurrentEventsForTrain } from "../../model/trainTracking";
-import { useInterval } from "../../operations/useInterval";
-import useStationWatch from "../../operations/useStationWatch";
-import useTrain from "../../operations/useTrain";
-import BottomBar from "./BottomBar";
-import Content from "./Content";
-import TopBar from "./TopBar";
+import { useContext, useState } from 'react';
+import { getTrainFromContext, TrainContext } from '../../components/TrainData';
+import { TrainEvent } from '../../model/TrainEvent';
+import { calculateCurrentEventsForTrain } from '../../model/trainTracking';
+import { useInterval } from '../../operations/useInterval';
+import useStationWatch from '../../operations/useStationWatch';
+import useTrain from '../../operations/useTrain';
+import BottomBar from './BottomBar';
+import Content from './Content';
+import TopBar from './TopBar';
 
 export default function TrainTracking() {
   const [trainNumber, setTrainNumber] = useState(1);
@@ -30,11 +30,7 @@ export default function TrainTracking() {
   const departureDate = useTrain(isTracking ? trainNumber ?? null : null);
   useStationWatch(isTracking ? nextStationCode : null);
 
-  const train = getTrainFromContext(
-    departureDate,
-    trainNumber,
-    trainDataContext
-  );
+  const train = getTrainFromContext(departureDate, trainNumber, trainDataContext);
 
   useInterval(
     () => {
@@ -49,11 +45,7 @@ export default function TrainTracking() {
 
   return (
     <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">
-      <TopBar
-        startTracking={startTracking}
-        train={train}
-        isTracking={isTracking}
-      />
+      <TopBar startTracking={startTracking} train={train} isTracking={isTracking} />
       <ErrorMessage errorMessage={errorMessage} />
       <Content events={events} />
       <BottomBar isTracking={isTracking} stopTracking={stopTracking} />

@@ -2,7 +2,7 @@ import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
-} from "../components/TrainData";
+} from '../components/TrainData';
 import {
   Station as DigitrafficStation,
   Train as DigitrafficTrain,
@@ -10,25 +10,18 @@ import {
   FirstLevelCause,
   SecondLevelCause,
   ThirdLevelCause,
-} from "./digitraffic";
+} from './digitraffic';
 
-import { StationCollection } from "./Station";
-import { Train } from "./Train";
-import { TrainLocation } from "./TrainLocation";
-import {
-  transformLocation,
-  transformStation,
-  transformTrains,
-} from "./transform";
+import { StationCollection } from './Station';
+import { Train } from './Train';
+import { TrainLocation } from './TrainLocation';
+import { transformLocation, transformStation, transformTrains } from './transform';
 
-const DIGITRAFFIC_API_URL = "https://rata.digitraffic.fi/api/v1";
+const DIGITRAFFIC_API_URL = 'https://rata.digitraffic.fi/api/v1';
 
-export async function getTrain(
-  trainNumber: number,
-  departureDate?: string
-): Promise<Train | null> {
+export async function getTrain(trainNumber: number, departureDate?: string): Promise<Train | null> {
   try {
-    const dateForUrl = departureDate ?? "latest";
+    const dateForUrl = departureDate ?? 'latest';
     const url = `${DIGITRAFFIC_API_URL}/trains/${dateForUrl}/${trainNumber}`;
     const response = await fetch(url);
     const digitrafficTrains = (await response.json()) as DigitrafficTrain[];
@@ -39,9 +32,7 @@ export async function getTrain(
   }
 }
 
-export async function getTrainsOfStation(
-  stationCode: string
-): Promise<Train[]> {
+export async function getTrainsOfStation(stationCode: string): Promise<Train[]> {
   try {
     const url = `${DIGITRAFFIC_API_URL}/live-trains/station/${stationCode}?include_nonstopping=true`;
     const response = await fetch(url);
@@ -52,14 +43,11 @@ export async function getTrainsOfStation(
   }
 }
 
-export async function getLocation(
-  trainNumber: number
-): Promise<TrainLocation | null> {
+export async function getLocation(trainNumber: number): Promise<TrainLocation | null> {
   try {
     const url = `${DIGITRAFFIC_API_URL}/train-locations/latest/${trainNumber}`;
     const response = await fetch(url);
-    const digitrafficLocations =
-      (await response.json()) as DigitrafficGpsLocation[];
+    const digitrafficLocations = (await response.json()) as DigitrafficGpsLocation[];
     const locations = digitrafficLocations.map(transformLocation);
     return locations.length > 0 ? locations[0] : null;
   } catch (error) {
@@ -73,9 +61,7 @@ export async function getStations(): Promise<StationCollection> {
     const response = await fetch(url);
     const digitrafficStations = (await response.json()) as DigitrafficStation[];
     const stations = digitrafficStations.map(transformStation);
-    const result = Object.fromEntries(
-      stations.map((station) => [station.shortCode, station])
-    );
+    const result = Object.fromEntries(stations.map((station) => [station.shortCode, station]));
     return result;
   } catch (error) {
     return {};

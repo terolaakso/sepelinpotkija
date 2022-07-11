@@ -1,7 +1,7 @@
-import CommuterBadge from "../../components/CommuterBadge";
-import DifferenceBadge from "../../components/DifferenceBadge";
-import { TrainEvent } from "../../model/TrainEvent";
-import EventText from "./EventText";
+import CommuterBadge from '../../components/CommuterBadge';
+import DifferenceBadge from '../../components/DifferenceBadge';
+import { TrainEvent } from '../../model/TrainEvent';
+import EventText from './EventText';
 
 export interface EventInfoProps {
   event: TrainEvent;

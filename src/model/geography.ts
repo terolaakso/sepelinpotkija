@@ -16,10 +16,7 @@ interface Cartesian {
 
 const EARTH_RADIUS = 6371;
 
-export function distanceBetweenCoordsInKm(
-  point1: LatLon,
-  point2: LatLon
-): number {
+export function distanceBetweenCoordsInKm(point1: LatLon, point2: LatLon): number {
   const R = EARTH_RADIUS;
   const dLat = toRad(point2.lat - point1.lat);
   const dLon = toRad(point2.lon - point1.lon);
@@ -56,10 +53,7 @@ export function nearestPointSegment(
   const abDistance = distanceBetweenCoordsInKm(a, b);
   const btDistance = distanceBetweenCoordsInKm(b, t);
 
-  if (
-    Math.abs(abDistance - atDistance - btDistance) <
-    POINT_EXISTS_ON_LINE_TOLERANCE_KM
-  ) {
+  if (Math.abs(abDistance - atDistance - btDistance) < POINT_EXISTS_ON_LINE_TOLERANCE_KM) {
     // Point t is between a and b within 100 m accuracy
     return {
       location: atDistance / abDistance,
@@ -123,9 +117,7 @@ function vectorProduct(a: Cartesian, b: Cartesian): Cartesian {
 }
 
 function normalize(vector: Cartesian): void {
-  const length = Math.sqrt(
-    vector.x * vector.x + vector.y * vector.y + vector.z * vector.z
-  );
+  const length = Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
 
   vector.x = vector.x / length;
   vector.y = vector.y / length;

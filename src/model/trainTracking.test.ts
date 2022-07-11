@@ -1,157 +1,141 @@
-import { DateTime } from "luxon";
-import { StopType, TimeType, Train } from "./Train";
-import { getCurrentCommercialStops, getCurrentStations } from "./trainTracking";
+import { DateTime } from 'luxon';
+import { StopType, TimeType, Train } from './Train';
+import { getCurrentCommercialStops, getCurrentStations } from './trainTracking';
 
-describe("selecting events", () => {
-  it("should return correct commercial stops when train not departed", () => {
+describe('selecting events', () => {
+  it('should return correct commercial stops when train not departed', () => {
     const { train } = getTrainData();
     const result = getCurrentCommercialStops(train, 0);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe("TKU");
+    expect(result[0].name).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
 
-    expect(result[1].name).toBe("KUT");
+    expect(result[1].name).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
-    expect(
-      result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
 
-  it("should return correct stations when train not departed", () => {
+  it('should return correct stations when train not departed', () => {
     const { train } = getTrainData();
     const result = getCurrentStations(train, 0);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe("TKU");
+    expect(result[0].name).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
 
-    expect(result[1].name).toBe("KUT");
+    expect(result[1].name).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
-    expect(
-      result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
 
-  it("should return correct commercial stops before arriving to first stop", () => {
+  it('should return correct commercial stops before arriving to first stop', () => {
     const { train } = getTrainData();
     const result = getCurrentCommercialStops(train, 1);
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe("KUT");
+    expect(result[0].name).toBe('KUT');
     expect(result[0].departureTime).not.toBeNull();
-    expect(
-      result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
 
-  it("should return correct stations before arriving to first station", () => {
+  it('should return correct stations before arriving to first station', () => {
     const { train } = getTrainData();
     const result = getCurrentStations(train, 1);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe("TKU");
+    expect(result[0].name).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
-    expect(result[1].name).toBe("KUT");
+    expect(result[1].name).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
   });
 
-  it("should return correct commercial stops when stopped", () => {
+  it('should return correct commercial stops when stopped', () => {
     const { train } = getTrainData();
     const result = getCurrentCommercialStops(train, 2);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe("KUT");
+    expect(result[0].name).toBe('KUT');
     expect(result[0].departureTime).not.toBeNull();
-    expect(
-      result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
 
-    expect(result[1].name).toBe("PO");
+    expect(result[1].name).toBe('PO');
     expect(result[1].departureTime).not.toBeNull();
-    expect(
-      result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
 
-  it("should return correct stations when stopped", () => {
+  it('should return correct stations when stopped', () => {
     const { train } = getTrainData();
     const result = getCurrentStations(train, 2);
     expect(result.length).toBe(3);
 
-    expect(result[0].name).toBe("TKU");
+    expect(result[0].name).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
-    expect(result[1].name).toBe("KUT");
+    expect(result[1].name).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
-    expect(result[2].name).toBe("PIK");
+    expect(result[2].name).toBe('PIK');
     expect(result[2].departureTime).not.toBeNull(); // Piikkiö has different arrival and departure times by couple of seconds
   });
 
-  it("should return correct commercial stops after passing a station", () => {
+  it('should return correct commercial stops after passing a station', () => {
     const { train } = getTrainData();
     const result = getCurrentCommercialStops(train, 5);
 
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe("PO");
+    expect(result[0].name).toBe('PO');
     expect(result[0].departureTime).not.toBeNull();
-    expect(
-      result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
 
-  it("should return correct stations after passing a station", () => {
+  it('should return correct stations after passing a station', () => {
     const { train } = getTrainData();
     const result = getCurrentStations(train, 5); // seuraavana paimio
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe("PIK");
+    expect(result[0].name).toBe('PIK');
     expect(result[0].departureTime).not.toBeNull();
-    expect(
-      result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
 
-    expect(result[1].name).toBe("PO");
+    expect(result[1].name).toBe('PO');
     expect(result[1].departureTime).not.toBeNull();
-    expect(
-      result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))
-    ).toBe(true);
+    expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
 
-  it("should return correct commercial stops before arriving to final station", () => {
+  it('should return correct commercial stops before arriving to final station', () => {
     const { train } = getTrainData();
     const result = getCurrentCommercialStops(train, 13);
 
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe("HKI");
+    expect(result[0].name).toBe('HKI');
     expect(result[0].departureTime).toBeNull();
   });
 
-  it("should return correct stations before arriving to final station", () => {
+  it('should return correct stations before arriving to final station', () => {
     const { train } = getTrainData();
     const result = getCurrentStations(train, 13); // seuraavana helsinki
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe("PKU");
+    expect(result[0].name).toBe('PKU');
     expect(result[0].departureTime).toBeNull();
 
-    expect(result[1].name).toBe("HKI");
+    expect(result[1].name).toBe('HKI');
     expect(result[1].departureTime).toBeNull();
   });
 
-  it("should return correct commercial stops after arriving to final station", () => {
+  it('should return correct commercial stops after arriving to final station', () => {
     const { train } = getTrainData();
     const result = getCurrentCommercialStops(train, 14); // helsingissä
     expect(result.length).toBe(0);
   });
 
-  it("should return correct stations after arriving to final station", () => {
+  it('should return correct stations after arriving to final station', () => {
     const { train } = getTrainData();
     const result = getCurrentStations(train, 14); // helsingissä
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe("HKI");
+    expect(result[0].name).toBe('HKI');
     expect(result[0].departureTime).toBeNull();
   });
 
@@ -160,12 +144,12 @@ describe("selecting events", () => {
       train: Train;
     } = {
       train: {
-        departureDate: "2018-12-30",
+        departureDate: '2018-12-30',
         latestActualTimeIndex: 0,
         timestamp: DateTime.now(),
         version: 1,
         trainNumber: 1948,
-        name: "MUS 1948",
+        name: 'MUS 1948',
         currentSpeed: 0,
         currentLateCauses: [],
         latestGpsIndex: 0,
@@ -174,12 +158,12 @@ describe("selecting events", () => {
         lineId: null,
         timetableRows: [
           {
-            stationShortCode: "TKU",
+            stationShortCode: 'TKU',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T05:44:00.000Z"),
-            time: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:03:00.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T06:03:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T05:44:00.000Z'),
+            time: DateTime.fromISO('2018-12-30T06:03:00.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:03:00.000Z'),
             differenceInMinutes: -19,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -187,12 +171,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "KUT",
+            stationShortCode: 'KUT',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T06:09:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T06:09:44.000Z"),
-            time: DateTime.fromISO("2018-12-30T06:09:44.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:09:44.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T06:09:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T06:09:44.000Z'),
+            time: DateTime.fromISO('2018-12-30T06:09:44.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:09:44.000Z'),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -200,12 +184,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "KUT",
+            stationShortCode: 'KUT',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T06:11:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T06:11:30.000Z"),
-            time: DateTime.fromISO("2018-12-30T06:11:30.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:11:30.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T06:11:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T06:11:30.000Z'),
+            time: DateTime.fromISO('2018-12-30T06:11:30.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:11:30.000Z'),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -213,12 +197,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "PIK",
+            stationShortCode: 'PIK',
             stopType: StopType.None,
-            scheduledTime: DateTime.fromISO("2018-12-30T06:26:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T06:25:53.000Z"),
-            time: DateTime.fromISO("2018-12-30T06:25:53.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:25:53.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T06:26:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T06:25:53.000Z'),
+            time: DateTime.fromISO('2018-12-30T06:25:53.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:25:53.000Z'),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -226,12 +210,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "PIK",
+            stationShortCode: 'PIK',
             stopType: StopType.None,
-            scheduledTime: DateTime.fromISO("2018-12-30T06:26:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T06:26:03.000Z"),
-            time: DateTime.fromISO("2018-12-30T06:26:03.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:26:03.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T06:26:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T06:26:03.000Z'),
+            time: DateTime.fromISO('2018-12-30T06:26:03.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:26:03.000Z'),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -239,12 +223,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "PO",
+            stationShortCode: 'PO',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T06:38:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T06:37:55.000Z"),
-            time: DateTime.fromISO("2018-12-30T06:37:55.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:37:55.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T06:38:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T06:37:55.000Z'),
+            time: DateTime.fromISO('2018-12-30T06:37:55.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:37:55.000Z'),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -252,12 +236,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "PO",
+            stationShortCode: 'PO',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T06:45:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T06:47:21.000Z"),
-            time: DateTime.fromISO("2018-12-30T06:47:21.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T06:47:21.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T06:45:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T06:47:21.000Z'),
+            time: DateTime.fromISO('2018-12-30T06:47:21.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:47:21.000Z'),
             differenceInMinutes: 2,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -265,12 +249,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "SLO",
+            stationShortCode: 'SLO',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T07:13:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T07:12:58.000Z"),
-            time: DateTime.fromISO("2018-12-30T07:12:58.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:12:58.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T07:13:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T07:12:58.000Z'),
+            time: DateTime.fromISO('2018-12-30T07:12:58.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T07:12:58.000Z'),
             differenceInMinutes: 0,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -278,12 +262,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "SLO",
+            stationShortCode: 'SLO',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T07:15:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T07:15:35.000Z"),
-            time: DateTime.fromISO("2018-12-30T07:15:35.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:15:35.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T07:15:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T07:15:35.000Z'),
+            time: DateTime.fromISO('2018-12-30T07:15:35.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T07:15:35.000Z'),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -291,12 +275,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "ERV",
+            stationShortCode: 'ERV',
             stopType: StopType.OtherTraffic,
-            scheduledTime: DateTime.fromISO("2018-12-30T07:41:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T07:41:47.000Z"),
-            time: DateTime.fromISO("2018-12-30T07:41:47.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:41:47.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T07:41:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T07:41:47.000Z'),
+            time: DateTime.fromISO('2018-12-30T07:41:47.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T07:41:47.000Z'),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -304,12 +288,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "ERV",
+            stationShortCode: 'ERV',
             stopType: StopType.OtherTraffic,
-            scheduledTime: DateTime.fromISO("2018-12-30T07:45:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T07:46:09.000Z"),
-            time: DateTime.fromISO("2018-12-30T07:46:09.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T07:46:09.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T07:45:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T07:46:09.000Z'),
+            time: DateTime.fromISO('2018-12-30T07:46:09.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T07:46:09.000Z'),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -317,12 +301,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "PKU",
+            stationShortCode: 'PKU',
             stopType: StopType.None,
-            scheduledTime: DateTime.fromISO("2018-12-30T08:08:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
-            time: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T08:08:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T08:09:10.000Z'),
+            time: DateTime.fromISO('2018-12-30T08:09:10.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T08:09:10.000Z'),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -330,12 +314,12 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "PKU",
+            stationShortCode: 'PKU',
             stopType: StopType.None,
-            scheduledTime: DateTime.fromISO("2018-12-30T08:08:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
-            time: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T08:09:10.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T08:08:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T08:09:10.000Z'),
+            time: DateTime.fromISO('2018-12-30T08:09:10.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T08:09:10.000Z'),
             differenceInMinutes: 1,
             timeType: TimeType.Actual,
             estimatedTime: null,
@@ -343,13 +327,13 @@ describe("selecting events", () => {
             lateCauses: [],
           },
           {
-            stationShortCode: "HKI",
+            stationShortCode: 'HKI',
             stopType: StopType.Commercial,
-            scheduledTime: DateTime.fromISO("2018-12-30T10:44:00.000Z"),
-            actualTime: DateTime.fromISO("2018-12-30T10:50:07.000Z"),
+            scheduledTime: DateTime.fromISO('2018-12-30T10:44:00.000Z'),
+            actualTime: DateTime.fromISO('2018-12-30T10:50:07.000Z'),
             differenceInMinutes: 6,
-            time: DateTime.fromISO("2018-12-30T10:44:00.000Z"),
-            bestDigitrafficTime: DateTime.fromISO("2018-12-30T10:44:00.000Z"),
+            time: DateTime.fromISO('2018-12-30T10:44:00.000Z'),
+            bestDigitrafficTime: DateTime.fromISO('2018-12-30T10:44:00.000Z'),
             timeType: TimeType.Actual,
             estimatedTime: null,
             isTrainReady: false,

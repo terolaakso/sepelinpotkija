@@ -1,11 +1,11 @@
-import _ from "lodash";
+import _ from 'lodash';
 import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
-} from "../components/TrainData";
-import { isNotNil } from "../utils/misc";
-import { RowCause, TimetableRow, Train } from "./Train";
+} from '../components/TrainData';
+import { isNotNil } from '../utils/misc';
+import { RowCause, TimetableRow, Train } from './Train';
 
 export interface LateCause {
   name: string;
@@ -30,18 +30,13 @@ export function calculateCauses(
       if (i > lastIndex) {
         return result;
       }
-      const stillUnexplained = Math.min(
-        result.unexplainedMin,
-        row.differenceInMinutes
-      );
+      const stillUnexplained = Math.min(result.unexplainedMin, row.differenceInMinutes);
       if (row.lateCauses.length > 0 && stillUnexplained > 0) {
         const lateMinTotal = Math.min(
           timetableRowLateMin(train.timetableRows, i),
           stillUnexplained
         );
-        const lateMinPerCause = Math.floor(
-          lateMinTotal / row.lateCauses.length
-        );
+        const lateMinPerCause = Math.floor(lateMinTotal / row.lateCauses.length);
         return {
           causes: mergeCauses(
             result.causes,
@@ -64,17 +59,11 @@ export function calculateCauses(
     }
   );
 
-  const sortedCauses = _.sortBy(
-    causesResult.causes,
-    (cause) => -cause.lateMinutes
-  );
+  const sortedCauses = _.sortBy(causesResult.causes, (cause) => -cause.lateMinutes);
   return sortedCauses;
 }
 
-function mergeCauses(
-  existing: LateCause[],
-  newCauses: LateCause[]
-): LateCause[] {
+function mergeCauses(existing: LateCause[], newCauses: LateCause[]): LateCause[] {
   const mergedCauses = newCauses.reduce((result, newCause) => {
     const existingCause = result.find((cause) => cause.name === newCause.name);
     if (existingCause) {
@@ -101,12 +90,7 @@ function createCauses(
 ): LateCause[] {
   if (lateMinutes > 0) {
     return causes.map((cause) => ({
-      name: getCauseName(
-        cause,
-        firstLevelCauses,
-        secondLevelCauses,
-        thirdLevelCauses
-      ),
+      name: getCauseName(cause, firstLevelCauses, secondLevelCauses, thirdLevelCauses),
       lateMinutes,
     }));
   }
@@ -128,25 +112,21 @@ function getCauseName(
   const thirdLevelName = cause.level3CodeId
     ? thirdLevelCauses[cause.level3CodeId]?.thirdCategoryName
     : null;
-  const nameStructure = [thirdLevelName, secondLevelName, firstLevelName]
-    .filter(isNotNil)
-    .reduce(
-      (result, name) => {
-        if (!result.name) {
-          return { name, categories: [] };
-        } else {
-          return {
-            ...result,
-            categories: [...result.categories, name],
-          };
-        }
-      },
-      { name: "", categories: [] as string[] }
-    );
+  const nameStructure = [thirdLevelName, secondLevelName, firstLevelName].filter(isNotNil).reduce(
+    (result, name) => {
+      if (!result.name) {
+        return { name, categories: [] };
+      } else {
+        return {
+          ...result,
+          categories: [...result.categories, name],
+        };
+      }
+    },
+    { name: '', categories: [] as string[] }
+  );
   return `${nameStructure.name}${
-    nameStructure.categories.length > 0
-      ? ` (${nameStructure.categories.reverse().join(": ")})`
-      : ""
+    nameStructure.categories.length > 0 ? ` (${nameStructure.categories.reverse().join(': ')})` : ''
   }`;
 }
 
@@ -163,8 +143,7 @@ function timetableRowLateMin(rows: TimetableRow[], startIndex: number): number {
         mins,
         found:
           result.found ||
-          (i < startIndex &&
-            (row.lateCauses.length > 0 || row.differenceInMinutes <= 0)),
+          (i < startIndex && (row.lateCauses.length > 0 || row.differenceInMinutes <= 0)),
       };
     },
     { mins: rows[startIndex].differenceInMinutes, found: false }

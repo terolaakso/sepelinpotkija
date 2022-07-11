@@ -1,6 +1,6 @@
-import { useContext, useEffect, useRef } from "react";
-import { matches } from "mqtt-pattern";
-import MqttContext from "./Context";
+import { useContext, useEffect, useRef } from 'react';
+import { matches } from 'mqtt-pattern';
+import MqttContext from './Context';
 
 export default function useSubscription<T>(
   topic: string | null,
@@ -32,11 +32,11 @@ export default function useSubscription<T>(
     }
 
     savedClient.current?.subscribe(topic);
-    savedClient.current?.on("message", messageReceived);
+    savedClient.current?.on('message', messageReceived);
 
     return () => {
       savedClient.current?.unsubscribe(topic);
-      savedClient.current?.off("message", messageReceived);
+      savedClient.current?.off('message', messageReceived);
     };
   }, [isClientReady, topic]);
 }

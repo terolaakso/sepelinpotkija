@@ -1,17 +1,17 @@
-import { DateTime, Duration } from "luxon";
-import { LateCause } from "./lateCauses";
+import { DateTime, Duration } from 'luxon';
+import { LateCause } from './lateCauses';
 
 export enum TimeType {
-  None = "None",
-  Scheduled = "Scheduled",
-  Estimated = "Estimated",
-  Actual = "Actual",
+  None = 'None',
+  Scheduled = 'Scheduled',
+  Estimated = 'Estimated',
+  Actual = 'Actual',
 }
 
 export enum StopType {
-  None = "None",
-  OtherTraffic = "OtherTraffic",
-  Commercial = "Commercial",
+  None = 'None',
+  OtherTraffic = 'OtherTraffic',
+  Commercial = 'Commercial',
 }
 
 export interface Train {
@@ -59,9 +59,7 @@ export interface RowCause {
 
 // this is old timetableGpsAge
 export function timetableExpirationDuration(train: Train): Duration {
-  const index = train.latestGpsIndex
-    ? train.latestGpsIndex + 1
-    : train.latestActualTimeIndex + 1;
+  const index = train.latestGpsIndex ? train.latestGpsIndex + 1 : train.latestActualTimeIndex + 1;
 
   if (index < train.timetableRows.length) {
     const age = DateTime.now().diff(train.timetableRows[index].time);

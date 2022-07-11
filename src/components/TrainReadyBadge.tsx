@@ -6,9 +6,5 @@ export default function TrainReadyBadge({ isReady }: TrainReadyBadgeProps) {
   if (!isReady) {
     return null;
   }
-  return (
-    <small className="rounded-full border-gray-300 border-1 px-1">
-      Lähtövalmis
-    </small>
-  );
+  return <small className="rounded-full border-gray-300 border-1 px-1">Lähtövalmis</small>;
 }

@@ -1,13 +1,13 @@
-import { useState } from "react";
-import useSubscription from "../operations/mqtt/useSubscription";
+import { useState } from 'react';
+import useSubscription from '../operations/mqtt/useSubscription';
 
 export default function Viewer() {
   function messageHandler(msg: any) {
     setMessage(msg.toString());
   }
 
-  const [message, setMessage] = useState("");
-  useSubscription("train-locations/#", messageHandler);
+  const [message, setMessage] = useState('');
+  useSubscription('train-locations/#', messageHandler);
 
   return (
     <>

@@ -1,20 +1,15 @@
-import { isNil } from "lodash";
-import { useContext, useEffect, useRef, useState } from "react";
-import { TrainContext, TrainContextProps } from "../components/TrainData";
-import { getTrain } from "../model/digitrafficClient";
-import { fillNewTrainWithDetails } from "../model/timetableCalculation";
-import useTrainLocationWatch from "./useTrainLocationWatch";
-import useTrainWatch from "./useTrainWatch";
+import { isNil } from 'lodash';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { TrainContext, TrainContextProps } from '../components/TrainData';
+import { getTrain } from '../model/digitrafficClient';
+import { fillNewTrainWithDetails } from '../model/timetableCalculation';
+import useTrainLocationWatch from './useTrainLocationWatch';
+import useTrainWatch from './useTrainWatch';
 
-export default function useTrain(
-  trainNumber: number | null,
-  departureDate?: string | null
-) {
+export default function useTrain(trainNumber: number | null, departureDate?: string | null) {
   const trainDataRef = useRef<TrainContextProps>();
   const trainDataContext = useContext(TrainContext);
-  const [followedDepartureDate, setFollowedDepartureDate] = useState<
-    string | null
-  >(null);
+  const [followedDepartureDate, setFollowedDepartureDate] = useState<string | null>(null);
 
   useEffect(() => {
     trainDataRef.current = trainDataContext;

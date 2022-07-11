@@ -1,4 +1,4 @@
-import { LatLon } from "./geography";
+import { LatLon } from './geography';
 
 export interface Station {
   name: string;

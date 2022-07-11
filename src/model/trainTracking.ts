@@ -1,8 +1,8 @@
-import { DateTime } from "luxon";
-import { StopType, TimetableRow, Train } from "./Train";
-import _ from "lodash";
-import { isNotNil } from "../utils/misc";
-import { TrainEvent, TrainEventType } from "./TrainEvent";
+import { DateTime } from 'luxon';
+import { StopType, TimetableRow, Train } from './Train';
+import _ from 'lodash';
+import { isNotNil } from '../utils/misc';
+import { TrainEvent, TrainEventType } from './TrainEvent';
 
 export function calculateCurrentEventsForTrain(train: Train): {
   events: TrainEvent[];
@@ -14,14 +14,10 @@ export function calculateCurrentEventsForTrain(train: Train): {
 
   const now = DateTime.now();
   const nextStationCode =
-    allStations.find((event) => (event.departureTime ?? event.time) > now)
-      ?.name ?? null;
+    allStations.find((event) => (event.departureTime ?? event.time) > now)?.name ?? null;
   // TODO: Generate infos for "extra" stations
   // TODO: Encounters
-  const uniqueEvents = _.unionBy(
-    [...commercialStops, ...allStations],
-    (row) => row.name
-  );
+  const uniqueEvents = _.unionBy([...commercialStops, ...allStations], (row) => row.name);
   const sortedEvents = _.sortBy(uniqueEvents, (row) => row.time);
   const withCountdown = calculateCountdown(sortedEvents);
   withCountdown.forEach((event, i) => {
@@ -33,22 +29,11 @@ export function calculateCurrentEventsForTrain(train: Train): {
   return { events: withCountdown, nextStationCode };
 }
 
-export function getCurrentCommercialStops(
-  train: Train,
-  nextRowIndex: number
-): TrainEvent[] {
-  return getStops(
-    train,
-    nextRowIndex,
-    (row) => row.stopType === StopType.Commercial,
-    false
-  );
+export function getCurrentCommercialStops(train: Train, nextRowIndex: number): TrainEvent[] {
+  return getStops(train, nextRowIndex, (row) => row.stopType === StopType.Commercial, false);
 }
 
-export function getCurrentStations(
-  train: Train,
-  nextRowIndex: number
-): TrainEvent[] {
+export function getCurrentStations(train: Train, nextRowIndex: number): TrainEvent[] {
   return getStops(train, nextRowIndex, () => true, true);
 }
 
@@ -78,34 +63,25 @@ function createEvent(rows: TimetableRow[], index: number): TrainEvent {
     name: row.stationShortCode,
     time: row.time,
     departureTime,
-    eventType:
-      row.stopType === StopType.Commercial
-        ? TrainEventType.Stop
-        : TrainEventType.Station,
+    eventType: row.stopType === StopType.Commercial ? TrainEventType.Stop : TrainEventType.Station,
     lineId: null,
     lateMinutes: null,
-    countdown: "",
+    countdown: '',
     relativeProgress: 0,
   };
 }
 
 function getRelevantTimeOfEvent(event: TrainEvent): DateTime {
   const now = DateTime.now();
-  const time =
-    event.departureTime && event.time < now ? event.departureTime : event.time;
+  const time = event.departureTime && event.time < now ? event.departureTime : event.time;
   return time;
 }
 
-function calculateRelativeProgress(
-  time: DateTime,
-  previousTime: DateTime | null
-): number {
+function calculateRelativeProgress(time: DateTime, previousTime: DateTime | null): number {
   const now = DateTime.now();
   if (previousTime !== null) {
     if (time >= now && previousTime <= now) {
-      return (
-        now.diff(previousTime).toMillis() / time.diff(previousTime).toMillis()
-      );
+      return now.diff(previousTime).toMillis() / time.diff(previousTime).toMillis();
     }
     if (time < now) {
       return 1;
@@ -115,8 +91,7 @@ function calculateRelativeProgress(
 }
 
 function countdownUntilTime(time: DateTime): string {
-  const untilEvent =
-    DateTime.now() <= time ? time.diffNow().toFormat("m.ss") : "";
+  const untilEvent = DateTime.now() <= time ? time.diffNow().toFormat('m.ss') : '';
   return untilEvent;
 }
 
@@ -153,17 +128,14 @@ function findPrevious(
   if (includePast && nextRowIndex > 0 && nextRowIndex < rows.length) {
     const stepToPrevious =
       nextRowIndex < rows.length &&
-      rows[nextRowIndex].stationShortCode ===
-        rows[nextRowIndex - 1].stationShortCode
+      rows[nextRowIndex].stationShortCode === rows[nextRowIndex - 1].stationShortCode
         ? 2
         : 1;
     const index = _.findLastIndex(
       rows,
       (row, i) =>
         criteria(row) &&
-        (i === 0 ||
-          i + 1 >= rows.length ||
-          row.stationShortCode === rows[i + 1].stationShortCode),
+        (i === 0 || i + 1 >= rows.length || row.stationShortCode === rows[i + 1].stationShortCode),
       nextRowIndex - stepToPrevious
     );
     if (index >= 0) {
@@ -184,8 +156,7 @@ function findCurrent(
     (nextRowIndex >= rows.length && includePast) ||
     (nextRowIndex < rows.length &&
       criteria(rows[nextRowIndex]) &&
-      rows[nextRowIndex].stationShortCode ===
-        rows[nextRowIndex - 1].stationShortCode)
+      rows[nextRowIndex].stationShortCode === rows[nextRowIndex - 1].stationShortCode)
   ) {
     const arrivalIndex = nextRowIndex === 0 ? 0 : nextRowIndex - 1;
     return createEvent(rows, arrivalIndex);
@@ -202,9 +173,7 @@ function findNext(
   const index = _.findIndex(
     rows,
     (row, i) =>
-      criteria(row) &&
-      i - 1 >= 0 &&
-      rows[i - 1].stationShortCode !== row.stationShortCode,
+      criteria(row) && i - 1 >= 0 && rows[i - 1].stationShortCode !== row.stationShortCode,
     nextRowIndex
   );
   if (index >= 0) {

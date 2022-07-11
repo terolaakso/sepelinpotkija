@@ -1,16 +1,16 @@
-import { DateTime, Duration } from "luxon";
-import { isNotNil } from "../utils/misc";
+import { DateTime, Duration } from 'luxon';
+import { isNotNil } from '../utils/misc';
 import {
   Cause,
   GpsLocation,
   Station as DigiTrafficStation,
   TimeTableRow,
   Train as DigiTrafficTrain,
-} from "./digitraffic";
-import { Station } from "./Station";
-import { calculateLateMins } from "./timetableCalculation";
-import { RowCause, StopType, TimetableRow, TimeType, Train } from "./Train";
-import { TrainLocation } from "./TrainLocation";
+} from './digitraffic';
+import { Station } from './Station';
+import { calculateLateMins } from './timetableCalculation';
+import { RowCause, StopType, TimetableRow, TimeType, Train } from './Train';
+import { TrainLocation } from './TrainLocation';
 
 const ESTIMATE_ERROR_TOLERANCE = 0.5;
 
@@ -23,12 +23,9 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
   if (train.cancelled) {
     return null;
   }
-  const timetableRows =
-    train.timeTableRows?.map(transformTimetableRow).filter(isNotNil) ?? [];
+  const timetableRows = train.timeTableRows?.map(transformTimetableRow).filter(isNotNil) ?? [];
   const fixedRows = fixTimetableErrors(timetableRows);
-  const latestActualTimeIndex = fixedRows
-    .map((r) => r.timeType)
-    .lastIndexOf(TimeType.Actual);
+  const latestActualTimeIndex = fixedRows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
   const isReady =
     latestActualTimeIndex < fixedRows.length - 1 &&
     fixedRows[latestActualTimeIndex + 1].isTrainReady;
@@ -56,9 +53,7 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
     return null;
   }
   const scheduledTime = DateTime.fromISO(row.scheduledTime);
-  const estimatedTime = row.liveEstimateTime
-    ? DateTime.fromISO(row.liveEstimateTime)
-    : null;
+  const estimatedTime = row.liveEstimateTime ? DateTime.fromISO(row.liveEstimateTime) : null;
   const actualTime = row.actualTime ? DateTime.fromISO(row.actualTime) : null;
   const bestTime = actualTime ?? estimatedTime ?? scheduledTime;
 
@@ -75,8 +70,7 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
       ? TimeType.Estimated
       : TimeType.Scheduled,
     differenceInMinutes:
-      row.differenceInMinutes ??
-      Math.round(bestTime.diff(scheduledTime).as("minutes")),
+      row.differenceInMinutes ?? Math.round(bestTime.diff(scheduledTime).as('minutes')),
     stopType: row.commercialStop
       ? StopType.Commercial
       : row.trainStopping
@@ -104,10 +98,7 @@ function fixTimetableErrors(rows: TimetableRow[]): TimetableRow[] {
   return [...pastTimesFixed, ...futureTimesFixed];
 }
 
-function fixErrorsByType(
-  rows: TimetableRow[],
-  fixType: TimeType
-): TimetableRow[] {
+function fixErrorsByType(rows: TimetableRow[], fixType: TimeType): TimetableRow[] {
   let isFixing = false;
   const result: TimetableRow[] = [...rows];
 
@@ -121,8 +112,7 @@ function fixErrorsByType(
         (fixType === TimeType.Estimated && row.timeType === TimeType.Scheduled))
     ) {
       const nextRow = result[i + 1];
-      const isBetweenStations =
-        row.stationShortCode !== nextRow.stationShortCode;
+      const isBetweenStations = row.stationShortCode !== nextRow.stationShortCode;
       const durationBetweenRows =
         isBetweenStations || row.stopType === StopType.Commercial
           ? nextRow.scheduledTime.diff(row.scheduledTime)
@@ -139,9 +129,7 @@ function fixErrorsByType(
 }
 
 function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
-  const latestInThePastIndex = rows
-    .map((r) => r.timeType)
-    .lastIndexOf(TimeType.Actual);
+  const latestInThePastIndex = rows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
 
   const pastRows: TimetableRow[] = [...rows];
 
@@ -161,22 +149,15 @@ function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
 }
 
 function fixFutureTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
-  const latestInThePastIndex = rows
-    .map((r) => r.timeType)
-    .lastIndexOf(TimeType.Actual);
+  const latestInThePastIndex = rows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
 
   const futureRows: TimetableRow[] = [...rows];
 
-  for (
-    let i = Math.max(latestInThePastIndex + 1, 1);
-    i < futureRows.length;
-    i++
-  ) {
+  for (let i = Math.max(latestInThePastIndex + 1, 1); i < futureRows.length; i++) {
     const row = futureRows[i];
     const previousRow = futureRows[i - 1];
 
-    const isBetweenStations =
-      row.stationShortCode !== previousRow.stationShortCode;
+    const isBetweenStations = row.stationShortCode !== previousRow.stationShortCode;
     const time = isBetweenStations
       ? fixedTimeBetweenStations(previousRow, row)
       : fixedTimeAtStation(previousRow, row);
@@ -185,10 +166,7 @@ function fixFutureTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
   return futureRows;
 }
 
-function fixedTimeBetweenStations(
-  from: TimetableRow,
-  to: TimetableRow
-): DateTime {
+function fixedTimeBetweenStations(from: TimetableRow, to: TimetableRow): DateTime {
   const duration = to.time.diff(from.time);
   const scheduledDuration = to.scheduledTime.diff(from.scheduledTime);
 
@@ -204,20 +182,11 @@ function fixedTimeBetweenStations(
   return to.time;
 }
 
-function isDurationWithinTolerance(
-  duration: Duration,
-  scheduledDuration: Duration
-): boolean {
-  return (
-    duration <
-    scheduledDuration.mapUnits((x) => x * (1 - ESTIMATE_ERROR_TOLERANCE))
-  );
+function isDurationWithinTolerance(duration: Duration, scheduledDuration: Duration): boolean {
+  return duration < scheduledDuration.mapUnits((x) => x * (1 - ESTIMATE_ERROR_TOLERANCE));
 }
 
-function fixedTimeAtStation(
-  arrival: TimetableRow,
-  departure: TimetableRow
-): DateTime {
+function fixedTimeAtStation(arrival: TimetableRow, departure: TimetableRow): DateTime {
   const shortestStoppingDuration =
     departure.stopType === StopType.Commercial
       ? Duration.fromMillis(
@@ -248,8 +217,8 @@ export function transformLocation(location: GpsLocation): TrainLocation {
 }
 
 export function transformStation(station: DigiTrafficStation): Station {
-  const nameWithoutUnderscores = station.stationName.replace("_", " ");
-  const asemaIndex = nameWithoutUnderscores.toLowerCase().lastIndexOf(" asema");
+  const nameWithoutUnderscores = station.stationName.replace('_', ' ');
+  const asemaIndex = nameWithoutUnderscores.toLowerCase().lastIndexOf(' asema');
   const nameWithoutAsema =
     asemaIndex > -1 && asemaIndex === nameWithoutUnderscores.length - 6
       ? nameWithoutUnderscores.substring(0, asemaIndex)

@@ -1,10 +1,10 @@
-import { useContext, useEffect, useRef } from "react";
-import CommuterBadge from "../../components/CommuterBadge";
-import DifferenceBadge from "../../components/DifferenceBadge";
-import LateCauses from "../../components/LateCauses";
-import { TrainContext, TrainContextProps } from "../../components/TrainData";
-import TrainReadyBadge from "../../components/TrainReadyBadge";
-import { Train } from "../../model/Train";
+import { useContext, useEffect, useRef } from 'react';
+import CommuterBadge from '../../components/CommuterBadge';
+import DifferenceBadge from '../../components/DifferenceBadge';
+import LateCauses from '../../components/LateCauses';
+import { TrainContext, TrainContextProps } from '../../components/TrainData';
+import TrainReadyBadge from '../../components/TrainReadyBadge';
+import { Train } from '../../model/Train';
 
 export interface TrainHeaderProps {
   train: Train | null;
@@ -23,11 +23,9 @@ export default function TrainHeader({ train, isExpired }: TrainHeaderProps) {
     return null;
   }
   const stations = trainDataRef.current?.stations || {};
-  const origin = stations[train.timetableRows[0].stationShortCode]?.name ?? "";
+  const origin = stations[train.timetableRows[0].stationShortCode]?.name ?? '';
   const destination =
-    stations[
-      train.timetableRows[train.timetableRows.length - 1].stationShortCode
-    ]?.name ?? "";
+    stations[train.timetableRows[train.timetableRows.length - 1].stationShortCode]?.name ?? '';
 
   return (
     <>
