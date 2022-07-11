@@ -30,6 +30,8 @@
     "@types/luxon": "^2.3.2",
     "autoprefixer": "^10.4.5",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest-dom": "^4.0.2",
+    "eslint-plugin-prettier": "^4.2.1",
     "postcss": "^8.4.12",
     "prettier": "^2.6.2",
     "react-app-rewired": "^2.2.1",
@@ -39,7 +41,9 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
+    "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\""
   },
   "eslintConfig": {
     "extends": [
