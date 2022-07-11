@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { DateTime } from 'luxon';
 
-import { isNotNil } from '../utils/misc';
+import { isNotNil } from '@/utils/misc';
 
 import { StopType, TimetableRow, Train } from './Train';
 import { TrainEvent, TrainEventType } from './TrainEvent';
@@ -174,6 +174,9 @@ function findNext(
   );
   if (index >= 0) {
     return createEvent(rows, index);
+  }
+  if (includePast) {
+    // TODO: something with includePast
   }
   return null;
 }

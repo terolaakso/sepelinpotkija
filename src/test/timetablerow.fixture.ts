@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import { StopType, TimetableRow, TimeType } from '../model/Train';
+import { StopType, TimetableRow, TimeType } from '@/model/Train';
 
 export function timetableRowFixture(props?: Partial<TimetableRow>): TimetableRow {
   return {

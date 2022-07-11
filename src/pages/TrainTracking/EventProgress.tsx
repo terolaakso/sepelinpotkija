@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
-import { TrainEvent, TrainEventType } from '../../model/TrainEvent';
+import { TrainEvent, TrainEventType } from '@/model/TrainEvent';
 
 export interface EventProgressProps {
   event: TrainEvent;

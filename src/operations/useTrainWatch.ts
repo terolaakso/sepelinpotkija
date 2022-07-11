@@ -1,11 +1,11 @@
 import { isNil } from 'lodash';
 import { useContext, useEffect, useRef } from 'react';
 
-import { TrainContext, TrainContextProps } from '../components/TrainData';
-import { Train as DigitrafficTrain } from '../model/digitraffic';
-import { fillNewTrainWithDetails } from '../model/timetableCalculation';
-import { transformTrains } from '../model/transform';
-import { isNotNil } from '../utils/misc';
+import { TrainContext, TrainContextProps } from '@/components/TrainData';
+import { Train as DigitrafficTrain } from '@/model/digitraffic';
+import { fillNewTrainWithDetails } from '@/model/timetableCalculation';
+import { transformTrains } from '@/model/transform';
+import { isNotNil } from '@/utils/misc';
 
 import useSubscription from './mqtt/useSubscription';
 

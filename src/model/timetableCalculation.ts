@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
-import { getLocationFromContext, TrainContextProps } from '../components/TrainData';
-import { isNotNil } from '../utils/misc';
+import { getLocationFromContext, TrainContextProps } from '@/components/TrainData';
+import { isNotNil } from '@/utils/misc';
 
 import {
   distanceBetweenCoordsInKm,

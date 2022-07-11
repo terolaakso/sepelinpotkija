@@ -4,9 +4,9 @@ import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
-} from '../components/TrainData';
-import { timetableRowFixture } from '../test/timetablerow.fixture';
-import { trainFixture } from '../test/train.fixture';
+} from '@/components/TrainData';
+import { timetableRowFixture } from '@/test/timetablerow.fixture';
+import { trainFixture } from '@/test/train.fixture';
 
 import { calculateCauses } from './lateCauses';
 import { RowCause } from './Train';

@@ -4,8 +4,8 @@ import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
-} from '../components/TrainData';
-import { isNotNil } from '../utils/misc';
+} from '@/components/TrainData';
+import { isNotNil } from '@/utils/misc';
 
 import { RowCause, TimetableRow, Train } from './Train';
 

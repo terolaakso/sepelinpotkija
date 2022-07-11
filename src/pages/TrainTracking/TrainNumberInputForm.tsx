@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { isNotNil } from '../../utils/misc';
+import { isNotNil } from '@/utils/misc';
 
 export interface TrainNumberInputProps {
   initialTrainNumber: number;

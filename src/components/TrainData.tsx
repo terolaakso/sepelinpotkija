@@ -1,16 +1,16 @@
 import { isNil } from 'lodash';
 import { createContext, useEffect, useState } from 'react';
 
-import { FirstLevelCause, SecondLevelCause, ThirdLevelCause } from '../model/digitraffic';
+import { FirstLevelCause, SecondLevelCause, ThirdLevelCause } from '@/model/digitraffic';
 import {
   get1stLevelCauses,
   get2ndLevelCauses,
   get3rdLevelCauses,
   getStations,
-} from '../model/digitrafficClient';
-import { StationCollection } from '../model/Station';
-import { Train, TrainCollection } from '../model/Train';
-import { LocationCollection, TrainLocation } from '../model/TrainLocation';
+} from '@/model/digitrafficClient';
+import { StationCollection } from '@/model/Station';
+import { Train, TrainCollection } from '@/model/Train';
+import { LocationCollection, TrainLocation } from '@/model/TrainLocation';
 
 export interface FirstLevelCauseCollection {
   [id: number]: FirstLevelCause | undefined;

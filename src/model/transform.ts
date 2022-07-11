@@ -1,6 +1,6 @@
 import { DateTime, Duration } from 'luxon';
 
-import { isNotNil } from '../utils/misc';
+import { isNotNil } from '@/utils/misc';
 
 import {
   Cause,
