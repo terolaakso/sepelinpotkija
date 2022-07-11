@@ -8,21 +8,21 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.32",
-    "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
+    "@types/react": "^18.0.8",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "buffer": "^6.0.3",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "luxon": "^2.4.0",
-    "mqtt": "^4.3.7",
     "mqtt-pattern": "^1.2.0",
+    "mqtt": "^4.3.7",
     "process": "^0.11.10",
-    "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react": "^18.1.0",
     "typescript": "^4.6.4",
     "url": "^0.11.0",
     "web-vitals": "^2.1.4"
@@ -38,9 +38,12 @@
     "eslint-plugin-jest-dom": "^4.0.2",
     "eslint-plugin-jsx-a11y": "^6.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-testing-library": "^5.5.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.12",
     "prettier": "^2.6.2",
     "react-app-rewired": "^2.2.1",
@@ -54,7 +57,9 @@
     "eject": "react-scripts eject",
     "lint": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
-    "compile": "tsc --project tsconfig.json --pretty --noEmit"
+    "check-types": "tsc --project tsconfig.json --pretty --noEmit",
+    "prepare": "husky install",
+    "validate": "npm-run-all --parallel check-types && lint-staged"
   },
   "browserslist": {
     "production": [
@@ -66,6 +71,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "*.+(ts|tsx)": [
+      "npm run lint"
     ]
   }
 }
