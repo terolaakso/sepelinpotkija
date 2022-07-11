@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import MqttContext from './Context';
 import { ConnectorProps, IMqttContext } from './types';
 
-export default function Connector({ children, brokerUrl, parserMethod }: ConnectorProps) {
+export default function Connector({ children, brokerUrl }: ConnectorProps) {
   const clientRef = useRef<MqttClient | null>(null);
   const mountedRef = useRef(true);
   const [contextState, setContextState] = useState<IMqttContext>({

@@ -20,13 +20,6 @@ export interface IMqttContext {
   parserMethod?: (message: any) => string;
 }
 
-export interface IUseSubscription {
-  // topic: string | null;
-  // client?: MqttClient | null;
-  // message?: IMessage;
-  // connectionStatus: string | Error;
-}
-
 export interface IMessageStructure {
   [key: string]: string;
 }

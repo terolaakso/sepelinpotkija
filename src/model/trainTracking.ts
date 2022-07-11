@@ -22,12 +22,6 @@ export function calculateCurrentEventsForTrain(train: Train): {
   const uniqueEvents = _.unionBy([...commercialStops, ...allStations], (row) => row.name);
   const sortedEvents = _.sortBy(uniqueEvents, (row) => row.time);
   const withCountdown = calculateCountdown(sortedEvents);
-  withCountdown.forEach((event, i) => {
-    if (event.departureTime && event.time > event.departureTime) {
-      console.log(train);
-      debugger;
-    }
-  });
   return { events: withCountdown, nextStationCode };
 }
 

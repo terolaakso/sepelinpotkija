@@ -383,7 +383,6 @@ function doFutureTimesFix(
         time: row.bestDigitrafficTime,
       };
     } else if (i === segment.toIndex) {
-      debugger;
       const duration = row.bestDigitrafficTime
         .diff(result[i - 1].bestDigitrafficTime)
         .mapUnits((x) => x * (1 - segment.location));
