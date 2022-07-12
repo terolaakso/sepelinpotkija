@@ -2,10 +2,10 @@ import { isNil } from 'lodash';
 import { useContext, useEffect, useRef } from 'react';
 
 import { getTrainFromContext, TrainContext, TrainContextProps } from '@/components/TrainData';
-import { GpsLocation } from '@/model/digitraffic';
-import { getLocation } from '@/model/digitrafficClient';
-import { adjustTimetableByLocation, fillNewTrainWithDetails } from '@/model/timetableCalculation';
-import { transformLocation } from '@/model/transform';
+import { GpsLocation } from '@/types/digitraffic';
+import { getLocation } from '@/types/digitrafficClient';
+import { adjustTimetableByLocation, fillNewTrainWithDetails } from '@/types/timetableCalculation';
+import { transformLocation } from '@/types/transform';
 import { isNotNil } from '@/utils/misc';
 
 import useSubscription from './mqtt/useSubscription';

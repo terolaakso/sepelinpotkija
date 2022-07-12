@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import useSubscription from '@/operations/mqtt/useSubscription';
+import useSubscription from '@/hooks/mqtt/useSubscription';
 
 export default function Viewer() {
   function messageHandler(msg: any) {

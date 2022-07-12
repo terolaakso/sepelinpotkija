@@ -2,8 +2,8 @@ import { isNil } from 'lodash';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import { TrainContext, TrainContextProps } from '@/components/TrainData';
-import { getTrain } from '@/model/digitrafficClient';
-import { fillNewTrainWithDetails } from '@/model/timetableCalculation';
+import { getTrain } from '@/types/digitrafficClient';
+import { fillNewTrainWithDetails } from '@/types/timetableCalculation';
 
 import useTrainLocationWatch from './useTrainLocationWatch';
 import useTrainWatch from './useTrainWatch';

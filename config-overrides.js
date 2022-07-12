@@ -8,13 +8,10 @@ module.exports = function override(config) {
   });
   config.plugins = [
     ...config.plugins,
-    new webpack.ProvidePlugin({
-      process: 'process/browser',
-      Buffer: ['buffer', 'Buffer'],
-    }),
+    new webpack.ProvidePlugin({ process: 'process/browser', Buffer: ['buffer', 'Buffer'] }),
   ];
   config.resolve.alias = Object.assign({}, config.resolve.alias, {
-    '@': path.resolve(__dirname, 'src')
+    '@': path.resolve(__dirname, 'src'),
   });
   return config;
 };

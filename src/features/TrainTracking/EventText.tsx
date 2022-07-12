@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { TrainEvent } from '@/model/TrainEvent';
+import { TrainEvent } from '@/types/TrainEvent';
 
 export interface EventTextProps {
   event: TrainEvent;

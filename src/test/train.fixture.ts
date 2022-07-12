@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import { Train } from '@/model/Train';
+import { Train } from '@/types/Train';
 
 import { timetableRowFixture } from './timetablerow.fixture';
 

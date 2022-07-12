@@ -5,7 +5,7 @@ import DifferenceBadge from '@/components/DifferenceBadge';
 import LateCauses from '@/components/LateCauses';
 import { TrainContext, TrainContextProps } from '@/components/TrainData';
 import TrainReadyBadge from '@/components/TrainReadyBadge';
-import { Train } from '@/model/Train';
+import { Train } from '@/types/Train';
 
 export interface TrainHeaderProps {
   train: Train | null;

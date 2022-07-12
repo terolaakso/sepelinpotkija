@@ -1,4 +1,4 @@
-import { TrainEvent } from '@/model/TrainEvent';
+import { TrainEvent } from '@/types/TrainEvent';
 
 import IntroContent from './IntroContent';
 import TrainContent from './TrainContent';
