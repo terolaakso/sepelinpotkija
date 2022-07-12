@@ -1,9 +1,10 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { TrainTracking } from '@/features/TrainTracking';
+
 import Home from './components/Home';
 import TrainData from './components/TrainData';
-import TrainTracking from './features/TrainTracking/Main';
 import Connector from './hooks/mqtt/Connector';
 
 function App() {
