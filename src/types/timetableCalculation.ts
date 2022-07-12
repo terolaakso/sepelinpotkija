@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
 import { getLocationFromContext, TrainContextProps } from '@/components/TrainData';
+import { calculateCauses } from '@/features/lateCauses';
 import {
   distanceBetweenCoordsInKm,
   LatLon,
@@ -10,7 +11,6 @@ import {
 } from '@/utils/geography';
 import { isNotNil } from '@/utils/misc';
 
-import { calculateCauses } from './lateCauses';
 import { Station, StationCollection } from './Station';
 import { StopType, TimetableRow, Train } from './Train';
 import { TrainLocation } from './TrainLocation';

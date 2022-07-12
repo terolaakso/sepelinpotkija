@@ -2,9 +2,9 @@ import { useContext, useEffect, useRef } from 'react';
 
 import CommuterBadge from '@/components/CommuterBadge';
 import DifferenceBadge from '@/components/DifferenceBadge';
-import LateCauses from '@/components/LateCauses';
 import { TrainContext, TrainContextProps } from '@/components/TrainData';
 import TrainReadyBadge from '@/components/TrainReadyBadge';
+import { LateCauses } from '@/features/lateCauses';
 import { Train } from '@/types/Train';
 
 export interface TrainHeaderProps {

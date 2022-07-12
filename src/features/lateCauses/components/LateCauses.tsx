@@ -1,4 +1,4 @@
-import { LateCause } from '@/types/lateCauses';
+import { LateCause } from '../types';
 
 export interface LateCausesProps {
   causes: LateCause[];

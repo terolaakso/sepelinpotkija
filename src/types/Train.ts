@@ -1,6 +1,6 @@
 import { DateTime, Duration } from 'luxon';
 
-import { LateCause } from './lateCauses';
+import { LateCause } from '@/features/lateCauses';
 
 export enum TimeType {
   None = 'None',

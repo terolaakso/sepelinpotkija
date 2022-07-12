@@ -5,14 +5,10 @@ import {
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
 } from '@/components/TrainData';
+import { RowCause, TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
 
-import { RowCause, TimetableRow, Train } from './Train';
-
-export interface LateCause {
-  name: string;
-  lateMinutes: number;
-}
+import { LateCause } from '../types';
 
 export function calculateCauses(
   train: Train,

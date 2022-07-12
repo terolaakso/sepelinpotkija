@@ -7,9 +7,9 @@ import {
 } from '@/components/TrainData';
 import { timetableRowFixture } from '@/test/timetablerow.fixture';
 import { trainFixture } from '@/test/train.fixture';
+import { RowCause } from '@/types/Train';
 
 import { calculateCauses } from './lateCauses';
-import { RowCause } from './Train';
 
 describe('late causes', () => {
   const firstLevelCauses: FirstLevelCauseCollection = {
