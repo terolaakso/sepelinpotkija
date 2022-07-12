@@ -1,4 +1,4 @@
-import useMqttState from '@/hooks/mqtt/useMqttState';
+import { useMqttState } from '@/features/mqtt';
 
 export default function Status() {
   const { connectionStatus } = useMqttState();

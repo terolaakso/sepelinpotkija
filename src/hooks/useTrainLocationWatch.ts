@@ -2,13 +2,12 @@ import { isNil } from 'lodash';
 import { useContext, useEffect, useRef } from 'react';
 
 import { getTrainFromContext, TrainContext, TrainContextProps } from '@/components/TrainData';
+import { useSubscription } from '@/features/mqtt';
 import { GpsLocation } from '@/types/digitraffic';
 import { getLocation } from '@/types/digitrafficClient';
 import { adjustTimetableByLocation, fillNewTrainWithDetails } from '@/types/timetableCalculation';
 import { transformLocation } from '@/types/transform';
 import { isNotNil } from '@/utils/misc';
-
-import useSubscription from './mqtt/useSubscription';
 
 export default function useTrainLocationWatch(
   departureDate: string | null,

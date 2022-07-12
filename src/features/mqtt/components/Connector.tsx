@@ -1,8 +1,9 @@
 import { connect, MqttClient } from 'mqtt';
 import { useState, useEffect, useRef } from 'react';
 
+import { ConnectorProps, IMqttContext } from '../types';
+
 import MqttContext from './Context';
-import { ConnectorProps, IMqttContext } from './types';
 
 export default function Connector({ children, brokerUrl }: ConnectorProps) {
   const clientRef = useRef<MqttClient | null>(null);

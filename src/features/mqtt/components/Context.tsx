@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 
-import { IMqttContext } from './types';
+import { IMqttContext } from '../types';
 
 const MqttContext = createContext<IMqttContext>({} as IMqttContext);
 

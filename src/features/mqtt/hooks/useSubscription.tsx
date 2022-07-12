@@ -1,7 +1,7 @@
 import { matches } from 'mqtt-pattern';
 import { useContext, useEffect, useRef } from 'react';
 
-import MqttContext from './Context';
+import MqttContext from '../components/Context';
 
 export default function useSubscription<T>(
   topic: string | null,
