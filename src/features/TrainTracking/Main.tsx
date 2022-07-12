@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 
+import ErrorBar from '@/components/ErrorBar';
 import { getTrainFromContext, TrainContext } from '@/components/TrainData';
 import { useInterval } from '@/hooks/useInterval';
 import useStationWatch from '@/hooks/useStationWatch';
@@ -48,20 +49,9 @@ export default function TrainTracking() {
   return (
     <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">
       <TopBar startTracking={startTracking} train={train} isTracking={isTracking} />
-      <ErrorMessage errorMessage={errorMessage} />
+      <ErrorBar errorMessage={errorMessage} />
       <Content events={events} />
       <BottomBar isTracking={isTracking} stopTracking={stopTracking} />
     </div>
   );
-}
-
-interface ErrorProps {
-  errorMessage: string | null;
-}
-
-function ErrorMessage({ errorMessage }: ErrorProps) {
-  if (!errorMessage) {
-    return null;
-  }
-  return <div className="bg-red-700 m-1 px-1"> {errorMessage}</div>;
 }
