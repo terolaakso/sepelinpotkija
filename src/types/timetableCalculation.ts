@@ -2,14 +2,14 @@ import _ from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
 import { getLocationFromContext, TrainContextProps } from '@/components/TrainData';
-import { isNotNil } from '@/utils/misc';
-
 import {
   distanceBetweenCoordsInKm,
   LatLon,
   nearestPointSegment,
   StationSegmentLocation,
-} from './geography';
+} from '@/utils/geography';
+import { isNotNil } from '@/utils/misc';
+
 import { calculateCauses } from './lateCauses';
 import { Station, StationCollection } from './Station';
 import { StopType, TimetableRow, Train } from './Train';

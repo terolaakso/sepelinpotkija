@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import { LatLon } from './geography';
+import { LatLon } from '@/utils/geography';
 
 export interface TrainLocation {
   trainNumber: number;
