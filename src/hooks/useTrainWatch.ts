@@ -1,12 +1,12 @@
 import { isNil } from 'lodash';
 import { useContext, useEffect, useRef } from 'react';
 
+import { transformTrains } from '@/api/transform';
 import { TrainContext, TrainContextProps } from '@/components/TrainData';
 import { useSubscription } from '@/features/mqtt';
 import { Train as DigitrafficTrain } from '@/types/digitraffic';
-import { fillNewTrainWithDetails } from '@/types/timetableCalculation';
-import { transformTrains } from '@/types/transform';
 import { isNotNil } from '@/utils/misc';
+import { fillNewTrainWithDetails } from '@/utils/timetableCalculation';
 
 export default function useTrainWatch(departureDate: string | null, trainNumber: number | null) {
   const trainDataRef = useRef<TrainContextProps>();

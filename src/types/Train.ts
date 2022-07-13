@@ -1,4 +1,4 @@
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 
 import { LateCause } from '@/features/lateCauses';
 
@@ -56,15 +56,4 @@ export interface RowCause {
   level1CodeId: number | null;
   level2CodeId: number | null;
   level3CodeId: number | null;
-}
-
-// this is old timetableGpsAge
-export function timetableExpirationDuration(train: Train): Duration {
-  const index = train.latestGpsIndex ? train.latestGpsIndex + 1 : train.latestActualTimeIndex + 1;
-
-  if (index < train.timetableRows.length) {
-    const age = DateTime.now().diff(train.timetableRows[index].time);
-    return age;
-  }
-  return Duration.fromMillis(0);
 }

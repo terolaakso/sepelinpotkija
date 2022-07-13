@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { Duration } from 'luxon';
 
-import { timetableExpirationDuration, Train } from '@/types/Train';
+import { Train } from '@/types/Train';
+import { timetableExpirationDuration } from '@/utils/timetableCalculation';
 
 import TrainHeader from './TrainHeader';
 import TrainNumberInputForm from './TrainNumberInputForm';

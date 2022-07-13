@@ -1,18 +1,17 @@
 import { DateTime, Duration } from 'luxon';
 
-import { isNotNil } from '@/utils/misc';
-
 import {
   Cause,
   GpsLocation,
   Station as DigiTrafficStation,
   TimeTableRow,
   Train as DigiTrafficTrain,
-} from './digitraffic';
-import { Station } from './Station';
-import { calculateLateMins } from './timetableCalculation';
-import { RowCause, StopType, TimetableRow, TimeType, Train } from './Train';
-import { TrainLocation } from './TrainLocation';
+} from '@/types/digitraffic';
+import { Station } from '@/types/Station';
+import { RowCause, StopType, TimetableRow, TimeType, Train } from '@/types/Train';
+import { TrainLocation } from '@/types/TrainLocation';
+import { isNotNil } from '@/utils/misc';
+import { calculateLateMins } from '@/utils/timetableCalculation';
 
 const ESTIMATE_ERROR_TOLERANCE = 0.5;
 

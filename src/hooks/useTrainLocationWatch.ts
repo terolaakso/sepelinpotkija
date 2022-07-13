@@ -1,13 +1,13 @@
 import { isNil } from 'lodash';
 import { useContext, useEffect, useRef } from 'react';
 
+import { getLocation } from '@/api/digitrafficClient';
+import { transformLocation } from '@/api/transform';
 import { getTrainFromContext, TrainContext, TrainContextProps } from '@/components/TrainData';
 import { useSubscription } from '@/features/mqtt';
 import { GpsLocation } from '@/types/digitraffic';
-import { getLocation } from '@/types/digitrafficClient';
-import { adjustTimetableByLocation, fillNewTrainWithDetails } from '@/types/timetableCalculation';
-import { transformLocation } from '@/types/transform';
 import { isNotNil } from '@/utils/misc';
+import { adjustTimetableByLocation, fillNewTrainWithDetails } from '@/utils/timetableCalculation';
 
 export default function useTrainLocationWatch(
   departureDate: string | null,

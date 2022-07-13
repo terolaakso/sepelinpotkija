@@ -11,9 +11,9 @@ import {
 } from '@/utils/geography';
 import { isNotNil } from '@/utils/misc';
 
-import { Station, StationCollection } from './Station';
-import { StopType, TimetableRow, Train } from './Train';
-import { TrainLocation } from './TrainLocation';
+import { Station, StationCollection } from '../types/Station';
+import { StopType, TimetableRow, Train } from '../types/Train';
+import { TrainLocation } from '../types/TrainLocation';
 
 interface StationIndex {
   index: number;
@@ -432,4 +432,15 @@ export function fillNewTrainWithDetails(train: Train, context: TrainContextProps
     ),
   };
   return trainWithLateCauses;
+}
+
+// this is old timetableGpsAge
+export function timetableExpirationDuration(train: Train): Duration {
+  const index = train.latestGpsIndex ? train.latestGpsIndex + 1 : train.latestActualTimeIndex + 1;
+
+  if (index < train.timetableRows.length) {
+    const age = DateTime.now().diff(train.timetableRows[index].time);
+    return age;
+  }
+  return Duration.fromMillis(0);
 }

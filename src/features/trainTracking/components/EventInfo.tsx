@@ -1,6 +1,7 @@
 import CommuterBadge from '@/components/CommuterBadge';
 import DifferenceBadge from '@/components/DifferenceBadge';
-import { TrainEvent } from '@/types/TrainEvent';
+
+import { TrainEvent } from '../types/TrainEvent';
 
 import EventText from './EventText';
 

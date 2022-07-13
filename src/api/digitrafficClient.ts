@@ -3,7 +3,6 @@ import {
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
 } from '@/components/TrainData';
-
 import {
   Station as DigitrafficStation,
   Train as DigitrafficTrain,
@@ -11,10 +10,11 @@ import {
   FirstLevelCause,
   SecondLevelCause,
   ThirdLevelCause,
-} from './digitraffic';
-import { StationCollection } from './Station';
-import { Train } from './Train';
-import { TrainLocation } from './TrainLocation';
+} from '@/types/digitraffic';
+import { StationCollection } from '@/types/Station';
+import { Train } from '@/types/Train';
+import { TrainLocation } from '@/types/TrainLocation';
+
 import { transformLocation, transformStation, transformTrains } from './transform';
 
 const DIGITRAFFIC_API_URL = 'https://rata.digitraffic.fi/api/v1';

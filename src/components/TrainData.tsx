@@ -1,13 +1,13 @@
 import { isNil } from 'lodash';
 import { createContext, useEffect, useState } from 'react';
 
-import { FirstLevelCause, SecondLevelCause, ThirdLevelCause } from '@/types/digitraffic';
 import {
   get1stLevelCauses,
   get2ndLevelCauses,
   get3rdLevelCauses,
   getStations,
-} from '@/types/digitrafficClient';
+} from '@/api/digitrafficClient';
+import { FirstLevelCause, SecondLevelCause, ThirdLevelCause } from '@/types/digitraffic';
 import { StationCollection } from '@/types/Station';
 import { Train, TrainCollection } from '@/types/Train';
 import { LocationCollection, TrainLocation } from '@/types/TrainLocation';

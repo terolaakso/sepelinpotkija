@@ -5,8 +5,9 @@ import { getTrainFromContext, TrainContext } from '@/components/TrainData';
 import { useInterval } from '@/hooks/useInterval';
 import useStationWatch from '@/hooks/useStationWatch';
 import useTrain from '@/hooks/useTrain';
-import { TrainEvent } from '@/types/TrainEvent';
-import { calculateCurrentEventsForTrain } from '@/types/trainTracking';
+
+import { TrainEvent } from '../types/TrainEvent';
+import { calculateCurrentEventsForTrain } from '../utils/trainTracking';
 
 import BottomBar from './BottomBar';
 import Content from './Content';

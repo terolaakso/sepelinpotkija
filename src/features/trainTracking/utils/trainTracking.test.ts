@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 
-import { StopType, TimeType, Train } from './Train';
+import { StopType, TimeType, Train } from '@/types/Train';
+
 import { getCurrentCommercialStops, getCurrentStations } from './trainTracking';
 
 describe('selecting events', () => {

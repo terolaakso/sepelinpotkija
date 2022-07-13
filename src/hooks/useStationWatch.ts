@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
 import { useContext, useEffect, useRef, useState } from 'react';
 
+import { getTrainsOfStation } from '@/api/digitrafficClient';
 import { TrainContext, TrainContextProps } from '@/components/TrainData';
-import { getTrainsOfStation } from '@/types/digitrafficClient';
-import { fillNewTrainWithDetails } from '@/types/timetableCalculation';
+import { fillNewTrainWithDetails } from '@/utils/timetableCalculation';
 
 import { useInterval } from './useInterval';
 
