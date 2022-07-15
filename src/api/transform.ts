@@ -70,8 +70,7 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
       : estimatedTime
       ? TimeType.Estimated
       : TimeType.Scheduled,
-    differenceInMinutes:
-      row.differenceInMinutes ?? Math.round(bestTime.diff(scheduledTime).as('minutes')),
+    differenceInMinutes: Math.round(bestTime.diff(scheduledTime).as('minutes')),
     stopType: row.commercialStop
       ? StopType.Commercial
       : row.trainStopping
@@ -184,7 +183,7 @@ function fixedTimeBetweenStations(from: TimetableRow, to: TimetableRow): DateTim
 }
 
 function isDurationWithinTolerance(duration: Duration, scheduledDuration: Duration): boolean {
-  return duration < scheduledDuration.mapUnits((x) => x * (1 - ESTIMATE_ERROR_TOLERANCE));
+  return duration >= scheduledDuration.mapUnits((x) => x * (1 - ESTIMATE_ERROR_TOLERANCE));
 }
 
 function fixedTimeAtStation(arrival: TimetableRow, departure: TimetableRow): DateTime {
