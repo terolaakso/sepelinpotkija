@@ -1,12 +1,13 @@
 import { DateTime } from 'luxon';
 
+import { useTrainDataStore } from '@/stores/trainData';
+import { timetableRowFixture } from '@/test/timetablerow.fixture';
+import { trainFixture } from '@/test/train.fixture';
 import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
-} from '@/components/TrainData';
-import { timetableRowFixture } from '@/test/timetablerow.fixture';
-import { trainFixture } from '@/test/train.fixture';
+} from '@/types/digitraffic';
 import { RowCause } from '@/types/Train';
 
 import { calculateCauses } from './lateCauses';
@@ -54,6 +55,18 @@ describe('late causes', () => {
     level3CodeId: 101,
   };
 
+  beforeAll(() => {
+    const {
+      setFirstLevelCauses: populateFirstLevelCauses,
+      setSecondLevelCauses: populateSecondLevelCauses,
+      setThirdLevelCauses: populateThirdLevelCauses,
+    } = useTrainDataStore.getState();
+
+    populateFirstLevelCauses(firstLevelCauses);
+    populateSecondLevelCauses(secondLevelCauses);
+    populateThirdLevelCauses(thirdLevelCauses);
+  });
+
   it('train became late after leaving on time', () => {
     const train = trainFixture({
       timetableRows: [
@@ -67,7 +80,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(1);
     expect(causes[0].lateMinutes).toBe(1);
@@ -87,7 +100,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -116,7 +129,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -145,7 +158,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(1);
     expect(causes).toEqual(
@@ -178,7 +191,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -214,7 +227,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -250,7 +263,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(0);
   });
@@ -280,7 +293,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train, firstLevelCauses, secondLevelCauses, thirdLevelCauses);
+    const causes = calculateCauses(train);
 
     expect(causes).toHaveLength(1);
     expect(causes).toEqual(

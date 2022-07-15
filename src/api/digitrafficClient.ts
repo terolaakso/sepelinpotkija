@@ -2,8 +2,6 @@ import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
   ThirdLevelCauseCollection,
-} from '@/components/TrainData';
-import {
   Station as DigitrafficStation,
   Train as DigitrafficTrain,
   GpsLocation as DigitrafficGpsLocation,

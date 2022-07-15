@@ -95,8 +95,8 @@ function fixTimetableErrors(rows: TimetableRow[]): TimetableRow[] {
   const actualsFixed = fixErrorsByType(rows, TimeType.Actual);
   const allTimeTypesFixed = fixErrorsByType(actualsFixed, TimeType.Estimated);
   const pastTimesFixed = fixPastTimesInWrongOrder(allTimeTypesFixed);
-  const futureTimesFixed = fixFutureTimesInWrongOrder(allTimeTypesFixed);
-  return [...pastTimesFixed, ...futureTimesFixed];
+  const futureTimesFixed = fixFutureTimesInWrongOrder(pastTimesFixed);
+  return futureTimesFixed;
 }
 
 function fixErrorsByType(rows: TimetableRow[], fixType: TimeType): TimetableRow[] {

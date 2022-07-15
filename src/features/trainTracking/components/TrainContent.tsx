@@ -16,7 +16,7 @@ export default function TrainContent({ events }: TrainContentProps) {
     <div className="flex-1 mr-1 portrait:flex-initial portrait:mr-0">
       <div className="flex flex-col-reverse">
         {events.map((event) => (
-          <div className="flex" key={event.name}>
+          <div className="flex" key={event.id}>
             <EventProgress event={event} />
             <EventInfo event={event} />
           </div>

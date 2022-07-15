@@ -1,22 +1,12 @@
 import _ from 'lodash';
 
-import {
-  FirstLevelCauseCollection,
-  SecondLevelCauseCollection,
-  ThirdLevelCauseCollection,
-} from '@/components/TrainData';
+import { useTrainDataStore } from '@/stores/trainData';
 import { RowCause, TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
 
 import { LateCause } from '../types';
 
-export function calculateCauses(
-  train: Train,
-  firstLevelCauses: FirstLevelCauseCollection,
-  secondLevelCauses: SecondLevelCauseCollection,
-  thirdLevelCauses: ThirdLevelCauseCollection,
-  index?: number
-): LateCause[] {
+export function calculateCauses(train: Train, index?: number): LateCause[] {
   const lastIndex = Math.min(
     index ?? train.latestActualTimeIndex + 1,
     train.timetableRows.length - 1
@@ -36,16 +26,7 @@ export function calculateCauses(
         );
         const lateMinPerCause = Math.floor(lateMinTotal / row.lateCauses.length);
         return {
-          causes: mergeCauses(
-            result.causes,
-            createCauses(
-              row.lateCauses,
-              lateMinPerCause,
-              firstLevelCauses,
-              secondLevelCauses,
-              thirdLevelCauses
-            )
-          ),
+          causes: mergeCauses(result.causes, createCauses(row.lateCauses, lateMinPerCause)),
           unexplainedMin: result.unexplainedMin - lateMinTotal,
         };
       }
@@ -79,28 +60,18 @@ function mergeCauses(existing: LateCause[], newCauses: LateCause[]): LateCause[]
   return mergedCauses;
 }
 
-function createCauses(
-  causes: RowCause[],
-  lateMinutes: number,
-  firstLevelCauses: FirstLevelCauseCollection,
-  secondLevelCauses: SecondLevelCauseCollection,
-  thirdLevelCauses: ThirdLevelCauseCollection
-): LateCause[] {
+function createCauses(causes: RowCause[], lateMinutes: number): LateCause[] {
   if (lateMinutes > 0) {
     return causes.map((cause) => ({
-      name: getCauseName(cause, firstLevelCauses, secondLevelCauses, thirdLevelCauses),
+      name: getCauseName(cause),
       lateMinutes,
     }));
   }
   return [];
 }
 
-function getCauseName(
-  cause: RowCause,
-  firstLevelCauses: FirstLevelCauseCollection,
-  secondLevelCauses: SecondLevelCauseCollection,
-  thirdLevelCauses: ThirdLevelCauseCollection
-): string {
+function getCauseName(cause: RowCause): string {
+  const { firstLevelCauses, secondLevelCauses, thirdLevelCauses } = useTrainDataStore.getState();
   const firstLevelName = cause.level1CodeId
     ? firstLevelCauses[cause.level1CodeId]?.categoryName
     : null;

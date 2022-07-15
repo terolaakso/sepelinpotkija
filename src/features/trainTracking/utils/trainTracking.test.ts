@@ -10,10 +10,10 @@ describe('selecting events', () => {
     const result = getCurrentCommercialStops(train, 0);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe('TKU');
+    expect(result[0].id).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
 
-    expect(result[1].name).toBe('KUT');
+    expect(result[1].id).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
     expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
@@ -23,10 +23,10 @@ describe('selecting events', () => {
     const result = getCurrentStations(train, 0);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe('TKU');
+    expect(result[0].id).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
 
-    expect(result[1].name).toBe('KUT');
+    expect(result[1].id).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
     expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
@@ -36,7 +36,7 @@ describe('selecting events', () => {
     const result = getCurrentCommercialStops(train, 1);
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe('KUT');
+    expect(result[0].id).toBe('KUT');
     expect(result[0].departureTime).not.toBeNull();
     expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
@@ -46,9 +46,9 @@ describe('selecting events', () => {
     const result = getCurrentStations(train, 1);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe('TKU');
+    expect(result[0].id).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
-    expect(result[1].name).toBe('KUT');
+    expect(result[1].id).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
   });
 
@@ -57,11 +57,11 @@ describe('selecting events', () => {
     const result = getCurrentCommercialStops(train, 2);
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe('KUT');
+    expect(result[0].id).toBe('KUT');
     expect(result[0].departureTime).not.toBeNull();
     expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
 
-    expect(result[1].name).toBe('PO');
+    expect(result[1].id).toBe('PO');
     expect(result[1].departureTime).not.toBeNull();
     expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
@@ -71,11 +71,11 @@ describe('selecting events', () => {
     const result = getCurrentStations(train, 2);
     expect(result.length).toBe(3);
 
-    expect(result[0].name).toBe('TKU');
+    expect(result[0].id).toBe('TKU');
     expect(result[0].departureTime).toBeNull();
-    expect(result[1].name).toBe('KUT');
+    expect(result[1].id).toBe('KUT');
     expect(result[1].departureTime).not.toBeNull();
-    expect(result[2].name).toBe('PIK');
+    expect(result[2].id).toBe('PIK');
     expect(result[2].departureTime).not.toBeNull(); // Piikkiö has different arrival and departure times by couple of seconds
   });
 
@@ -85,7 +85,7 @@ describe('selecting events', () => {
 
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe('PO');
+    expect(result[0].id).toBe('PO');
     expect(result[0].departureTime).not.toBeNull();
     expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
@@ -95,11 +95,11 @@ describe('selecting events', () => {
     const result = getCurrentStations(train, 5); // seuraavana paimio
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe('PIK');
+    expect(result[0].id).toBe('PIK');
     expect(result[0].departureTime).not.toBeNull();
     expect(result[0].time < (result[0].departureTime ?? DateTime.fromMillis(0))).toBe(true);
 
-    expect(result[1].name).toBe('PO');
+    expect(result[1].id).toBe('PO');
     expect(result[1].departureTime).not.toBeNull();
     expect(result[1].time < (result[1].departureTime ?? DateTime.fromMillis(0))).toBe(true);
   });
@@ -110,7 +110,7 @@ describe('selecting events', () => {
 
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe('HKI');
+    expect(result[0].id).toBe('HKI');
     expect(result[0].departureTime).toBeNull();
   });
 
@@ -119,10 +119,10 @@ describe('selecting events', () => {
     const result = getCurrentStations(train, 13); // seuraavana helsinki
     expect(result.length).toBe(2);
 
-    expect(result[0].name).toBe('PKU');
+    expect(result[0].id).toBe('PKU');
     expect(result[0].departureTime).toBeNull();
 
-    expect(result[1].name).toBe('HKI');
+    expect(result[1].id).toBe('HKI');
     expect(result[1].departureTime).toBeNull();
   });
 
@@ -137,7 +137,7 @@ describe('selecting events', () => {
     const result = getCurrentStations(train, 14); // helsingissä
     expect(result.length).toBe(1);
 
-    expect(result[0].name).toBe('HKI');
+    expect(result[0].id).toBe('HKI');
     expect(result[0].departureTime).toBeNull();
   });
 

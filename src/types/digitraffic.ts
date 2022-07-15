@@ -385,3 +385,15 @@ export interface ThirdLevelCause {
   validFrom: string;
   id: number;
 }
+
+export interface FirstLevelCauseCollection {
+  [id: number]: FirstLevelCause | undefined;
+}
+
+export interface SecondLevelCauseCollection {
+  [id: number]: SecondLevelCause | undefined;
+}
+
+export interface ThirdLevelCauseCollection {
+  [id: number]: ThirdLevelCause | undefined;
+}

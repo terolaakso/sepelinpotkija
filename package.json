@@ -8,24 +8,25 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.32",
-    "@types/react-dom": "^18.0.3",
     "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "buffer": "^6.0.3",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "luxon": "^2.4.0",
-    "mqtt-pattern": "^1.2.0",
     "mqtt": "^4.3.7",
+    "mqtt-pattern": "^1.2.0",
     "process": "^0.11.10",
+    "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "react": "^18.1.0",
     "typescript": "^4.6.4",
     "url": "^0.11.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",
@@ -38,8 +39,8 @@
     "eslint-plugin-jest-dom": "^4.0.2",
     "eslint-plugin-jsx-a11y": "^6.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^5.5.1",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
@@ -58,7 +59,8 @@
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
     "check-types": "tsc --project tsconfig.json --pretty --noEmit",
     "prepare": "husky install",
-    "validate": "npm-run-all --parallel check-types && lint-staged"
+    "validate:staged": "npm-run-all --parallel check-types && lint-staged",
+    "validate": "npm-run-all --parallel check-types lint"
   },
   "browserslist": {
     "production": [
@@ -76,5 +78,10 @@
     "*.+(ts|tsx)": [
       "npm run lint"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/src/$1"
+    }
   }
 }

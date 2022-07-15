@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
-import { getLocationFromContext, TrainContextProps } from '@/components/TrainData';
 import { calculateCauses } from '@/features/lateCauses';
+import { getLocationFromStore, useTrainDataStore } from '@/stores/trainData';
 import {
   distanceBetweenCoordsInKm,
   LatLon,
@@ -25,11 +25,7 @@ interface StationSegment extends StationSegmentLocation {
   toIndex: number;
 }
 
-export function adjustTimetableByLocation(
-  train: Train,
-  location: TrainLocation | null,
-  stations: StationCollection
-): Train {
+export function adjustTimetableByLocation(train: Train, location: TrainLocation | null): Train {
   const LOCATION_USABLE_MAX_MINUTES = 1;
   if (
     !location ||
@@ -42,10 +38,11 @@ export function adjustTimetableByLocation(
     lateMinutes: calculateLateMins(train.timetableRows, train.latestActualTimeIndex),
     currentSpeed: location.speed,
   };
-  if (isTrainAtStation(filledWithNewData, location, stations)) {
+  if (isTrainAtStation(filledWithNewData, location)) {
     const withoutLocationAdjustment = resetTimes(filledWithNewData);
     return withoutLocationAdjustment;
   }
+  const stations = useTrainDataStore.getState().stations;
   const segment = findClosestStationSegment(filledWithNewData, location, stations);
   if (!segment) {
     return filledWithNewData;
@@ -60,7 +57,6 @@ export function adjustTimetableByLocation(
 }
 
 function fixTimesInWrongOrder(rows: TimetableRow[], fixFromIndex: number): TimetableRow[] {
-  console.log(new Date().toLocaleTimeString(), 'Fixing times in wrong order', fixFromIndex);
   const result: TimetableRow[] = [...rows];
   for (let i = fixFromIndex - 1; i >= 0; i--) {
     const row = result[i];
@@ -70,6 +66,7 @@ function fixTimesInWrongOrder(rows: TimetableRow[], fixFromIndex: number): Timet
         ...row,
         time: nextTime,
       };
+      console.log(new Date().toLocaleTimeString(), 'Fixed time in wrong order', i);
     }
   }
   return result;
@@ -79,11 +76,7 @@ function fixTimesInWrongOrder(rows: TimetableRow[], fixFromIndex: number): Timet
  * According to times from Digitraffic, the train is at the station based on the current time,
  *  and if we have a GPS location, it is not more than 1 km from the station.
  */
-export function isTrainAtStation(
-  train: Train,
-  location: TrainLocation,
-  stations: StationCollection
-): boolean {
+export function isTrainAtStation(train: Train, location: TrainLocation): boolean {
   const MAX_STATION_RANGE_KM = 1;
   const now = DateTime.now();
   const rows = train.timetableRows;
@@ -114,6 +107,7 @@ export function isTrainAtStation(
   // const result = isAtStationAccordingToTime || isAtStationAccordingToActualTime;
   const result = isAtStationAccordingToActualTime;
   if (result && location) {
+    const stations = useTrainDataStore.getState().stations;
     const station = stations[rows[Math.max(actualIndex, 0)].stationShortCode];
     if (station) {
       const distance = distanceBetweenCoordsInKm(location.location, station.location);
@@ -417,19 +411,12 @@ function floorDurationToSeconds(duration: Duration): Duration {
   });
 }
 
-export function fillNewTrainWithDetails(train: Train, context: TrainContextProps): Train {
-  const location = getLocationFromContext(train.departureDate, train.trainNumber, context);
-  const fixedTrain = location
-    ? adjustTimetableByLocation(train, location, context.stations)
-    : train;
+export function fillNewTrainWithDetails(train: Train): Train {
+  const location = getLocationFromStore(train.departureDate, train.trainNumber);
+  const fixedTrain = location ? adjustTimetableByLocation(train, location) : train;
   const trainWithLateCauses: Train = {
     ...fixedTrain,
-    currentLateCauses: calculateCauses(
-      fixedTrain,
-      context.firstLevelCauses,
-      context.secondLevelCauses,
-      context.thirdLevelCauses
-    ),
+    currentLateCauses: calculateCauses(fixedTrain),
   };
   return trainWithLateCauses;
 }

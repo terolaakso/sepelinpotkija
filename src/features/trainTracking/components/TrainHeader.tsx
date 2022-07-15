@@ -1,10 +1,8 @@
-import { useContext, useEffect, useRef } from 'react';
-
 import CommuterBadge from '@/components/CommuterBadge';
 import DifferenceBadge from '@/components/DifferenceBadge';
-import { TrainContext, TrainContextProps } from '@/components/TrainData';
 import TrainReadyBadge from '@/components/TrainReadyBadge';
 import { LateCauses } from '@/features/lateCauses';
+import { useTrainDataStore } from '@/stores/trainData';
 import { Train } from '@/types/Train';
 
 export interface TrainHeaderProps {
@@ -13,17 +11,11 @@ export interface TrainHeaderProps {
 }
 
 export default function TrainHeader({ train, isExpired }: TrainHeaderProps) {
-  const trainDataRef = useRef<TrainContextProps>();
-  const trainDataContext = useContext(TrainContext);
-
-  useEffect(() => {
-    trainDataRef.current = trainDataContext;
-  }, [trainDataContext]);
+  const stations = useTrainDataStore((state) => state.stations);
 
   if (train === null) {
     return null;
   }
-  const stations = trainDataRef.current?.stations || {};
   const origin = stations[train.timetableRows[0].stationShortCode]?.name ?? '';
   const destination =
     stations[train.timetableRows[train.timetableRows.length - 1].stationShortCode]?.name ?? '';

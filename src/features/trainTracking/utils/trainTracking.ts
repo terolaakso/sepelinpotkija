@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { DateTime } from 'luxon';
 
+import { useTrainDataStore } from '@/stores/trainData';
 import { StopType, TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
 
@@ -16,10 +17,10 @@ export function calculateCurrentEventsForTrain(train: Train): {
 
   const now = DateTime.now();
   const nextStationCode =
-    allStations.find((event) => (event.departureTime ?? event.time) > now)?.name ?? null;
+    allStations.find((event) => (event.departureTime ?? event.time) > now)?.id ?? null;
   // TODO: Generate infos for "extra" stations
   // TODO: Encounters
-  const uniqueEvents = _.unionBy([...commercialStops, ...allStations], (row) => row.name);
+  const uniqueEvents = _.unionBy([...commercialStops, ...allStations], (row) => row.id);
   const sortedEvents = _.sortBy(uniqueEvents, (row) => row.time);
   const withCountdown = calculateCountdown(sortedEvents);
   return { events: withCountdown, nextStationCode };
@@ -50,13 +51,15 @@ function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
 }
 
 function createEvent(rows: TimetableRow[], index: number): TrainEvent {
+  const stations = useTrainDataStore.getState().stations;
   const row = rows[index];
   const departureTime =
     index > 0 && index + 1 < rows.length && +row.time !== +rows[index + 1].time
       ? rows[index + 1].time
       : null;
   return {
-    name: row.stationShortCode,
+    id: row.stationShortCode,
+    name: stations[row.stationShortCode]?.name ?? row.stationShortCode,
     time: row.time,
     departureTime,
     eventType: row.stopType === StopType.Commercial ? TrainEventType.Stop : TrainEventType.Station,

@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { getTrainsOfStation } from '@/api/digitrafficClient';
-import { TrainContext, TrainContextProps } from '@/components/TrainData';
+import { useTrainDataStore } from '@/stores/trainData';
 import { fillNewTrainWithDetails } from '@/utils/timetableCalculation';
 
 import { useInterval } from './useInterval';
@@ -10,14 +10,9 @@ import { useInterval } from './useInterval';
 const FETCH_INTERVAL_MINUTES = 1;
 
 export default function useStationWatch(stationCode: string | null) {
-  const trainDataRef = useRef<TrainContextProps>();
-  const trainDataContext = useContext(TrainContext);
   const previousFetchTimestampRef = useRef(DateTime.fromMillis(0));
   const [currentStation, setCurrentStation] = useState('');
-
-  useEffect(() => {
-    trainDataRef.current = trainDataContext;
-  }, [trainDataContext]);
+  const setTrain = useTrainDataStore((state) => state.setTrain);
 
   useInterval(
     async () => {
@@ -34,10 +29,8 @@ export default function useStationWatch(stationCode: string | null) {
       setCurrentStation(stationCode);
       const trains = await getTrainsOfStation(stationCode);
       trains.forEach((train) => {
-        const fixedTrain = trainDataRef.current
-          ? fillNewTrainWithDetails(train, trainDataRef.current)
-          : train;
-        trainDataRef.current?.setTrain(fixedTrain);
+        const fixedTrain = fillNewTrainWithDetails(train);
+        setTrain(fixedTrain);
       });
     },
     stationCode !== null ? 1000 : null
