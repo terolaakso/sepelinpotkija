@@ -7,6 +7,15 @@ import { timetableRowFixture } from './timetablerow.fixture';
 export function trainFixture(props?: Partial<Train>): Train {
   return {
     ...defaultTrain,
+    timetableRows: [
+      timetableRowFixture(),
+      timetableRowFixture({
+        stationShortCode: 'KUT',
+        scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+        actualTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+        time: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+      }),
+    ],
     ...props,
   };
 }
@@ -24,13 +33,5 @@ const defaultTrain: Train = {
   lateMinutes: 0,
   isReady: false,
   lineId: null,
-  timetableRows: [
-    timetableRowFixture(),
-    timetableRowFixture({
-      stationShortCode: 'KUT',
-      scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-      actualTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-      time: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-    }),
-  ],
+  timetableRows: [],
 };

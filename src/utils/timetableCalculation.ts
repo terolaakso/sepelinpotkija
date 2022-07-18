@@ -76,7 +76,7 @@ function fixTimesInWrongOrder(rows: TimetableRow[], fixFromIndex: number): Timet
  * According to times from Digitraffic, the train is at the station based on the current time,
  *  and if we have a GPS location, it is not more than 1 km from the station.
  */
-export function isTrainAtStation(train: Train, location: TrainLocation): boolean {
+export function isTrainAtStation(train: Train, location: TrainLocation | null): boolean {
   const MAX_STATION_RANGE_KM = 1;
   const now = DateTime.now();
   const rows = train.timetableRows;
@@ -89,21 +89,6 @@ export function isTrainAtStation(train: Train, location: TrainLocation): boolean
       rows[actualIndex].stationShortCode === rows[actualIndex + 1].stationShortCode &&
       rows[actualIndex].stopType !== StopType.None &&
       now < rows[actualIndex + 1].bestDigitrafficTime);
-  if (actualIndex >= 0 && actualIndex + 1 < rows.length) {
-    console.log(
-      new Date().toLocaleTimeString(),
-      'index',
-      actualIndex,
-      'actualRow',
-      rows[actualIndex].stationShortCode,
-      'nextRow',
-      rows[actualIndex + 1].stationShortCode,
-      'nextTime',
-      rows[actualIndex + 1].bestDigitrafficTime.toFormat('HH:mm:ss'),
-      'train',
-      train.trainNumber
-    );
-  }
   // const result = isAtStationAccordingToTime || isAtStationAccordingToActualTime;
   const result = isAtStationAccordingToActualTime;
   if (result && location) {
@@ -111,14 +96,6 @@ export function isTrainAtStation(train: Train, location: TrainLocation): boolean
     const station = stations[rows[Math.max(actualIndex, 0)].stationShortCode];
     if (station) {
       const distance = distanceBetweenCoordsInKm(location.location, station.location);
-      if (isAtStationAccordingToActualTime) {
-        console.log(
-          new Date().toLocaleTimeString(),
-          'Train is at station',
-          distance,
-          isAtStationAccordingToActualTime
-        );
-      }
       return distance < MAX_STATION_RANGE_KM;
     }
   }

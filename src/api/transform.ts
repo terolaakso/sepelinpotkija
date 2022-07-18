@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
 import {
@@ -20,13 +21,17 @@ export function transformTrains(trains: DigiTrafficTrain[]): Train[] {
   return result;
 }
 
+function getLatestActualTimeIndex(rows: TimetableRow[]): number {
+  return _.findLastIndex(rows, (row) => isNotNil(row.actualTime));
+}
+
 function transformTrain(train: DigiTrafficTrain): Train | null {
   if (train.cancelled) {
     return null;
   }
   const timetableRows = train.timeTableRows?.map(transformTimetableRow).filter(isNotNil) ?? [];
   const fixedRows = fixTimetableErrors(timetableRows);
-  const latestActualTimeIndex = fixedRows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
+  const latestActualTimeIndex = getLatestActualTimeIndex(fixedRows);
   const isReady =
     latestActualTimeIndex < fixedRows.length - 1 &&
     fixedRows[latestActualTimeIndex + 1].isTrainReady;
@@ -65,11 +70,6 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
     actualTime,
     time: bestTime,
     bestDigitrafficTime: bestTime,
-    timeType: actualTime
-      ? TimeType.Actual
-      : estimatedTime
-      ? TimeType.Estimated
-      : TimeType.Scheduled,
     differenceInMinutes: Math.round(bestTime.diff(scheduledTime).as('minutes')),
     stopType: row.commercialStop
       ? StopType.Commercial
@@ -98,18 +98,31 @@ function fixTimetableErrors(rows: TimetableRow[]): TimetableRow[] {
   return futureTimesFixed;
 }
 
+function rowTimeType(row: TimetableRow): TimeType {
+  if (isNotNil(row.actualTime)) {
+    return TimeType.Actual;
+  } else if (isNotNil(row.estimatedTime)) {
+    return TimeType.Estimated;
+  } else if (isNotNil(row.scheduledTime)) {
+    return TimeType.Scheduled;
+  } else {
+    return TimeType.None;
+  }
+}
+
 function fixErrorsByType(rows: TimetableRow[], fixType: TimeType): TimetableRow[] {
   let isFixing = false;
   const result: TimetableRow[] = [...rows];
 
   for (let i = result.length - 1; i >= 0; i--) {
     const row = result[i];
-    isFixing = isFixing || row.timeType === fixType;
+    const timeType = rowTimeType(row);
+    isFixing = isFixing || timeType === fixType;
 
     if (
       isFixing &&
-      ((fixType === TimeType.Actual && row.timeType !== TimeType.Actual) ||
-        (fixType === TimeType.Estimated && row.timeType === TimeType.Scheduled))
+      ((fixType === TimeType.Actual && timeType !== TimeType.Actual) ||
+        (fixType === TimeType.Estimated && timeType === TimeType.Scheduled))
     ) {
       const nextRow = result[i + 1];
       const isBetweenStations = row.stationShortCode !== nextRow.stationShortCode;
@@ -129,7 +142,7 @@ function fixErrorsByType(rows: TimetableRow[], fixType: TimeType): TimetableRow[
 }
 
 function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
-  const latestInThePastIndex = rows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
+  const latestInThePastIndex = getLatestActualTimeIndex(rows);
 
   const result: TimetableRow[] = [...rows];
 
@@ -149,7 +162,7 @@ function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
 }
 
 function fixFutureTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
-  const latestInThePastIndex = rows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
+  const latestInThePastIndex = getLatestActualTimeIndex(rows);
 
   const result: TimetableRow[] = [...rows];
 

@@ -56,15 +56,12 @@ describe('late causes', () => {
   };
 
   beforeAll(() => {
-    const {
-      setFirstLevelCauses: populateFirstLevelCauses,
-      setSecondLevelCauses: populateSecondLevelCauses,
-      setThirdLevelCauses: populateThirdLevelCauses,
-    } = useTrainDataStore.getState();
+    const { setFirstLevelCauses, setSecondLevelCauses, setThirdLevelCauses } =
+      useTrainDataStore.getState();
 
-    populateFirstLevelCauses(firstLevelCauses);
-    populateSecondLevelCauses(secondLevelCauses);
-    populateThirdLevelCauses(thirdLevelCauses);
+    setFirstLevelCauses(firstLevelCauses);
+    setSecondLevelCauses(secondLevelCauses);
+    setThirdLevelCauses(thirdLevelCauses);
   });
 
   it('train became late after leaving on time', () => {

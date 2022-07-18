@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import { StopType, TimetableRow, TimeType } from '@/types/Train';
+import { StopType, TimetableRow } from '@/types/Train';
 
 export function timetableRowFixture(props?: Partial<TimetableRow>): TimetableRow {
   return {
@@ -17,7 +17,6 @@ const defaultTimetableRow: TimetableRow = {
   time: DateTime.fromISO('2018-12-30T06:03:00.000Z'),
   bestDigitrafficTime: DateTime.fromISO('2018-12-30T06:03:00.000Z'),
   differenceInMinutes: 0,
-  timeType: TimeType.Actual,
   estimatedTime: null,
   isTrainReady: true,
   lateCauses: [],
