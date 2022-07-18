@@ -131,13 +131,13 @@ function fixErrorsByType(rows: TimetableRow[], fixType: TimeType): TimetableRow[
 function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
   const latestInThePastIndex = rows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
 
-  const pastRows: TimetableRow[] = [...rows];
+  const result: TimetableRow[] = [...rows];
 
   for (let i = latestInThePastIndex - 1; i >= 0; i--) {
-    const row = pastRows[i];
-    const nextRow = pastRows[i + 1];
+    const row = result[i];
+    const nextRow = result[i + 1];
     if (row.time > nextRow.time) {
-      pastRows[i] = {
+      result[i] = {
         ...row,
         time: nextRow.time,
         bestDigitrafficTime: nextRow.time,
@@ -145,25 +145,25 @@ function fixPastTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
     }
   }
 
-  return pastRows;
+  return result;
 }
 
 function fixFutureTimesInWrongOrder(rows: TimetableRow[]): TimetableRow[] {
   const latestInThePastIndex = rows.map((r) => r.timeType).lastIndexOf(TimeType.Actual);
 
-  const futureRows: TimetableRow[] = [...rows];
+  const result: TimetableRow[] = [...rows];
 
-  for (let i = Math.max(latestInThePastIndex + 1, 1); i < futureRows.length; i++) {
-    const row = futureRows[i];
-    const previousRow = futureRows[i - 1];
+  for (let i = Math.max(latestInThePastIndex + 1, 1); i < result.length; i++) {
+    const row = result[i];
+    const previousRow = result[i - 1];
 
     const isBetweenStations = row.stationShortCode !== previousRow.stationShortCode;
     const time = isBetweenStations
       ? fixedTimeBetweenStations(previousRow, row)
       : fixedTimeAtStation(previousRow, row);
-    futureRows[i] = { ...row, time, bestDigitrafficTime: time };
+    result[i] = { ...row, time, bestDigitrafficTime: time };
   }
-  return futureRows;
+  return result;
 }
 
 function fixedTimeBetweenStations(from: TimetableRow, to: TimetableRow): DateTime {
@@ -171,8 +171,9 @@ function fixedTimeBetweenStations(from: TimetableRow, to: TimetableRow): DateTim
   const scheduledDuration = to.scheduledTime.diff(from.scheduledTime);
 
   if (!isDurationWithinTolerance(duration, scheduledDuration)) {
-    if (from.estimatedTime && to.estimatedTime) {
-      const estimatedDuration = to.estimatedTime.diff(from.estimatedTime);
+    const fromEstimate = from.actualTime ?? from.estimatedTime; // "from" might have actual time, "to" never has
+    if (fromEstimate && to.estimatedTime) {
+      const estimatedDuration = to.estimatedTime.diff(fromEstimate);
       if (isDurationWithinTolerance(estimatedDuration, scheduledDuration)) {
         return from.time.plus(estimatedDuration);
       }
