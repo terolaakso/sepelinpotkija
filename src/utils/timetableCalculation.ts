@@ -168,27 +168,36 @@ function findPreviousStation(
     (row) => row.stationShortCode !== train.timetableRows[index].stationShortCode,
     Math.max(index - 1, 0)
   );
-  const station = stations[train.timetableRows[i].stationShortCode];
-  if (i >= 0 && isNotNil(station)) {
-    return {
-      index: i,
-      station: station,
-    };
+  if (i >= 0) {
+    const station = stations[train.timetableRows[i].stationShortCode];
+    if (isNotNil(station)) {
+      return {
+        index: i,
+        station,
+      };
+    }
   }
   return null;
 }
 
-function findNextStation(train: Train, index: number, stations: StationCollection) {
+function findNextStation(
+  train: Train,
+  index: number,
+  stations: StationCollection
+): StationIndex | null {
   const i = _.findIndex(
     train.timetableRows,
     (row) => row.stationShortCode !== train.timetableRows[index].stationShortCode,
     index + 1
   );
   if (i >= 0 && i < train.timetableRows.length) {
-    return {
-      index: i,
-      station: stations[train.timetableRows[i].stationShortCode],
-    };
+    const station = stations[train.timetableRows[i].stationShortCode];
+    if (isNotNil(station)) {
+      return {
+        index: i,
+        station,
+      };
+    }
   }
   return null;
 }
@@ -208,7 +217,7 @@ export function findClosestStationSegment(
       )
     : null;
   const nextStation = findNextStation(train, closestStation.index, stations);
-  const nextSegment = nextStation?.station
+  const nextSegment = nextStation
     ? nearestPointSegment(
         closestStation.station.location,
         nextStation.station.location,
@@ -218,7 +227,7 @@ export function findClosestStationSegment(
   if (
     previousStation &&
     previousSegment &&
-    previousSegment?.distance < (nextSegment?.distance ?? Number.MAX_VALUE)
+    previousSegment.distance < (nextSegment?.distance ?? Number.MAX_VALUE)
   ) {
     return {
       ...previousSegment,

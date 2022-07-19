@@ -10,6 +10,7 @@ import { LatLon } from '@/utils/geography';
 import {
   adjustTimetableByLocation,
   findClosestFutureStation,
+  findClosestStationSegment,
   isTrainAtStation,
 } from '@/utils/timetableCalculation';
 
@@ -253,6 +254,69 @@ describe('finding the closest station', () => {
   });
 });
 
+describe('findig the closest station segment', () => {
+  beforeAll(() => {
+    const { setStations } = useTrainDataStore.getState();
+    setStations(stations);
+  });
+
+  const train = trainFixture({
+    latestActualTimeIndex: -1,
+    timetableRows: rowsForTest({ minutes: -30 }, { minutes: 2 }).map(timetableRowFixture),
+  });
+
+  it('train before the origin station', () => {
+    const location = trainLocationFixture({ location: locations.atHPKStationNorthOfStationPoint });
+
+    const segment = findClosestStationSegment(train, location);
+
+    expect(segment).toMatchObject({ fromIndex: 0, toIndex: 1, location: 0 });
+  });
+  it('train after the origin station', () => {
+    const location = trainLocationFixture({ location: locations.twoKmSouthOfHPK });
+
+    const segment = findClosestStationSegment(train, location);
+
+    expect(segment).toMatchObject({ fromIndex: 0, toIndex: 1 });
+    expect(segment?.location).toBeGreaterThan(0);
+    expect(segment?.location).toBeLessThan(0.5);
+  });
+  it('train before a middle station', () => {
+    const location = trainLocationFixture({ location: locations.halfKmNorthOfKLO });
+
+    const segment = findClosestStationSegment(train, location);
+
+    expect(segment).toMatchObject({ fromIndex: 0, toIndex: 1 });
+    expect(segment?.location).toBeGreaterThan(0.5);
+    expect(segment?.location).toBeLessThan(1);
+  });
+  it('train after a middle station', () => {
+    const location = trainLocationFixture({ location: locations.twoKmSouthOfKLO });
+
+    const segment = findClosestStationSegment(train, location);
+
+    expect(segment).toMatchObject({ fromIndex: 2, toIndex: 3 });
+    expect(segment?.location).toBeGreaterThan(0);
+    expect(segment?.location).toBeLessThan(0.5);
+  });
+  it('train before the final station', () => {
+    const location = trainLocationFixture({ location: locations.twoKmNorthOfVLP });
+
+    const segment = findClosestStationSegment(train, location);
+
+    expect(segment).toMatchObject({ fromIndex: 2, toIndex: 3 });
+    expect(segment?.location).toBeGreaterThan(0.5);
+    expect(segment?.location).toBeLessThan(1);
+  });
+  it('train after the final station', () => {
+    const location = trainLocationFixture({ location: locations.atVLPStationSouthOfStationPoint });
+
+    const segment = findClosestStationSegment(train, location);
+
+    expect(segment).toMatchObject({ fromIndex: 2, toIndex: 3, location: 1 });
+  });
+});
+
 // function logTimes(rows: TimetableRow[]): void {
 //   const times = rows.map((row) => [row.time.toISO(), row.bestDigitrafficTime.toISO()]);
 //   console.log(times, DateTime.now().toISO());
@@ -363,6 +427,14 @@ const locations = createLocations({
     lat: 62.249415598,
     lon: 24.452555689,
   },
+  twoKmSouthOfHPK: {
+    lat: 62.229846111,
+    lon: 24.469100833,
+  },
+  halfKmNorthOfKLO: {
+    lat: 62.132454167,
+    lon: 24.506371111,
+  },
   atKLOStationSouthOfStationPoint: {
     lat: 62.125693056,
     lon: 24.507781389,
@@ -371,9 +443,9 @@ const locations = createLocations({
     lat: 62.110116667,
     lon: 24.505612778,
   },
-  halfKmNorthOfKLO: {
-    lat: 62.132454167,
-    lon: 24.506371111,
+  twoKmNorthOfVLP: {
+    lat: 62.043631667,
+    lon: 24.502271389,
   },
   atVLPStationSouthOfStationPoint: {
     lat: 62.021724722,
