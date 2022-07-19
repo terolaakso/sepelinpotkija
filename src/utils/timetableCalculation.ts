@@ -42,8 +42,7 @@ export function adjustTimetableByLocation(train: Train, location: TrainLocation 
     const withoutLocationAdjustment = resetTimes(filledWithNewData);
     return withoutLocationAdjustment;
   }
-  const stations = useTrainDataStore.getState().stations;
-  const segment = findClosestStationSegment(filledWithNewData, location, stations);
+  const segment = findClosestStationSegment(filledWithNewData, location);
   if (!segment) {
     return filledWithNewData;
   }
@@ -89,7 +88,6 @@ export function isTrainAtStation(train: Train, location: TrainLocation | null): 
       rows[actualIndex].stationShortCode === rows[actualIndex + 1].stationShortCode &&
       rows[actualIndex].stopType !== StopType.None &&
       now < rows[actualIndex + 1].bestDigitrafficTime);
-  // const result = isAtStationAccordingToTime || isAtStationAccordingToActualTime;
   const result = isAtStationAccordingToActualTime;
   if (result && location) {
     const stations = useTrainDataStore.getState().stations;
@@ -98,13 +96,6 @@ export function isTrainAtStation(train: Train, location: TrainLocation | null): 
       const distance = distanceBetweenCoordsInKm(location.location, station.location);
       return distance < MAX_STATION_RANGE_KM;
     }
-  }
-  if (result) {
-    console.log(
-      new Date().toLocaleTimeString(),
-      'Train is at station',
-      isAtStationAccordingToActualTime
-    );
   }
   return result;
 }
@@ -132,11 +123,7 @@ export function calculateLateMins(
   return lateMins;
 }
 
-// function digitrafficTime(row: TimetableRow): DateTime {
-//   return row.actualTime ?? row.estimatedTime ?? row.scheduledTime;
-// }
-
-function findClosestFutureStation(
+export function findClosestFutureStation(
   train: Train,
   location: LatLon,
   stations: StationCollection
@@ -206,11 +193,11 @@ function findNextStation(train: Train, index: number, stations: StationCollectio
   return null;
 }
 
-function findClosestStationSegment(
+export function findClosestStationSegment(
   train: Train,
-  location: TrainLocation,
-  stations: StationCollection
+  location: TrainLocation
 ): StationSegment | null {
+  const stations = useTrainDataStore.getState().stations;
   const closestStation = findClosestFutureStation(train, location.location, stations);
   const previousStation = findPreviousStation(train, closestStation.index, stations);
   const previousSegment = previousStation
