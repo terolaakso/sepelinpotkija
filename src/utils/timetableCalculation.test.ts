@@ -40,15 +40,181 @@ describe('timetable adjustment using gps location', () => {
   it('ignores adjustments by gps location when train is at station', () => {
     const train = trainFixture({
       latestActualTimeIndex: 1,
-      timetableRows: rowsForTest({ minutes: -10 }, { minutes: 2 }, { seconds: 30 }).map(
-        timetableRowFixture
-      ),
+      timetableRows: rowsForTest(
+        { minutes: -10 },
+        { firstStopDuration: { minutes: 2 }, gpsFixOffset: { seconds: 30 } }
+      ).map(timetableRowFixture),
     });
     const location = trainLocationFixture({ location: locations.atKLOStationSouthOfStationPoint });
 
     train.timetableRows.forEach((row) => {
       expect(row.time).not.toEqual(row.bestDigitrafficTime);
     });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    adjusted.timetableRows.forEach((row) => {
+      expect(row.time).toEqual(row.bestDigitrafficTime);
+    });
+  });
+
+  it('uses location timestamp as departure time when train stopped before the station point and departure time has passed', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: -1,
+      timetableRows: rowsForTest({ minutes: -12 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    const location = trainLocationFixture({ location: locations.atKLOStationNorthOfStationPoint });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    expect(adjusted.timetableRows[0].time).toEqual(adjusted.timetableRows[0].bestDigitrafficTime);
+    expect(adjusted.timetableRows[1].time).toEqual(adjusted.timetableRows[1].bestDigitrafficTime);
+    expect(adjusted.timetableRows[2].time).toEqual(location.timestamp);
+    expect(adjusted.timetableRows[2].time).not.toEqual(
+      adjusted.timetableRows[2].bestDigitrafficTime
+    );
+    expect(adjusted.timetableRows[3].time).toEqual(location.timestamp.plus({ minutes: 11 }));
+  });
+
+  it('adjusts the origin start time when not yet departed but depature time has passed', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: -1,
+      timetableRows: rowsForTest({ minutes: -1 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    const location = trainLocationFixture({ location: locations.atHPKStationSouthOfStationPoint });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    expect(adjusted.timetableRows[0].time.toMillis()).toBeGreaterThan(
+      adjusted.timetableRows[0].bestDigitrafficTime.toMillis()
+    );
+    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(location.timestamp.toMillis());
+    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
+      location.timestamp.toMillis()
+    );
+    expect(adjusted.timetableRows[1].time).not.toEqual(
+      adjusted.timetableRows[1].bestDigitrafficTime
+    );
+    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
+      adjusted.timetableRows[0].time.toMillis()
+    );
+    expect(adjusted.timetableRows[2].time.toMillis()).toBeGreaterThan(
+      adjusted.timetableRows[1].time.toMillis()
+    );
+    expect(adjusted.timetableRows[3].time.toMillis()).toBeGreaterThan(
+      adjusted.timetableRows[2].time.toMillis()
+    );
+  });
+
+  it('adjusts the times backwards all the way to latest actual time', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 0,
+      timetableRows: rowsForTest({ minutes: -30 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    const location = trainLocationFixture({ location: locations.atKLOStationSouthOfStationPoint });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    expect(adjusted.timetableRows[0].time.toMillis()).toBeGreaterThan(
+      adjusted.timetableRows[0].bestDigitrafficTime.toMillis()
+    );
+    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.timetableRows[1].time.toMillis()
+    );
+    expect(adjusted.timetableRows[1].time.toMillis()).toBeLessThan(
+      adjusted.timetableRows[2].time.toMillis()
+    );
+    expect(adjusted.timetableRows[2].time.toMillis()).toBeLessThan(location.timestamp.toMillis());
+    expect(adjusted.timetableRows[3].time.toMillis()).toBeGreaterThan(
+      location.timestamp.toMillis()
+    );
+  });
+
+  it('does not adjust beyond latest actual time', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 1,
+      timetableRows: rowsForTest({ minutes: -30 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    const location = trainLocationFixture({ location: locations.atKLOStationSouthOfStationPoint });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    expect(adjusted.timetableRows[0].time).toEqual(adjusted.timetableRows[0].bestDigitrafficTime);
+    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.timetableRows[1].time.toMillis()
+    );
+    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
+      adjusted.timetableRows[1].bestDigitrafficTime.toMillis()
+    );
+    expect(adjusted.timetableRows[1].time.toMillis()).toBeLessThan(
+      adjusted.timetableRows[2].time.toMillis()
+    );
+    expect(adjusted.timetableRows[2].time.toMillis()).toBeLessThan(location.timestamp.toMillis());
+    expect(adjusted.timetableRows[3].time.toMillis()).toBeGreaterThan(
+      location.timestamp.toMillis()
+    );
+  });
+
+  it('adjusts an early going train until the next stop', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: -1,
+      timetableRows: rowsForTest({ minutes: -7 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    const location = trainLocationFixture({ location: locations.halfKmNorthOfKLO });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.timetableRows[0].bestDigitrafficTime.toMillis()
+    );
+    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.timetableRows[1].time.toMillis()
+    );
+    expect(adjusted.timetableRows[1].time.toMillis()).toBeLessThan(
+      adjusted.timetableRows[1].bestDigitrafficTime.toMillis()
+    );
+    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
+      location.timestamp.toMillis()
+    );
+    expect(adjusted.timetableRows[2].time).toEqual(adjusted.timetableRows[2].bestDigitrafficTime);
+    expect(adjusted.timetableRows[3].time).toEqual(adjusted.timetableRows[3].bestDigitrafficTime);
+  });
+
+  it('does not generate invalid time sequence when train is moving early', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 2,
+      timetableRows: rowsForTest({ minutes: -15 }).map(timetableRowFixture),
+    });
+    const location = trainLocationFixture({ location: locations.twoKmNorthOfVLP });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    for (let i = 0; i < 4 - 1; i++) {
+      expect(adjusted.timetableRows[i].time.toMillis()).toBeLessThanOrEqual(
+        adjusted.timetableRows[i + 1].time.toMillis()
+      );
+    }
+  });
+
+  it('does not adjust times when location is too far back', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 4,
+      timetableRows: rowsForTest(
+        { minutes: -7 },
+        { firstStopDuration: { minutes: 2 }, rowCount: 6 }
+      ).map(timetableRowFixture),
+    });
+    const location = trainLocationFixture({ location: locations.atHPKStationSouthOfStationPoint });
 
     const adjusted = adjustTimetableByLocation(train, location);
 
@@ -64,10 +230,6 @@ describe('when is train at station when location is not available', () => {
       latestActualTimeIndex: -1,
       timetableRows: rowsForTest({ minutes: 1 }).map(timetableRowFixture),
     });
-    train.timetableRows[0].actualTime = null;
-    train.timetableRows[1].actualTime = null;
-    train.timetableRows[2].actualTime = null;
-    train.timetableRows[3].actualTime = null;
 
     const isAtStation = isTrainAtStation(train, null);
 
@@ -109,7 +271,9 @@ describe('when is train at station when location is not available', () => {
   it('is at station when has actual time for arrival and departure time has not yet passed', () => {
     const train = trainFixture({
       latestActualTimeIndex: 1,
-      timetableRows: rowsForTest({ minutes: -10 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -10 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
 
     const isAtStation = isTrainAtStation(train, null);
@@ -120,7 +284,9 @@ describe('when is train at station when location is not available', () => {
   it("is not at station when arrival time has passed and it's not actual", () => {
     const train = trainFixture({
       latestActualTimeIndex: 0,
-      timetableRows: rowsForTest({ minutes: -10 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -10 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
 
     const isAtStation = isTrainAtStation(train, null);
@@ -131,7 +297,9 @@ describe('when is train at station when location is not available', () => {
   it('is not at station when has no actual time for arrival', () => {
     const train = trainFixture({
       latestActualTimeIndex: 0,
-      timetableRows: rowsForTest({ minutes: -8 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -8 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
 
     const isAtStation = isTrainAtStation(train, null);
@@ -139,10 +307,12 @@ describe('when is train at station when location is not available', () => {
     expect(isAtStation).toBe(false);
   });
 
-  it("is not at station when there's no stop in the timetable", () => {
+  it('is not at station when there is no stop in the timetable', () => {
     const train = trainFixture({
       latestActualTimeIndex: 1,
-      timetableRows: rowsForTest({ minutes: -10 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -10 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
     train.timetableRows[1].stopType = StopType.None;
     train.timetableRows[2].stopType = StopType.None;
@@ -162,7 +332,9 @@ describe('when is train at station when location is available', () => {
   it('is not at station when location is more than 1 km away', () => {
     const train = trainFixture({
       latestActualTimeIndex: 1,
-      timetableRows: rowsForTest({ minutes: -10 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -10 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
     const location = trainLocationFixture({ location: locations.twoKmSouthOfKLO });
 
@@ -174,7 +346,9 @@ describe('when is train at station when location is available', () => {
   it('is at station when location is less than 1 km away', () => {
     const train = trainFixture({
       latestActualTimeIndex: 1,
-      timetableRows: rowsForTest({ minutes: -10 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -10 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
     const location = trainLocationFixture({ location: locations.halfKmNorthOfKLO });
 
@@ -188,7 +362,9 @@ describe('finding the closest station', () => {
   it('starts searching from the beginning when train is not yet departed', () => {
     const train = trainFixture({
       latestActualTimeIndex: -1,
-      timetableRows: rowsForTest({ minutes: 1 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: 1 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
 
     const closest = findClosestFutureStation(
@@ -206,7 +382,9 @@ describe('finding the closest station', () => {
   it('choosest the closest station', () => {
     const train = trainFixture({
       latestActualTimeIndex: 1,
-      timetableRows: rowsForTest({ minutes: -12 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -12 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
 
     const closest = findClosestFutureStation(train, locations.twoKmSouthOfKLO, stations);
@@ -220,7 +398,9 @@ describe('finding the closest station', () => {
   it('ignores stations that are earlier than the latest station by actual time', () => {
     const train = trainFixture({
       latestActualTimeIndex: 2,
-      timetableRows: rowsForTest({ minutes: -12 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: -12 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
 
     const closest = findClosestFutureStation(
@@ -238,7 +418,9 @@ describe('finding the closest station', () => {
   it('searches for the closest station all the way to the final destination', () => {
     const train = trainFixture({
       latestActualTimeIndex: 0,
-      timetableRows: rowsForTest({ minutes: 1 }, { minutes: 2 }).map(timetableRowFixture),
+      timetableRows: rowsForTest({ minutes: 1 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
     });
 
     const closest = findClosestFutureStation(
@@ -262,7 +444,9 @@ describe('findig the closest station segment', () => {
 
   const train = trainFixture({
     latestActualTimeIndex: -1,
-    timetableRows: rowsForTest({ minutes: -30 }, { minutes: 2 }).map(timetableRowFixture),
+    timetableRows: rowsForTest({ minutes: -30 }, { firstStopDuration: { minutes: 2 } }).map(
+      timetableRowFixture
+    ),
   });
 
   it('train before the origin station', () => {
@@ -272,6 +456,7 @@ describe('findig the closest station segment', () => {
 
     expect(segment).toMatchObject({ fromIndex: 0, toIndex: 1, location: 0 });
   });
+
   it('train after the origin station', () => {
     const location = trainLocationFixture({ location: locations.twoKmSouthOfHPK });
 
@@ -281,6 +466,7 @@ describe('findig the closest station segment', () => {
     expect(segment?.location).toBeGreaterThan(0);
     expect(segment?.location).toBeLessThan(0.5);
   });
+
   it('train before a middle station', () => {
     const location = trainLocationFixture({ location: locations.halfKmNorthOfKLO });
 
@@ -290,6 +476,7 @@ describe('findig the closest station segment', () => {
     expect(segment?.location).toBeGreaterThan(0.5);
     expect(segment?.location).toBeLessThan(1);
   });
+
   it('train after a middle station', () => {
     const location = trainLocationFixture({ location: locations.twoKmSouthOfKLO });
 
@@ -299,6 +486,7 @@ describe('findig the closest station segment', () => {
     expect(segment?.location).toBeGreaterThan(0);
     expect(segment?.location).toBeLessThan(0.5);
   });
+
   it('train before the final station', () => {
     const location = trainLocationFixture({ location: locations.twoKmNorthOfVLP });
 
@@ -308,6 +496,7 @@ describe('findig the closest station segment', () => {
     expect(segment?.location).toBeGreaterThan(0.5);
     expect(segment?.location).toBeLessThan(1);
   });
+
   it('train after the final station', () => {
     const location = trainLocationFixture({ location: locations.atVLPStationSouthOfStationPoint });
 
@@ -324,16 +513,32 @@ describe('findig the closest station segment', () => {
 
 function rowsForTest(
   departureOffset: DurationLike,
-  firstStopDuration: DurationLike = { minutes: 0 },
-  gpsFixOffset: DurationLike = { seconds: 0 }
+  options?: {
+    firstStopDuration?: DurationLike;
+    gpsFixOffset?: DurationLike;
+    rowCount?: number;
+  }
 ): TimetableRow[] {
+  const defaultOptions = {
+    firstStopDuration: { minutes: 0 },
+    gpsFixOffset: { seconds: 0 },
+    rowCount: 4,
+  };
+  const { firstStopDuration, gpsFixOffset, rowCount } = {
+    ...defaultOptions,
+    ...options,
+  };
   const now = DateTime.now();
   const departureFromOrigin = now.plus(departureOffset);
   const firstLegDuration: DurationLike = { minutes: 9 };
   const firstStopping = departureFromOrigin.plus(firstLegDuration);
   const firstStopDeparture = firstStopping.plus(firstStopDuration);
   const secondLegDuration: DurationLike = { minutes: 11 };
-  const finalStop = firstStopDeparture.plus(secondLegDuration);
+  const secondStopping = firstStopDeparture.plus(secondLegDuration);
+  const secondStopDuration: DurationLike = { minutes: 1 };
+  const secondStopDeparture = secondStopping.plus(secondStopDuration);
+  const thirdLegDuration: DurationLike = { minutes: 10 };
+  const thirdStop = secondStopDeparture.plus(thirdLegDuration);
 
   return [
     {
@@ -379,18 +584,42 @@ function rowsForTest(
       time: firstStopDeparture.plus(gpsFixOffset),
     },
     {
-      actualTime: finalStop,
-      bestDigitrafficTime: finalStop,
+      actualTime: secondStopping,
+      bestDigitrafficTime: secondStopping,
       differenceInMinutes: 0,
       estimatedTime: null,
       isTrainReady: false,
       lateCauses: [],
-      scheduledTime: finalStop,
+      scheduledTime: secondStopping,
       stationShortCode: 'VLP',
       stopType: StopType.Commercial,
-      time: finalStop.plus(gpsFixOffset),
+      time: secondStopping.plus(gpsFixOffset),
     },
-  ];
+    {
+      actualTime: secondStopDeparture,
+      bestDigitrafficTime: secondStopDeparture,
+      differenceInMinutes: 0,
+      estimatedTime: null,
+      isTrainReady: false,
+      lateCauses: [],
+      scheduledTime: secondStopDeparture,
+      stationShortCode: 'VLP',
+      stopType: StopType.Commercial,
+      time: secondStopDeparture.plus(gpsFixOffset),
+    },
+    {
+      actualTime: thirdStop,
+      bestDigitrafficTime: thirdStop,
+      differenceInMinutes: 0,
+      estimatedTime: null,
+      isTrainReady: false,
+      lateCauses: [],
+      scheduledTime: thirdStop,
+      stationShortCode: 'KAS',
+      stopType: StopType.Commercial,
+      time: thirdStop.plus(gpsFixOffset),
+    },
+  ].slice(0, rowCount);
 }
 
 const stations: StationCollection = {
@@ -418,6 +647,14 @@ const stations: StationCollection = {
       lon: 24.506956,
     },
   },
+  KAS: {
+    name: 'Korkeakoski',
+    shortCode: 'KAS',
+    location: {
+      lat: 61.807686,
+      lon: 24.375464,
+    },
+  },
 };
 
 const createLocations = <T extends Record<string, LatLon>>(x: T) => x;
@@ -427,6 +664,10 @@ const locations = createLocations({
     lat: 62.249415598,
     lon: 24.452555689,
   },
+  atHPKStationSouthOfStationPoint: {
+    lat: 62.244518611,
+    lon: 24.456861944,
+  },
   twoKmSouthOfHPK: {
     lat: 62.229846111,
     lon: 24.469100833,
@@ -434,6 +675,10 @@ const locations = createLocations({
   halfKmNorthOfKLO: {
     lat: 62.132454167,
     lon: 24.506371111,
+  },
+  atKLOStationNorthOfStationPoint: {
+    lat: 62.129304167,
+    lon: 24.507260278,
   },
   atKLOStationSouthOfStationPoint: {
     lat: 62.125693056,

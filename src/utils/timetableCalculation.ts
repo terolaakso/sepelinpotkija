@@ -25,34 +25,44 @@ interface StationSegment extends StationSegmentLocation {
   toIndex: number;
 }
 
+const LOCATION_USABLE_MAX_MINUTES = 1;
+const MAX_ALLOWED_GPS_DISTANCE_KM = 10;
+
 export function adjustTimetableByLocation(train: Train, location: TrainLocation | null): Train {
-  const LOCATION_USABLE_MAX_MINUTES = 1;
   if (
     !location ||
     DateTime.now().diff(location.timestamp).as('minutes') > LOCATION_USABLE_MAX_MINUTES
   ) {
     return train;
   }
-  const filledWithNewData: Train = {
+  if (isTrainAtStation(train, location)) {
+    const rowsWithoutLocationAdjustment = resetTimes(train.timetableRows);
+    return createTrainFromNewData(train, rowsWithoutLocationAdjustment, location);
+  }
+  const segment = findClosestStationSegment(train, location);
+  if (!segment) {
+    return createTrainFromNewData(train, train.timetableRows, location);
+  }
+  const fixedRows = fixTimetable(train, location, segment);
+  const result = createTrainFromNewData(
+    train,
+    fixTimesInWrongOrder(fixedRows, segment.fromIndex),
+    location
+  );
+  return result;
+}
+
+function createTrainFromNewData(
+  train: Train,
+  rows: TimetableRow[],
+  location: TrainLocation
+): Train {
+  return {
     ...train,
-    lateMinutes: calculateLateMins(train.timetableRows, train.latestActualTimeIndex),
+    timetableRows: rows,
+    lateMinutes: calculateLateMins(rows, train.latestActualTimeIndex),
     currentSpeed: location.speed,
   };
-  if (isTrainAtStation(filledWithNewData, location)) {
-    const withoutLocationAdjustment = resetTimes(filledWithNewData);
-    return withoutLocationAdjustment;
-  }
-  const segment = findClosestStationSegment(filledWithNewData, location);
-  if (!segment) {
-    return filledWithNewData;
-  }
-  const fixed = fixTimetable(filledWithNewData, location, segment);
-  const result: Train = {
-    ...filledWithNewData,
-    timetableRows: fixTimesInWrongOrder(fixed, segment.fromIndex),
-    lateMinutes: calculateLateMins(fixed, filledWithNewData.latestActualTimeIndex),
-  };
-  return result;
 }
 
 function fixTimesInWrongOrder(rows: TimetableRow[], fixFromIndex: number): TimetableRow[] {
@@ -65,7 +75,6 @@ function fixTimesInWrongOrder(rows: TimetableRow[], fixFromIndex: number): Timet
         ...row,
         time: nextTime,
       };
-      console.log(new Date().toLocaleTimeString(), 'Fixed time in wrong order', i);
     }
   }
   return result;
@@ -100,14 +109,11 @@ export function isTrainAtStation(train: Train, location: TrainLocation | null): 
   return result;
 }
 
-function resetTimes(train: Train): Train {
-  return {
-    ...train,
-    timetableRows: train.timetableRows.map((row) => ({
-      ...row,
-      time: row.bestDigitrafficTime,
-    })),
-  };
+function resetTimes(rows: TimetableRow[]): TimetableRow[] {
+  return rows.map((row) => ({
+    ...row,
+    time: row.bestDigitrafficTime,
+  }));
 }
 
 export function calculateLateMins(
@@ -207,19 +213,19 @@ export function findClosestStationSegment(
   location: TrainLocation
 ): StationSegment | null {
   const stations = useTrainDataStore.getState().stations;
-  const closestStation = findClosestFutureStation(train, location.location, stations);
-  const previousStation = findPreviousStation(train, closestStation.index, stations);
-  const previousSegment = previousStation
+  const nearestStation = findClosestFutureStation(train, location.location, stations);
+  const previousStation = findPreviousStation(train, nearestStation.index, stations);
+  const previousSegment = isNotNil(previousStation)
     ? nearestPointSegment(
         previousStation.station.location,
-        closestStation.station.location,
+        nearestStation.station.location,
         location.location
       )
     : null;
-  const nextStation = findNextStation(train, closestStation.index, stations);
-  const nextSegment = nextStation
+  const nextStation = findNextStation(train, nearestStation.index, stations);
+  const nextSegment = isNotNil(nextStation)
     ? nearestPointSegment(
-        closestStation.station.location,
+        nearestStation.station.location,
         nextStation.station.location,
         location.location
       )
@@ -227,7 +233,8 @@ export function findClosestStationSegment(
   if (
     previousStation &&
     previousSegment &&
-    previousSegment.distance < (nextSegment?.distance ?? Number.MAX_VALUE)
+    previousSegment.distance <
+      Math.min(nextSegment?.distance ?? Number.MAX_VALUE, MAX_ALLOWED_GPS_DISTANCE_KM)
   ) {
     return {
       ...previousSegment,
@@ -235,7 +242,7 @@ export function findClosestStationSegment(
       toIndex: previousStation.index + 1,
     };
   }
-  if (nextStation && nextSegment) {
+  if (nextStation && nextSegment && nextSegment.distance < MAX_ALLOWED_GPS_DISTANCE_KM) {
     return {
       ...nextSegment,
       fromIndex: nextStation.index - 1,
@@ -256,11 +263,6 @@ function fixTimetable(
     segment.toIndex
   );
   if (fixedBeforeStation) {
-    console.log(
-      new Date().toLocaleTimeString(),
-      train.trainNumber,
-      'Did stopped before station fix'
-    );
     return fixedBeforeStation;
   }
   const pastTimesFixed = doPastTimesFix(train, location, segment);
@@ -285,20 +287,17 @@ function doStoppedBeforeStationFix(
     rows[toIndex + 1].bestDigitrafficTime < now
   ) {
     const result: TimetableRow[] = [...rows];
-    for (let i = toIndex + 1; i < rows.length; i++) {
+    result[toIndex + 1] = {
+      ...result[toIndex + 1],
+      time: location.timestamp,
+    };
+    for (let i = toIndex + 2; i < rows.length; i++) {
       const row = rows[i];
-      if (i === toIndex + 1) {
-        result[i] = {
-          ...row,
-          time: location.timestamp,
-        };
-      } else {
-        const duration = row.bestDigitrafficTime.diff(result[i - 1].bestDigitrafficTime);
-        result[i] = {
-          ...row,
-          time: result[i - 1].time.plus(duration),
-        };
-      }
+      const duration = row.bestDigitrafficTime.diff(result[i - 1].bestDigitrafficTime);
+      result[i] = {
+        ...row,
+        time: result[i - 1].time.plus(duration),
+      };
     }
     return result;
   }
@@ -310,27 +309,25 @@ function doPastTimesFix(
   location: TrainLocation,
   segment: StationSegment
 ): TimetableRow[] {
-  const smallestFixedIndex = Math.min(train.latestActualTimeIndex, segment.fromIndex);
+  const smallestFixedIndex = Math.min(Math.max(train.latestActualTimeIndex, 0), segment.fromIndex);
   const result: TimetableRow[] = [...train.timetableRows];
-  for (let i = segment.fromIndex; i >= smallestFixedIndex; i--) {
+
+  const duration = result[segment.fromIndex + 1].bestDigitrafficTime
+    .diff(result[segment.fromIndex].bestDigitrafficTime)
+    .mapUnits((x) => x * segment.location);
+  const roundedDuration = floorDurationToSeconds(duration);
+  result[segment.fromIndex] = {
+    ...result[segment.fromIndex],
+    time: location.timestamp.minus(roundedDuration),
+  };
+
+  for (let i = segment.fromIndex - 1; i >= smallestFixedIndex; i--) {
     const row = result[i];
-    if (i === segment.fromIndex) {
-      const duration = result[i + 1].bestDigitrafficTime
-        .diff(row.bestDigitrafficTime)
-        .mapUnits((x) => x * segment.location);
-      const roundedDuration = floorDurationToSeconds(duration);
-      result[i] = {
-        ...row,
-        time: location.timestamp.minus(roundedDuration),
-      };
-      console.log(new Date().toLocaleTimeString(), train.trainNumber, 'Did past times fix');
-    } else {
-      const duration = result[i + 1].bestDigitrafficTime.diff(row.bestDigitrafficTime);
-      result[i] = {
-        ...row,
-        time: result[i + 1].time.minus(duration),
-      };
-    }
+    const duration = result[i + 1].bestDigitrafficTime.diff(row.bestDigitrafficTime);
+    result[i] = {
+      ...row,
+      time: result[i + 1].time.minus(duration),
+    };
   }
   return result;
 }
@@ -341,10 +338,10 @@ function doFutureTimesFix(
   segment: StationSegment
 ): TimetableRow[] {
   const result: TimetableRow[] = [...rows];
-  let trainStoppingBeforeSchedule = false;
+  let isTainStoppingEarlierThanScheduled = false;
   for (let i = segment.toIndex; i < result.length; i++) {
     const row = result[i];
-    if (trainStoppingBeforeSchedule) {
+    if (isTainStoppingEarlierThanScheduled) {
       result[i] = {
         ...row,
         time: row.bestDigitrafficTime,
@@ -358,7 +355,6 @@ function doFutureTimesFix(
         ...row,
         time: location.timestamp.plus(roundedDuration),
       };
-      console.log(new Date().toLocaleTimeString(), '?', 'Did future times fix');
     } else {
       const duration = row.bestDigitrafficTime.diff(result[i - 1].bestDigitrafficTime);
       result[i] = {
@@ -372,7 +368,7 @@ function doFutureTimesFix(
       i > 0 &&
       row.stationShortCode !== rows[i - 1].stationShortCode
     ) {
-      trainStoppingBeforeSchedule = true;
+      isTainStoppingEarlierThanScheduled = true;
     }
   }
   return result;
