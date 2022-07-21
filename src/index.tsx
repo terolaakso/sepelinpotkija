@@ -20,17 +20,13 @@ async function loadMetadata() {
     get2ndLevelCauses(),
     get3rdLevelCauses(),
   ]);
-  const {
-    setStations: populateStations,
-    setFirstLevelCauses: populateFirstLevelCauses,
-    setSecondLevelCauses: populateSecondLevelCauses,
-    setThirdLevelCauses: populateThirdLevelCauses,
-  } = useTrainDataStore.getState();
+  const { setStations, setFirstLevelCauses, setSecondLevelCauses, setThirdLevelCauses } =
+    useTrainDataStore.getState();
 
-  populateStations(stations);
-  populateFirstLevelCauses(firstLevels);
-  populateSecondLevelCauses(secondLevels);
-  populateThirdLevelCauses(thirdLevels);
+  setStations(stations);
+  setFirstLevelCauses(firstLevels);
+  setSecondLevelCauses(secondLevels);
+  setThirdLevelCauses(thirdLevels);
 }
 
 loadMetadata();

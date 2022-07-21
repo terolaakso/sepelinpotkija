@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
 import { calculateCauses } from '@/features/lateCauses';
-import { getLocationFromStore, useTrainDataStore } from '@/stores/trainData';
+import { useTrainDataStore } from '@/stores/trainData';
 import {
   distanceBetweenCoordsInKm,
   LatLon,
@@ -381,7 +381,7 @@ function floorDurationToSeconds(duration: Duration): Duration {
 }
 
 export function fillNewTrainWithDetails(train: Train): Train {
-  const location = getLocationFromStore(train.departureDate, train.trainNumber);
+  const location = useTrainDataStore.getState().getLocation(train.departureDate, train.trainNumber);
   const fixedTrain = location ? adjustTimetableByLocation(train, location) : train;
   const trainWithLateCauses: Train = {
     ...fixedTrain,

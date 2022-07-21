@@ -1,4 +1,4 @@
-import { isNil } from 'lodash';
+import { isNil, pickBy } from 'lodash';
 import { DateTime } from 'luxon';
 import create from 'zustand';
 
@@ -22,92 +22,111 @@ interface TrainDataStore {
   setFirstLevelCauses: (causes: FirstLevelCauseCollection) => void;
   setSecondLevelCauses: (causes: SecondLevelCauseCollection) => void;
   setThirdLevelCauses: (causes: ThirdLevelCauseCollection) => void;
+  getTrain: (departureDate: string | null, trainNumber: number | null) => Train | null;
   setTrain: (train: Train) => void;
+  getLocation: (departureDate: string, trainNumber: number) => TrainLocation | null;
   setLocation: (location: TrainLocation) => void;
 }
 
-export const useTrainDataStore = create<TrainDataStore>((set, get) => ({
-  stations: {},
-  firstLevelCauses: {},
-  secondLevelCauses: {},
-  thirdLevelCauses: {},
-  trains: {},
-  locations: {},
-  setStations: (stations) => {
-    set((state) => ({
-      ...state,
-      stations: stations,
-    }));
-  },
-  setFirstLevelCauses: (causes) => {
-    set((state) => ({
-      ...state,
-      firstLevelCauses: causes,
-    }));
-  },
-  setSecondLevelCauses: (causes) => {
-    set((state) => ({
-      ...state,
-      secondLevelCauses: causes,
-    }));
-  },
-  setThirdLevelCauses: (causes) => {
-    set((state) => ({
-      ...state,
-      thirdLevelCauses: causes,
-    }));
-  },
-  setTrain: (train: Train) => {
-    const { departureDate, trainNumber } = train;
-    const key = `${departureDate}-${trainNumber}`;
+const MAX_TRAIN_AGE_MINUTES = 6;
+const MAX_LOCATION_AGE_MINUTES = 1;
 
-    set((state) => {
-      const oldVersion = state.trains[key];
-      if ((oldVersion?.version ?? 0) <= train.version) {
-        return {
-          ...state,
-          trains: { ...state.trains, [key]: train },
-        };
-      } else {
-        console.log(new Date().toLocaleTimeString(), 'Rejected new train!', key);
-        return state;
-      }
+export const useTrainDataStore = create<TrainDataStore>((set, get) => {
+  function cleanup(state: TrainDataStore) {
+    const oldestTrainTimestampToKeep = DateTime.now().plus({ minutes: MAX_TRAIN_AGE_MINUTES });
+    const trainsToKeep = pickBy(
+      state.trains,
+      (train) => train?.timestamp ?? DateTime.fromMillis(0) >= oldestTrainTimestampToKeep
+    );
+    const oldestLocationTimestampToKeep = DateTime.now().plus({
+      minutes: MAX_LOCATION_AGE_MINUTES,
     });
-  },
-  getLocation: (departureDate: string, trainNumber: number) => {
-    const locations = get().locations;
-    const location = locations[`${departureDate}-${trainNumber}`] ?? null;
-    return location;
-  },
-  setLocation: (location: TrainLocation) => {
-    const { departureDate, trainNumber } = location;
-    const key = `${departureDate}-${trainNumber}`;
-    set((state) => {
-      const oldVersion = state.locations[key];
-      if ((oldVersion?.timestamp ?? DateTime.fromMillis(0)) <= location.timestamp) {
-        return {
-          ...state,
-          locations: { ...state.locations, [key]: location },
-        };
-      } else {
-        console.log(new Date().toLocaleTimeString(), 'Rejected new location!', key);
-        return state;
-      }
-    });
-  },
-}));
-
-export function getTrainFromStore(departureDate: string | null, trainNumber: number | null) {
-  if (isNil(departureDate) || isNil(trainNumber)) {
-    return null;
+    const locationsToKeep = pickBy(
+      state.locations,
+      (location) => location?.timestamp ?? DateTime.fromMillis(0) >= oldestLocationTimestampToKeep
+    );
+    return {
+      ...state,
+      trains: trainsToKeep,
+      locations: locationsToKeep,
+    };
   }
-  const trains = useTrainDataStore.getState().trains;
-  const train = trains[`${departureDate}-${trainNumber}`] ?? null;
-  return train;
-}
 
-export function getLocationFromStore(departureDate: string, trainNumber: number) {
-  const locations = useTrainDataStore.getState().locations;
-  const location = locations[`${departureDate}-${trainNumber}`] ?? null;
-  return location;
-}
+  return {
+    stations: {},
+    firstLevelCauses: {},
+    secondLevelCauses: {},
+    thirdLevelCauses: {},
+    trains: {},
+    locations: {},
+    setStations: (stations) => {
+      set((state) => ({
+        ...state,
+        stations: stations,
+      }));
+    },
+    setFirstLevelCauses: (causes) => {
+      set((state) => ({
+        ...state,
+        firstLevelCauses: causes,
+      }));
+    },
+    setSecondLevelCauses: (causes) => {
+      set((state) => ({
+        ...state,
+        secondLevelCauses: causes,
+      }));
+    },
+    setThirdLevelCauses: (causes) => {
+      set((state) => ({
+        ...state,
+        thirdLevelCauses: causes,
+      }));
+    },
+    getTrain: (departureDate: string | null, trainNumber: number | null) => {
+      if (isNil(departureDate) || isNil(trainNumber)) {
+        return null;
+      }
+      const trains = get().trains;
+      const train = trains[`${departureDate}-${trainNumber}`] ?? null;
+      return train;
+    },
+    setTrain: (train: Train) => {
+      const { departureDate, trainNumber } = train;
+      const key = `${departureDate}-${trainNumber}`;
+      set((state) => {
+        const cleanedState = cleanup(state);
+        const oldVersion = cleanedState.trains[key];
+        if ((oldVersion?.version ?? 0) <= train.version) {
+          return {
+            ...cleanedState,
+            trains: { ...cleanedState.trains, [key]: train },
+          };
+        } else {
+          return cleanedState;
+        }
+      });
+    },
+    getLocation: (departureDate: string, trainNumber: number) => {
+      const locations = get().locations;
+      const location = locations[`${departureDate}-${trainNumber}`] ?? null;
+      return location;
+    },
+    setLocation: (location: TrainLocation) => {
+      const { departureDate, trainNumber } = location;
+      const key = `${departureDate}-${trainNumber}`;
+      set((state) => {
+        const cleanedState = cleanup(state);
+        const oldVersion = cleanedState.locations[key];
+        if ((oldVersion?.timestamp ?? DateTime.fromMillis(0)) <= location.timestamp) {
+          return {
+            ...cleanedState,
+            locations: { ...cleanedState.locations, [key]: location },
+          };
+        } else {
+          return cleanedState;
+        }
+      });
+    },
+  };
+});

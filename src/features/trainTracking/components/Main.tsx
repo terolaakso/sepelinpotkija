@@ -4,7 +4,7 @@ import ErrorBar from '@/components/ErrorBar';
 import { useInterval } from '@/hooks/useInterval';
 import useStationWatch from '@/hooks/useStationWatch';
 import useTrain from '@/hooks/useTrain';
-import { getTrainFromStore } from '@/stores/trainData';
+import { useTrainDataStore } from '@/stores/trainData';
 
 import { TrainEvent } from '../types/TrainEvent';
 import { calculateCurrentEventsForTrain } from '../utils/trainTracking';
@@ -19,6 +19,7 @@ export default function TrainTracking() {
   const [isTracking, setIsTracking] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [nextStationCode, setNextStationCode] = useState<string | null>(null);
+  const getTrain = useTrainDataStore((state) => state.getTrain);
 
   async function startTracking(trainNumber: number) {
     setTrainNumber(trainNumber);
@@ -33,7 +34,7 @@ export default function TrainTracking() {
   const departureDate = useTrain(isTracking ? trainNumber ?? null : null);
   useStationWatch(isTracking ? nextStationCode : null);
 
-  const train = getTrainFromStore(departureDate, trainNumber);
+  const train = getTrain(departureDate, trainNumber);
 
   useInterval(
     () => {

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { getLocation } from '@/api/digitrafficClient';
 import { transformLocation } from '@/api/transform';
 import { useSubscription } from '@/features/mqtt';
-import { getTrainFromStore, useTrainDataStore } from '@/stores/trainData';
+import { useTrainDataStore } from '@/stores/trainData';
 import { GpsLocation } from '@/types/digitraffic';
 import { isNotNil } from '@/utils/misc';
 import { adjustTimetableByLocation, fillNewTrainWithDetails } from '@/utils/timetableCalculation';
@@ -13,6 +13,7 @@ export default function useTrainLocationWatch(
   departureDate: string | null,
   trainNumber: number | null
 ) {
+  const getTrain = useTrainDataStore((state) => state.getTrain);
   const setTrain = useTrainDataStore((state) => state.setTrain);
   const setLocation = useTrainDataStore((state) => state.setLocation);
 
@@ -26,7 +27,7 @@ export default function useTrainLocationWatch(
       }
       const location = transformLocation(receivedLocation);
       setLocation(location);
-      const train = getTrainFromStore(departureDate, trainNumber);
+      const train = getTrain(departureDate, trainNumber);
       if (train) {
         const fixedTrain = fillNewTrainWithDetails(train);
         setTrain(fixedTrain);
@@ -46,12 +47,12 @@ export default function useTrainLocationWatch(
         return;
       }
       setLocation(latestLocation);
-      const train = getTrainFromStore(departureDate, trainNumber);
+      const train = getTrain(departureDate, trainNumber);
       if (train) {
         const fixedTrain = adjustTimetableByLocation(train, latestLocation);
         setTrain(fixedTrain);
       }
     }
     fetchLocation();
-  }, [departureDate, trainNumber, setLocation, setTrain]);
+  }, [departureDate, trainNumber, getTrain, setLocation, setTrain]);
 }
