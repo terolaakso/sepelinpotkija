@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 
 import { transformTrains } from '@/api/transform';
 import { trainFixture } from '@/test/digitraffic.fixture';
+import { StopType } from '@/types/Train';
 
 describe('train transformation', () => {
   it('filters out cancelled trains', () => {
@@ -171,4 +172,29 @@ describe('train transformation', () => {
     expect(transformed.timetableRows[2].time).toEqual(DateTime.fromISO('2022-07-15T06:11:00.000Z'));
     expect(transformed.timetableRows[3].time).toEqual(DateTime.fromISO('2022-07-15T06:16:00.000Z'));
   });
+
+  it.each([
+    [0, true, StopType.Commercial],
+    [120, true, StopType.Commercial],
+    [15, false, StopType.None],
+    [60, false, StopType.OtherTraffic],
+  ])(
+    'determines the stop type',
+    (stopDurationSeconds: number, commercialStop: boolean, expectedStopType: StopType) => {
+      const train = trainFixture();
+      train.timeTableRows[1].actualTime = undefined;
+      train.timeTableRows[1].commercialStop = commercialStop;
+      train.timeTableRows[2].actualTime = undefined;
+      train.timeTableRows[2].scheduledTime = DateTime.fromISO('2022-07-15T06:09:00.000Z')
+        .plus({ seconds: stopDurationSeconds })
+        .toISO();
+      train.timeTableRows[2].commercialStop = commercialStop;
+      train.timeTableRows[3].actualTime = undefined;
+
+      const [transformed] = transformTrains([train]);
+
+      expect(transformed.timetableRows[1].stopType).toBe(expectedStopType);
+      expect(transformed.timetableRows[2].stopType).toBe(expectedStopType);
+    }
+  );
 });

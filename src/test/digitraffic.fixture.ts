@@ -47,6 +47,7 @@ const defaultTimetableRow: TimeTableRow = {
   commercialTrack: '5',
   cancelled: false,
   scheduledTime: '2022-07-15T06:00:00.000Z',
+  liveEstimateTime: undefined,
   actualTime: '2022-07-15T06:00:00.000Z',
   differenceInMinutes: 0,
 };

@@ -15,6 +15,7 @@ import { isNotNil } from '@/utils/misc';
 import { calculateLateMins } from '@/utils/timetableCalculation';
 
 const ESTIMATE_ERROR_TOLERANCE = 0.5;
+const MIN_PROPER_STOP_DURATION_SECONDS = 30;
 
 export function transformTrains(trains: DigiTrafficTrain[]): Train[] {
   const result = trains.map(transformTrain).filter(isNotNil);
@@ -71,11 +72,7 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
     time: bestTime,
     bestDigitrafficTime: bestTime,
     differenceInMinutes: Math.round(bestTime.diff(scheduledTime).as('minutes')),
-    stopType: row.commercialStop
-      ? StopType.Commercial
-      : row.trainStopping
-      ? StopType.OtherTraffic
-      : StopType.None,
+    stopType: row.commercialStop ? StopType.Commercial : StopType.None,
     isTrainReady: row.trainReady?.accepted ?? false,
     lateCauses: (row.causes ?? []).map(transformCause),
   };
@@ -95,7 +92,29 @@ function fixTimetableErrors(rows: TimetableRow[]): TimetableRow[] {
   const allTimeTypesFixed = fixErrorsByType(actualsFixed, TimeType.Estimated);
   const pastTimesFixed = fixPastTimesInWrongOrder(allTimeTypesFixed);
   const futureTimesFixed = fixFutureTimesInWrongOrder(pastTimesFixed);
-  return futureTimesFixed;
+  const stopsFixed = fixNonCommercialStops(futureTimesFixed);
+  return stopsFixed;
+}
+
+function fixNonCommercialStops(rows: TimetableRow[]): TimetableRow[] {
+  const result = [...rows];
+  for (let i = 2; i < result.length; i += 2) {
+    // Check every second row (i = the departure row index)
+    if (result[i].stopType !== StopType.Commercial) {
+      const duration = result[i].bestDigitrafficTime.diff(result[i - 1].bestDigitrafficTime);
+      if (duration.as('seconds') > MIN_PROPER_STOP_DURATION_SECONDS) {
+        result[i - 1] = {
+          ...result[i - 1],
+          stopType: StopType.OtherTraffic,
+        };
+        result[i] = {
+          ...result[i],
+          stopType: StopType.OtherTraffic,
+        };
+      }
+    }
+  }
+  return result;
 }
 
 function rowTimeType(row: TimetableRow): TimeType {
