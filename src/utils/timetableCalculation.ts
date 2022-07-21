@@ -62,6 +62,7 @@ function createTrainFromNewData(
     timetableRows: rows,
     lateMinutes: calculateLateMins(rows, train.latestActualTimeIndex),
     currentSpeed: location.speed,
+    currentLateCauses: calculateCauses(train),
   };
 }
 
@@ -383,11 +384,7 @@ function floorDurationToSeconds(duration: Duration): Duration {
 export function fillNewTrainWithDetails(train: Train): Train {
   const location = useTrainDataStore.getState().getLocation(train.departureDate, train.trainNumber);
   const fixedTrain = location ? adjustTimetableByLocation(train, location) : train;
-  const trainWithLateCauses: Train = {
-    ...fixedTrain,
-    currentLateCauses: calculateCauses(fixedTrain),
-  };
-  return trainWithLateCauses;
+  return fixedTrain;
 }
 
 // this is old timetableGpsAge

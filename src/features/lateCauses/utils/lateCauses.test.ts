@@ -70,8 +70,7 @@ describe('late causes', () => {
         timetableRowFixture(),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:09:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          differenceInMinutes: 1,
+          time: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
           lateCauses: [cause1],
         }),
       ],
@@ -90,8 +89,7 @@ describe('late causes', () => {
         timetableRowFixture(),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:09:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:19:00.000Z'),
-          differenceInMinutes: 10,
+          time: DateTime.fromISO('2018-12-30T06:19:00.000Z'),
           lateCauses: [cause1, cause2],
         }),
       ],
@@ -113,14 +111,12 @@ describe('late causes', () => {
       timetableRows: [
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          differenceInMinutes: 10,
+          time: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
           lateCauses: [cause1],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:16:00.000Z'),
-          differenceInMinutes: 11,
+          time: DateTime.fromISO('2018-12-30T06:16:00.000Z'),
           lateCauses: [cause2],
         }),
       ],
@@ -142,14 +138,12 @@ describe('late causes', () => {
       timetableRows: [
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          differenceInMinutes: 10,
+          time: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
           lateCauses: [cause1],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:16:00.000Z'),
-          differenceInMinutes: 11,
+          time: DateTime.fromISO('2018-12-30T06:16:00.000Z'),
           lateCauses: [cause1],
         }),
       ],
@@ -169,20 +163,17 @@ describe('late causes', () => {
       timetableRows: [
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          differenceInMinutes: 10,
+          time: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
           lateCauses: [cause1],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          differenceInMinutes: 5,
+          time: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
           lateCauses: [],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:21:00.000Z'),
-          differenceInMinutes: 11,
+          time: DateTime.fromISO('2018-12-30T06:21:00.000Z'),
           lateCauses: [cause2],
         }),
       ],
@@ -205,20 +196,17 @@ describe('late causes', () => {
       timetableRows: [
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          differenceInMinutes: 10,
+          time: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
           lateCauses: [cause1],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:20:00.000Z'),
-          differenceInMinutes: 15,
+          time: DateTime.fromISO('2018-12-30T06:20:00.000Z'),
           lateCauses: [],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:21:00.000Z'),
-          differenceInMinutes: 11,
+          time: DateTime.fromISO('2018-12-30T06:21:00.000Z'),
           lateCauses: [cause2],
         }),
       ],
@@ -241,20 +229,17 @@ describe('late causes', () => {
       timetableRows: [
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          differenceInMinutes: 0,
+          time: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
           lateCauses: [],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:06:00.000Z'),
-          differenceInMinutes: 1,
+          time: DateTime.fromISO('2018-12-30T06:06:00.000Z'),
           lateCauses: [cause1],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:09:00.000Z'),
-          differenceInMinutes: -1,
+          time: DateTime.fromISO('2018-12-30T06:09:00.000Z'),
           lateCauses: [],
         }),
       ],
@@ -271,20 +256,17 @@ describe('late causes', () => {
       timetableRows: [
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-          differenceInMinutes: 0,
+          time: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
           lateCauses: [],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:04:00.000Z'),
-          differenceInMinutes: -1,
+          time: DateTime.fromISO('2018-12-30T06:04:00.000Z'),
           lateCauses: [],
         }),
         timetableRowFixture({
           scheduledTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
-          actualTime: DateTime.fromISO('2018-12-30T06:11:00.000Z'),
-          differenceInMinutes: 1,
+          time: DateTime.fromISO('2018-12-30T06:11:00.000Z'),
           lateCauses: [cause1],
         }),
       ],
@@ -296,5 +278,32 @@ describe('late causes', () => {
     expect(causes).toEqual(
       expect.arrayContaining([{ lateMinutes: 1, name: expect.stringMatching(/^Third/) }])
     );
+  });
+
+  it('train became late after previous cause was nullified out', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 2,
+      timetableRows: [
+        timetableRowFixture({
+          scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+          time: DateTime.fromISO('2018-12-30T06:02:00.000Z'),
+          lateCauses: [cause1],
+        }),
+        timetableRowFixture({
+          scheduledTime: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
+          time: DateTime.fromISO('2018-12-30T06:05:00.000Z'),
+          lateCauses: [],
+        }),
+        timetableRowFixture({
+          scheduledTime: DateTime.fromISO('2018-12-30T06:10:00.000Z'),
+          time: DateTime.fromISO('2018-12-30T06:20:00.000Z'),
+          lateCauses: [],
+        }),
+      ],
+    });
+
+    const causes = calculateCauses(train);
+
+    expect(causes).toHaveLength(0);
   });
 });

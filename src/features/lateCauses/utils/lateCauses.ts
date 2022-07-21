@@ -11,14 +11,14 @@ export function calculateCauses(train: Train, index?: number): LateCause[] {
     index ?? train.latestActualTimeIndex + 1,
     train.timetableRows.length - 1
   );
-  const unexplainedMin = train.timetableRows[lastIndex].differenceInMinutes;
+  const unexplainedMin = rowLateMins(train.timetableRows[lastIndex]);
 
   const causesResult = train.timetableRows.reduceRight(
     (result, row, i) => {
-      if (i > lastIndex) {
+      if (i > lastIndex || result.unexplainedMin <= 0) {
         return result;
       }
-      const stillUnexplained = Math.min(result.unexplainedMin, row.differenceInMinutes);
+      const stillUnexplained = Math.min(result.unexplainedMin, rowLateMins(row));
       if (row.lateCauses.length > 0 && stillUnexplained > 0) {
         const lateMinTotal = Math.min(
           timetableRowLateMin(train.timetableRows, i),
@@ -30,7 +30,10 @@ export function calculateCauses(train: Train, index?: number): LateCause[] {
           unexplainedMin: result.unexplainedMin - lateMinTotal,
         };
       }
-      return result;
+      return {
+        ...result,
+        unexplainedMin: stillUnexplained,
+      };
     },
     {
       causes: [] as LateCause[],
@@ -40,6 +43,10 @@ export function calculateCauses(train: Train, index?: number): LateCause[] {
 
   const sortedCauses = _.sortBy(causesResult.causes, (cause) => -cause.lateMinutes);
   return sortedCauses;
+}
+
+function rowLateMins(row: TimetableRow): number {
+  return Math.round(row.time.diff(row.scheduledTime).as('minutes'));
 }
 
 function mergeCauses(existing: LateCause[], newCauses: LateCause[]): LateCause[] {
@@ -107,15 +114,14 @@ function timetableRowLateMin(rows: TimetableRow[], startIndex: number): number {
           ? 0
           : i >= startIndex || result.found
           ? result.mins
-          : Math.min(Math.max(row.differenceInMinutes, 0), result.mins);
+          : Math.min(Math.max(rowLateMins(row), 0), result.mins);
       return {
         mins,
         found:
-          result.found ||
-          (i < startIndex && (row.lateCauses.length > 0 || row.differenceInMinutes <= 0)),
+          result.found || (i < startIndex && (row.lateCauses.length > 0 || rowLateMins(row) <= 0)),
       };
     },
-    { mins: rows[startIndex].differenceInMinutes, found: false }
+    { mins: rowLateMins(rows[startIndex]), found: false }
   );
-  return rows[startIndex].differenceInMinutes - previousLateness.mins;
+  return rowLateMins(rows[startIndex]) - previousLateness.mins;
 }

@@ -38,12 +38,12 @@ describe('train transformation', () => {
     expect(row2.time).toEqual(row2.actualTime);
     expect(row2.time).not.toEqual(row2.estimatedTime);
     expect(row2.time).toEqual(row2.bestDigitrafficTime);
-    expect(row2.differenceInMinutes).toBe(1);
+    expect(row2.time.diff(row2.scheduledTime).as('minutes')).toBe(1);
 
     expect(row3.time).toEqual(row3.estimatedTime);
     expect(row3.time).not.toEqual(row3.actualTime);
     expect(row3.time).toEqual(row3.bestDigitrafficTime);
-    expect(row3.differenceInMinutes).toBe(2);
+    expect(row3.time.diff(row3.scheduledTime).as('minutes')).toBe(2);
 
     expect(transformed.latestActualTimeIndex).toBe(2);
   });

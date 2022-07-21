@@ -71,7 +71,6 @@ function transformTimetableRow(row: TimeTableRow): TimetableRow | null {
     actualTime,
     time: bestTime,
     bestDigitrafficTime: bestTime,
-    differenceInMinutes: Math.round(bestTime.diff(scheduledTime).as('minutes')),
     stopType: row.commercialStop ? StopType.Commercial : StopType.None,
     isTrainReady: row.trainReady?.accepted ?? false,
     lateCauses: (row.causes ?? []).map(transformCause),

@@ -45,7 +45,6 @@ export interface TimetableRow {
   scheduledTime: DateTime;
   estimatedTime: DateTime | null;
   actualTime: DateTime | null;
-  differenceInMinutes: number;
   stopType: StopType;
   isTrainReady: boolean;
   lateCauses: RowCause[];
