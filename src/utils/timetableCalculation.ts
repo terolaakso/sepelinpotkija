@@ -35,19 +35,25 @@ export function adjustTimetableByLocation(train: Train, location: TrainLocation 
   ) {
     return train;
   }
+  const segment = findClosestStationSegment(train, location);
   if (isTrainAtStation(train, location)) {
     const rowsWithoutLocationAdjustment = resetTimes(train.timetableRows);
-    return createTrainFromNewData(train, rowsWithoutLocationAdjustment, location);
+    return createTrainFromNewData(
+      train,
+      rowsWithoutLocationAdjustment,
+      location,
+      isNotNil(segment) ? segment.fromIndex : null
+    );
   }
-  const segment = findClosestStationSegment(train, location);
   if (!segment) {
-    return createTrainFromNewData(train, train.timetableRows, location);
+    return createTrainFromNewData(train, train.timetableRows, location, null);
   }
-  const fixedRows = fixTimetable(train, location, segment);
+  const { fixedRows, fixedFromIndex } = fixTimetable(train, location, segment);
   const result = createTrainFromNewData(
     train,
     fixTimesInWrongOrder(fixedRows, segment.fromIndex),
-    location
+    location,
+    fixedFromIndex
   );
   return result;
 }
@@ -55,7 +61,8 @@ export function adjustTimetableByLocation(train: Train, location: TrainLocation 
 function createTrainFromNewData(
   train: Train,
   rows: TimetableRow[],
-  location: TrainLocation
+  location: TrainLocation,
+  fixedFromIndex: number | null
 ): Train {
   return {
     ...train,
@@ -63,6 +70,7 @@ function createTrainFromNewData(
     lateMinutes: calculateLateMins(rows, train.latestActualTimeIndex),
     currentSpeed: location.speed,
     currentLateCauses: calculateCauses(train),
+    latestGpsIndex: fixedFromIndex,
   };
 }
 
@@ -257,19 +265,19 @@ function fixTimetable(
   train: Train,
   location: TrainLocation,
   segment: StationSegment
-): TimetableRow[] {
+): { fixedRows: TimetableRow[]; fixedFromIndex: number } {
   const fixedBeforeStation = doStoppedBeforeStationFix(
     train.timetableRows,
     location,
     segment.toIndex
   );
   if (fixedBeforeStation) {
-    return fixedBeforeStation;
+    return { fixedRows: fixedBeforeStation, fixedFromIndex: segment.toIndex + 1 };
   }
   const pastTimesFixed = doPastTimesFix(train, location, segment);
   const allTimesFixed = doFutureTimesFix(pastTimesFixed, location, segment);
 
-  return allTimesFixed;
+  return { fixedRows: allTimesFixed, fixedFromIndex: segment.toIndex };
 }
 
 /**
@@ -387,7 +395,6 @@ export function fillNewTrainWithDetails(train: Train): Train {
   return fixedTrain;
 }
 
-// this is old timetableGpsAge
 export function timetableExpirationDuration(train: Train): Duration {
   const index = train.latestGpsIndex ? train.latestGpsIndex + 1 : train.latestActualTimeIndex + 1;
 
