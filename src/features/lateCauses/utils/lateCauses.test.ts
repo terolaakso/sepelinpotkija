@@ -76,7 +76,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(1);
     expect(causes[0].lateMinutes).toBe(1);
@@ -95,7 +95,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -122,7 +122,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -149,7 +149,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(1);
     expect(causes).toEqual(
@@ -179,7 +179,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -212,7 +212,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(2);
     expect(causes).toEqual(
@@ -245,7 +245,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(0);
   });
@@ -272,7 +272,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(1);
     expect(causes).toEqual(
@@ -302,7 +302,7 @@ describe('late causes', () => {
       ],
     });
 
-    const causes = calculateCauses(train);
+    const causes = calculateCauses(train.timetableRows, train.latestActualTimeIndex + 1);
 
     expect(causes).toHaveLength(0);
   });

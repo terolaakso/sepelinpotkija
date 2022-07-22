@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { getTrain } from '@/api/digitrafficClient';
 import { useTrainDataStore } from '@/stores/trainData';
-import { fillNewTrainWithDetails } from '@/utils/timetableCalculation';
+import { adjustWithLocationFromStore } from '@/utils/timetableCalculation';
 
 import useTrainLocationWatch from './useTrainLocationWatch';
 import useTrainWatch from './useTrainWatch';
@@ -23,7 +23,7 @@ export default function useTrain(trainNumber: number | null, departureDate?: str
         setFollowedDepartureDate(null);
         return;
       }
-      const fixedTrain = fillNewTrainWithDetails(train);
+      const fixedTrain = adjustWithLocationFromStore(train);
       setFollowedDepartureDate(fixedTrain.departureDate);
       setTrain(fixedTrain);
     }

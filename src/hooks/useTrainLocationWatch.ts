@@ -7,7 +7,10 @@ import { useSubscription } from '@/features/mqtt';
 import { useTrainDataStore } from '@/stores/trainData';
 import { GpsLocation } from '@/types/digitraffic';
 import { isNotNil } from '@/utils/misc';
-import { adjustTimetableByLocation, fillNewTrainWithDetails } from '@/utils/timetableCalculation';
+import {
+  adjustTimetableByLocation,
+  adjustWithLocationFromStore,
+} from '@/utils/timetableCalculation';
 
 export default function useTrainLocationWatch(
   departureDate: string | null,
@@ -29,7 +32,7 @@ export default function useTrainLocationWatch(
       setLocation(location);
       const train = getTrain(departureDate, trainNumber);
       if (train) {
-        const fixedTrain = fillNewTrainWithDetails(train);
+        const fixedTrain = adjustWithLocationFromStore(train);
         setTrain(fixedTrain);
       }
     }

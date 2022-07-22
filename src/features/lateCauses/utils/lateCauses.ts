@@ -1,29 +1,23 @@
-import _ from 'lodash';
+import { sortBy } from 'lodash';
 
 import { useTrainDataStore } from '@/stores/trainData';
-import { RowCause, TimetableRow, Train } from '@/types/Train';
+import { RowCause, TimetableRow } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
 
 import { LateCause } from '../types';
 
-export function calculateCauses(train: Train, index?: number): LateCause[] {
-  const lastIndex = Math.min(
-    index ?? train.latestActualTimeIndex + 1,
-    train.timetableRows.length - 1
-  );
-  const unexplainedMin = rowLateMins(train.timetableRows[lastIndex]);
+export function calculateCauses(rows: TimetableRow[], index: number): LateCause[] {
+  const lastIndex = Math.min(index, rows.length - 1);
+  const unexplainedMin = rowLateMins(rows[lastIndex]);
 
-  const causesResult = train.timetableRows.reduceRight(
+  const causesResult = rows.reduceRight(
     (result, row, i) => {
       if (i > lastIndex || result.unexplainedMin <= 0) {
         return result;
       }
       const stillUnexplained = Math.min(result.unexplainedMin, rowLateMins(row));
       if (row.lateCauses.length > 0 && stillUnexplained > 0) {
-        const lateMinTotal = Math.min(
-          timetableRowLateMin(train.timetableRows, i),
-          stillUnexplained
-        );
+        const lateMinTotal = Math.min(timetableRowLateMin(rows, i), stillUnexplained);
         const lateMinPerCause = Math.floor(lateMinTotal / row.lateCauses.length);
         return {
           causes: mergeCauses(result.causes, createCauses(row.lateCauses, lateMinPerCause)),
@@ -41,7 +35,7 @@ export function calculateCauses(train: Train, index?: number): LateCause[] {
     }
   );
 
-  const sortedCauses = _.sortBy(causesResult.causes, (cause) => -cause.lateMinutes);
+  const sortedCauses = sortBy(causesResult.causes, (cause) => -cause.lateMinutes);
   return sortedCauses;
 }
 

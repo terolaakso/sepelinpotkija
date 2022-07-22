@@ -5,7 +5,7 @@ import { useSubscription } from '@/features/mqtt';
 import { useTrainDataStore } from '@/stores/trainData';
 import { Train as DigitrafficTrain } from '@/types/digitraffic';
 import { isNotNil } from '@/utils/misc';
-import { fillNewTrainWithDetails } from '@/utils/timetableCalculation';
+import { adjustWithLocationFromStore } from '@/utils/timetableCalculation';
 
 export default function useTrainWatch(departureDate: string | null, trainNumber: number | null) {
   const setTrain = useTrainDataStore((state) => state.setTrain);
@@ -19,7 +19,7 @@ export default function useTrainWatch(departureDate: string | null, trainNumber:
         return;
       }
       const transformedTrain = transformTrains([receivedTrain])[0];
-      const fixedTrain = fillNewTrainWithDetails(transformedTrain);
+      const fixedTrain = adjustWithLocationFromStore(transformedTrain);
       setTrain(fixedTrain);
     }
   );

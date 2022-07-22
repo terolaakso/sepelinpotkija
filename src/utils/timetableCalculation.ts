@@ -67,9 +67,9 @@ function createTrainFromNewData(
   return {
     ...train,
     timetableRows: rows,
-    lateMinutes: calculateLateMins(rows, train.latestActualTimeIndex),
+    lateMinutes: calculateLateMins(rows, (fixedFromIndex ?? train.latestActualTimeIndex) + 1),
     currentSpeed: location.speed,
-    currentLateCauses: calculateCauses(train),
+    currentLateCauses: calculateCauses(rows, (fixedFromIndex ?? train.latestActualTimeIndex) + 1),
     latestGpsIndex: fixedFromIndex,
   };
 }
@@ -125,14 +125,12 @@ function resetTimes(rows: TimetableRow[]): TimetableRow[] {
   }));
 }
 
-export function calculateLateMins(
-  rows: TimetableRow[],
-  latestActualTimeIndex: number
-): number | null {
-  if (latestActualTimeIndex < 0) {
+export function calculateLateMins(rows: TimetableRow[], index: number): number | null {
+  if (index <= 0) {
+    // Get latemins only for trains that have departed their origin station
     return null;
   }
-  const nextRowIndex = Math.min(latestActualTimeIndex + 1, rows.length - 1);
+  const nextRowIndex = Math.min(index, rows.length - 1);
   const row = rows[nextRowIndex];
   const lateMins = Math.round(row.time.diff(row.scheduledTime).as('minutes'));
   return lateMins;
@@ -389,7 +387,7 @@ function floorDurationToSeconds(duration: Duration): Duration {
   });
 }
 
-export function fillNewTrainWithDetails(train: Train): Train {
+export function adjustWithLocationFromStore(train: Train): Train {
   const location = useTrainDataStore.getState().getLocation(train.departureDate, train.trainNumber);
   const fixedTrain = location ? adjustTimetableByLocation(train, location) : train;
   return fixedTrain;

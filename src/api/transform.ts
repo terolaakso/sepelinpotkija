@@ -1,6 +1,7 @@
-import _ from 'lodash';
+import { findLastIndex } from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
+import { calculateCauses } from '@/features/lateCauses';
 import {
   Cause,
   GpsLocation,
@@ -23,7 +24,7 @@ export function transformTrains(trains: DigiTrafficTrain[]): Train[] {
 }
 
 function getLatestActualTimeIndex(rows: TimetableRow[]): number {
-  return _.findLastIndex(rows, (row) => isNotNil(row.actualTime));
+  return findLastIndex(rows, (row) => isNotNil(row.actualTime));
 }
 
 function transformTrain(train: DigiTrafficTrain): Train | null {
@@ -43,8 +44,8 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
     timetableRows: fixedRows,
     lineId: train.commuterLineID ?? null,
     currentSpeed: null,
-    currentLateCauses: [],
-    lateMinutes: calculateLateMins(fixedRows, latestActualTimeIndex),
+    currentLateCauses: calculateCauses(fixedRows, latestActualTimeIndex + 1),
+    lateMinutes: calculateLateMins(fixedRows, latestActualTimeIndex + 1),
     isReady,
     latestActualTimeIndex,
     latestGpsIndex: null,

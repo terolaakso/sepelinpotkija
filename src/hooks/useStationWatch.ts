@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 
 import { getTrainsOfStation } from '@/api/digitrafficClient';
 import { useTrainDataStore } from '@/stores/trainData';
-import { fillNewTrainWithDetails } from '@/utils/timetableCalculation';
+import { adjustWithLocationFromStore } from '@/utils/timetableCalculation';
 
 import { useInterval } from './useInterval';
 
@@ -29,7 +29,7 @@ export default function useStationWatch(stationCode: string | null) {
       setCurrentStation(stationCode);
       const trains = await getTrainsOfStation(stationCode);
       trains.forEach((train) => {
-        const fixedTrain = fillNewTrainWithDetails(train);
+        const fixedTrain = adjustWithLocationFromStore(train);
         setTrain(fixedTrain);
       });
     },
