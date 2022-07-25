@@ -14,11 +14,11 @@ export default function DifferenceBadge({ difference }: DifferenceBadgeProps) {
     'bg-red-800': difference >= 15,
   });
   return (
-    <div>
+    <span>
       <small className={classes}>
         {difference > 0 ? '+' : ''}
         {difference}
       </small>
-    </div>
+    </span>
   );
 }

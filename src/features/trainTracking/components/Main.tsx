@@ -25,6 +25,7 @@ export default function TrainTracking() {
     setTrainNumber(trainNumber);
     setErrorMessage(null);
     setIsTracking(true);
+    setEvents([]);
   }
 
   async function stopTracking() {
