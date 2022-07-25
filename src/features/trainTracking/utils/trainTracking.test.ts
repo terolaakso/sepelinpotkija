@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon';
 
+import { trainFixture } from '@/test/train.fixture';
 import { StopType, Train } from '@/types/Train';
 
-import { getCurrentCommercialStops, getCurrentStations } from './trainTracking';
+import { filterTrains, getCurrentCommercialStops, getCurrentStations } from './trainTracking';
 
 describe('selecting events', () => {
   it('should return correct commercial stops when train not departed', () => {
@@ -400,135 +401,90 @@ describe('selecting events', () => {
 
     return data;
   }
+});
 
-  // it("should filter trains when not departed", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+describe('selecting trains', () => {
+  it('should filter trains when not departed', () => {
+    const data = fillDataToFilter([1, 7, 15]);
+    const result = filterTrains(data);
+    expect(result.length).toBe(2);
+    expect(result[1].train.name).toBe('7');
+  });
 
-  //   const data = fillDataToFilter([1, 7, 15]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(2);
-  //   expect(data[1].name).toBe("7");
-  // });
+  it('should filter trains when recent trains since 5 mins', () => {
+    const data = fillDataToFilter([-4, -3, 2, 11, 15]);
 
-  // it("should filter trains when no recent trains since 5 mins", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+    const result = filterTrains(data);
 
-  //   const data = fillDataToFilter([-15, -9, -8, 1, 2, 7, 15]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(3);
-  //   expect(data[0].name).toBe("-8");
-  //   expect(data[2].name).toBe("2");
-  // });
+    expect(result.length).toBe(3);
+    expect(result[0].train.name).toBe('-4');
+    expect(result[2].train.name).toBe('2');
+  });
 
-  // it("should filter trains when recent trains since 5 mins", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+  it('should not filter trains when only recent trains since 5 mins', () => {
+    const data = fillDataToFilter([-4, -3, 2, 11, 15]);
 
-  //   const data = fillDataToFilter([-15, -9, -8, -4, -3, 2, 11, 15]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(3);
-  //   expect(data[0].name).toBe("-4");
-  //   expect(data[2].name).toBe("2");
-  // });
+    const result = filterTrains(data);
 
-  // it("should not filter trains when only recent trains since 5 mins", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+    expect(result.length).toBe(3);
+    expect(result[0].train.name).toBe('-4');
+    expect(result[2].train.name).toBe('2');
+  });
 
-  //   const data = fillDataToFilter([-4, -3, 2, 11, 15]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(3);
-  //   expect(data[0].name).toBe("-4");
-  //   expect(data[2].name).toBe("2");
-  // });
+  it('should not filter trains when only recent trains since 10 mins', () => {
+    const data = fillDataToFilter([-4, 2, 7, 15]);
 
-  // it("should not filter trains when only recent trains since 10 mins", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+    const result = filterTrains(data);
 
-  //   const data = fillDataToFilter([-8, 2, 7, 15]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(3);
-  //   expect(data[0].name).toBe("-8");
-  //   expect(data[2].name).toBe("7");
-  // });
+    expect(result.length).toBe(3);
+    expect(result[0].train.name).toBe('-4');
+    expect(result[2].train.name).toBe('7');
+  });
 
-  // it("should filter trains when arrived to final station", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+  it('should filter trains when arrived to final station', () => {
+    const data = fillDataToFilter([-3, -2]);
 
-  //   const data = fillDataToFilter([-8, -3, -2]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(2);
-  //   expect(data[0].name).toBe("-3");
-  // });
+    const result = filterTrains(data);
 
-  // it("should filter trains when arrived to final station over 5 mins ago", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+    expect(result.length).toBe(2);
+    expect(result[0].train.name).toBe('-3');
+  });
 
-  //   const data = fillDataToFilter([-12, -8, -7]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(1);
-  //   expect(data[0].name).toBe("-7");
-  // });
+  it('should filter future trains after 10 mins', () => {
+    const data = fillDataToFilter([-2, 2, 7, 15]);
 
-  // it("should filter future trains after 10 mins", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+    const result = filterTrains(data);
 
-  //   const data = fillDataToFilter([-2, 2, 7, 15]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(3);
-  //   expect(data[2].name).toBe("7");
-  // });
+    expect(result.length).toBe(3);
+    expect(result[2].train.name).toBe('7');
+  });
 
-  // it("should not filter the first future train if after 10 mins", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+  it('should not filter the first future train if after 10 mins', () => {
+    const data = fillDataToFilter([-2, 15, 20]);
 
-  //   const data = fillDataToFilter([-2, 15, 20]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(2);
-  //   expect(data[1].name).toBe("15");
-  // });
+    const result = filterTrains(data);
 
-  // it("should filter future trains after filtering past train", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
+    expect(result.length).toBe(2);
+    expect(result[1].train.name).toBe('15');
+  });
 
-  //   const data = fillDataToFilter([-12, -2, 2, 15]);
-  //   service.filterTrains(data);
-  //   expect(data.length).toBe(2);
-  //   expect(data[0].name).toBe("-2");
-  //   expect(data[1].name).toBe("2");
-  // });
+  it('should filter future trains after filtering past train', () => {
+    const data = fillDataToFilter([-2, 2, 15]);
 
-  // function fillDataToFilter(startMinutes: number[]) {
-  //   const now = new Date().getTime();
-  //   const result: TrainTrackingViewModel[] = [];
-  //   for (const startMinute of startMinutes) {
-  //     const item = new TrainTrackingViewModel();
-  //     item.time = new Date(now + startMinute * 60 * 1000);
-  //     item.name = startMinute.toString();
-  //     result.push(item);
-  //   }
-  //   return result;
-  // }
+    const result = filterTrains(data);
 
-  // it("should not merge two trains encountered at the exact same moment", () => {
-  //   const service: ExplorerService = TestBed.inject(ExplorerService);
-  //   const now = Date.now();
-  //   const time = new Date(now + 2 * 60 * 1000);
+    expect(result.length).toBe(2);
+    expect(result[0].train.name).toBe('-2');
+    expect(result[1].train.name).toBe('2');
+  });
 
-  //   const item1 = new TrainTrackingViewModel();
-  //   item1.time = time;
-  //   item1.eventType = EventType.Train;
-  //   item1.name = "1";
+  function fillDataToFilter(startMinutes: number[]) {
+    const now = DateTime.now();
 
-  //   const item2 = new TrainTrackingViewModel();
-  //   item2.time = time;
-  //   item1.eventType = EventType.Train;
-  //   item2.name = "2";
-
-  //   const trains = [item1, item2];
-  //   const events: TrainTrackingViewModel[] = [];
-  //   service.mergeTrains(events, trains);
-
-  //   expect(events.length).toBe(2);
-  //   expect(events[0].name).toBe("1");
-  //   expect(events[1].name).toBe("2");
-  // });
+    const result = startMinutes.map((startMinute) => ({
+      train: trainFixture({ trainNumber: startMinute, name: startMinute.toString() }),
+      time: now.plus({ minutes: startMinute }),
+    }));
+    return result;
+  }
 });

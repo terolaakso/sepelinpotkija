@@ -12,7 +12,7 @@ export default function LateCauses({ causes }: LateCausesProps) {
     <small>
       {causes.map((cause) => (
         <span className="block" key={cause.name}>
-          {cause.name} : +{cause.lateMinutes} min
+          {cause.name}: +{cause.lateMinutes} min
         </span>
       ))}
     </small>
