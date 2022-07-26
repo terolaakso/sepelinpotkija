@@ -33,17 +33,17 @@ const MAX_LOCATION_AGE_MINUTES = 1;
 
 export const useTrainDataStore = create<TrainDataStore>((set, get) => {
   function cleanup(state: TrainDataStore) {
-    const oldestTrainTimestampToKeep = DateTime.now().plus({ minutes: MAX_TRAIN_AGE_MINUTES });
+    const oldestTrainTimestampToKeep = DateTime.now().minus({ minutes: MAX_TRAIN_AGE_MINUTES });
     const trainsToKeep = pickBy(
       state.trains,
-      (train) => train?.timestamp ?? DateTime.fromMillis(0) >= oldestTrainTimestampToKeep
+      (train) => (train?.timestamp ?? DateTime.fromMillis(0)) >= oldestTrainTimestampToKeep
     );
-    const oldestLocationTimestampToKeep = DateTime.now().plus({
+    const oldestLocationTimestampToKeep = DateTime.now().minus({
       minutes: MAX_LOCATION_AGE_MINUTES,
     });
     const locationsToKeep = pickBy(
       state.locations,
-      (location) => location?.timestamp ?? DateTime.fromMillis(0) >= oldestLocationTimestampToKeep
+      (location) => (location?.timestamp ?? DateTime.fromMillis(0)) >= oldestLocationTimestampToKeep
     );
     return {
       ...state,
