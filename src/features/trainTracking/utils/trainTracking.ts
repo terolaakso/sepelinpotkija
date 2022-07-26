@@ -4,7 +4,6 @@ import { DateTime, DurationLike } from 'luxon';
 import { useTrainDataStore } from '@/stores/trainData';
 import { StopType, TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
-import { calculateLateMins } from '@/utils/timetableCalculation';
 
 import { TrainEvent, TrainEventType } from '../types/TrainEvent';
 
@@ -81,6 +80,7 @@ function createTimetableRowEvent(rows: TimetableRow[], index: number): TrainEven
     eventType: row.stopType === StopType.Commercial ? TrainEventType.Stop : TrainEventType.Station,
     lineId: null,
     lateMinutes: null,
+    lateCauses: [],
     countdown: '',
     relativeProgress: 0,
     subEvents: [],
@@ -97,7 +97,8 @@ function createTrainEvent(train: Train, time: DateTime): TrainEvent {
     departureTime: null,
     eventType: TrainEventType.Train,
     id: train.trainNumber.toString(),
-    lateMinutes: calculateLateMins(train.timetableRows, train.latestActualTimeIndex + 1),
+    lateMinutes: train.lateMinutes,
+    lateCauses: train.currentLateCauses,
     lineId: train.lineId,
     name: `${train.name} ${origin} - ${destination}`,
     relativeProgress: 0,

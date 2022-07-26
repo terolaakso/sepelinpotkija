@@ -1,5 +1,6 @@
 import CommuterBadge from '@/components/CommuterBadge';
 import DifferenceBadge from '@/components/DifferenceBadge';
+import { LateCauses } from '@/features/lateCauses';
 
 import { TrainEvent } from '../types/TrainEvent';
 
@@ -10,13 +11,16 @@ export interface EventContentProps {
 }
 export default function EventContent({ event }: EventContentProps) {
   return (
-    <div className="flex">
-      <div className="flex-grow">
-        <CommuterBadge lineId={event.lineId} />
-        <EventText event={event} />
-        <DifferenceBadge difference={event.lateMinutes} />
+    <>
+      <div className="flex">
+        <div className="flex-grow">
+          <CommuterBadge lineId={event.lineId} />
+          <EventText event={event} />
+          <DifferenceBadge difference={event.lateMinutes} />
+        </div>
+        <div>{event.countdown}</div>
       </div>
-      <div>{event.countdown}</div>
-    </div>
+      <LateCauses causes={event.lateCauses} />
+    </>
   );
 }

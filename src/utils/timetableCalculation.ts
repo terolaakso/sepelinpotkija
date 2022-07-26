@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { findIndex, findLastIndex } from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
 import { calculateCauses } from '@/features/lateCauses';
@@ -126,7 +126,7 @@ function resetTimes(rows: TimetableRow[]): TimetableRow[] {
 }
 
 export function calculateLateMins(rows: TimetableRow[], index: number): number | null {
-  if (index <= 0) {
+  if (index <= 0 || rows[0].scheduledTime > DateTime.now()) {
     // Get latemins only for trains that have departed their origin station
     return null;
   }
@@ -176,7 +176,7 @@ function findPreviousStation(
   index: number,
   stations: StationCollection
 ): StationIndex | null {
-  const i = _.findLastIndex(
+  const i = findLastIndex(
     train.timetableRows,
     (row) => row.stationShortCode !== train.timetableRows[index].stationShortCode,
     Math.max(index - 1, 0)
@@ -198,7 +198,7 @@ function findNextStation(
   index: number,
   stations: StationCollection
 ): StationIndex | null {
-  const i = _.findIndex(
+  const i = findIndex(
     train.timetableRows,
     (row) => row.stationShortCode !== train.timetableRows[index].stationShortCode,
     index + 1
