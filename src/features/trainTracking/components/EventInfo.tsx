@@ -1,9 +1,7 @@
-import CommuterBadge from '@/components/CommuterBadge';
-import DifferenceBadge from '@/components/DifferenceBadge';
-
 import { TrainEvent } from '../types/TrainEvent';
 
-import EventText from './EventText';
+import EventContent from './EventContent';
+import SubEvents from './SubEvents';
 
 export interface EventInfoProps {
   event: TrainEvent;
@@ -12,14 +10,8 @@ export interface EventInfoProps {
 export default function EventInfo({ event }: EventInfoProps) {
   return (
     <div className="min-h-10 ml-1 flex-grow">
-      <div className="flex">
-        <div className="flex-grow">
-          <CommuterBadge lineId={event.lineId} />
-          <EventText event={event} />
-          <DifferenceBadge difference={event.lateMinutes} />
-        </div>
-        <div>{event.countdown}</div>
-      </div>
+      <EventContent event={event} />
+      <SubEvents mainEvent={event} />
     </div>
   );
 }

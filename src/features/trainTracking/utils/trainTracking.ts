@@ -1,4 +1,4 @@
-import { findIndex, findLastIndex, sortBy, sortedUniqBy, unionBy } from 'lodash';
+import { findIndex, findLastIndex, sortBy, sortedUniqBy, uniqBy } from 'lodash';
 import { DateTime, DurationLike } from 'luxon';
 
 import { useTrainDataStore } from '@/stores/trainData';
@@ -32,12 +32,12 @@ export function calculateCurrentEventsForTrain(train: Train): {
   const nextStationCode =
     allStations.find((event) => (event.departureTime ?? event.time) > now)?.id ?? null;
   // TODO: Generate infos for "extra" stations
+  const uniqueStations = uniqBy([...commercialStops, ...allStations], (row) => row.id);
+
   const encounters = getOtherTrains(train);
-  const uniqueEvents = unionBy(
-    [...commercialStops, ...allStations, ...encounters],
-    (row) => row.id
-  );
-  const sortedEvents = sortBy(uniqueEvents, (row) => row.time);
+  const stationsWithTrains = mergeTrains(uniqueStations, encounters);
+
+  const sortedEvents = sortBy(stationsWithTrains, (row) => row.time);
   const withCountdown = calculateCountdown(sortedEvents);
   return { events: withCountdown, nextStationCode };
 }
@@ -83,6 +83,7 @@ function createTimetableRowEvent(rows: TimetableRow[], index: number): TrainEven
     lateMinutes: null,
     countdown: '',
     relativeProgress: 0,
+    subEvents: [],
   };
 }
 
@@ -100,6 +101,7 @@ function createTrainEvent(train: Train, time: DateTime): TrainEvent {
     lineId: train.lineId,
     name: `${train.name} ${origin} - ${destination}`,
     relativeProgress: 0,
+    subEvents: [],
     time,
   };
 }
@@ -314,4 +316,33 @@ function getEncountersBetween(
   toTime: DateTime
 ): EncounterResult[] {
   return encounters.filter((e) => e.time > fromTime && e.time <= toTime);
+}
+
+function mergeTrains(stations: TrainEvent[], encounters: TrainEvent[]): TrainEvent[] {
+  const result = encounters.reduce(
+    (acc, cur) => {
+      const matchingIndex = stations.findIndex(
+        (s) =>
+          (s.departureTime && s.time <= cur.time && s.departureTime >= cur.time) ||
+          (!s.departureTime && s.time.toMillis() === cur.time.toMillis())
+      );
+      if (matchingIndex >= 0) {
+        const station = acc.stationEvents[matchingIndex];
+        return {
+          ...acc,
+          stationEvents: Object.assign([], acc.stationEvents, {
+            [matchingIndex]: { ...station, subEvents: [...station.subEvents, cur] },
+          }),
+        };
+      } else {
+        return {
+          ...acc,
+          encountersOnLine: [...acc.encountersOnLine, cur],
+        };
+      }
+    },
+    { stationEvents: stations, encountersOnLine: [] as TrainEvent[] }
+  );
+
+  return [...result.stationEvents, ...result.encountersOnLine];
 }

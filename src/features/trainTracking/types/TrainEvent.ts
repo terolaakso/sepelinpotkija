@@ -10,6 +10,7 @@ export interface TrainEvent {
   lateMinutes: number | null;
   countdown: string;
   relativeProgress: number;
+  subEvents: TrainEvent[];
 }
 
 export enum TrainEventType {

@@ -13,7 +13,6 @@ export default function EventText({ event }: EventTextProps) {
   return (
     <span className={textClasses}>
       {event.name} {event.time.toFormat('HH:mm:ss')} {event.departureTime?.toFormat('HH:mm:ss')}
-      {/* TODO: encounter origin & destination */}
     </span>
   );
 }
