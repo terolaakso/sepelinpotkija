@@ -22,6 +22,7 @@ const PAST_EVENT_MIN_COUNT = 1;
 export function calculateCurrentEventsForTrain(train: Train): {
   events: TrainEvent[];
   nextStationCode: string | null;
+  nextTrain: Train | null;
 } {
   const nextRowIndex = nextTimetableRowIndex(train);
   const commercialStops = getCurrentCommercialStops(train, nextRowIndex);
@@ -34,11 +35,11 @@ export function calculateCurrentEventsForTrain(train: Train): {
   const uniqueStations = uniqBy([...commercialStops, ...allStations], (row) => row.id);
 
   const encounters = getOtherTrains(train);
-  const stationsWithTrains = mergeTrains(uniqueStations, encounters);
+  const stationsWithTrains = mergeTrains(uniqueStations, encounters.result);
 
   const sortedEvents = sortBy(stationsWithTrains, (row) => row.time);
   const withCountdown = calculateCountdown(sortedEvents);
-  return { events: withCountdown, nextStationCode };
+  return { events: withCountdown, nextStationCode, nextTrain: encounters.nextTrain };
 }
 
 export function getCurrentCommercialStops(train: Train, nextRowIndex: number): TrainEvent[] {
@@ -221,7 +222,7 @@ function findNext(
   return null;
 }
 
-function getOtherTrains(forTrain: Train): TrainEvent[] {
+function getOtherTrains(forTrain: Train): { result: TrainEvent[]; nextTrain: Train | null } {
   const otherTrains = Object.values(useTrainDataStore.getState().trains).filter(
     (train): train is Train =>
       isNotNil(train) &&
@@ -242,8 +243,9 @@ function getOtherTrains(forTrain: Train): TrainEvent[] {
     })
     .filter(isNotNil)
     .sort((a, b) => a.time.toMillis() - b.time.toMillis());
-  const encounterEvents = filterTrains(encounters).map((e) => createTrainEvent(e.train, e.time));
-  return encounterEvents;
+  const filterResult = filterTrains(encounters);
+  const encounterEvents = filterResult.result.map((e) => createTrainEvent(e.train, e.time));
+  return { result: encounterEvents, nextTrain: filterResult.nextTrain };
 }
 
 function trainsIntersectionTime(
@@ -281,13 +283,17 @@ function trainsIntersectionTime(
   return null;
 }
 
-export function filterTrains(encounters: EncounterResult[]): EncounterResult[] {
+export function filterTrains(encounters: EncounterResult[]): {
+  result: EncounterResult[];
+  nextTrain: Train | null;
+} {
   const now = DateTime.now();
   const showAllUntil = now.plus(SHOW_ALL_OTHER_TRAINS_FOR_DURATION);
 
   const past = getEncountersAtOrEarlierThan(encounters, now);
+  const nextEncounter = getNextEncounter(encounters, now);
   const future = sortedUniqBy(
-    [...getNextEncounter(encounters, now), ...getEncountersBetween(encounters, now, showAllUntil)],
+    [...nextEncounter, ...getEncountersBetween(encounters, now, showAllUntil)],
     (e) => e.train.trainNumber
   );
 
@@ -296,7 +302,11 @@ export function filterTrains(encounters: EncounterResult[]): EncounterResult[] {
     past.length
   );
   const futureToKeepCount = Math.min(TOTAL_TRAIN_EVENT_MAX_COUNT - pastToKeepCount, future.length);
-  return [...past.slice(-pastToKeepCount), ...future.slice(0, futureToKeepCount)];
+  const result = [...past.slice(-pastToKeepCount), ...future.slice(0, futureToKeepCount)];
+  return {
+    result,
+    nextTrain: nextEncounter.length > 0 ? nextEncounter[0].train : null,
+  };
 }
 
 function getEncountersAtOrEarlierThan(

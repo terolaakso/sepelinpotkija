@@ -4,6 +4,7 @@ import ErrorBar from '@/components/ErrorBar';
 import { useInterval } from '@/hooks/useInterval';
 import useStationWatch from '@/hooks/useStationWatch';
 import useTrain from '@/hooks/useTrain';
+import useTrainLocationWatch from '@/hooks/useTrainLocationWatch';
 import { useTrainDataStore } from '@/stores/trainData';
 
 import { TrainEvent } from '../types/TrainEvent';
@@ -19,6 +20,11 @@ export default function TrainTracking() {
   const [isTracking, setIsTracking] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [nextStationCode, setNextStationCode] = useState<string | null>(null);
+  const [nextTrain, setNextTrain] = useState<{
+    departureDate: string | null;
+    trainNumber: number | null;
+  }>({ departureDate: null, trainNumber: null });
+
   const getTrain = useTrainDataStore((state) => state.getTrain);
 
   async function startTracking(trainNumber: number) {
@@ -34,16 +40,25 @@ export default function TrainTracking() {
 
   const departureDate = useTrain(isTracking ? trainNumber ?? null : null);
   useStationWatch(isTracking ? nextStationCode : null);
+  useTrainLocationWatch(
+    isTracking ? nextTrain.departureDate : null,
+    isTracking ? nextTrain.trainNumber : null
+  );
 
   const train = getTrain(departureDate, trainNumber);
 
   useInterval(
     () => {
-      const { events, nextStationCode } = train
+      const { events, nextStationCode, nextTrain } = train
         ? calculateCurrentEventsForTrain(train)
-        : { events: [], nextStationCode: null };
+        : { events: [], nextStationCode: null, nextTrain: null };
       setEvents(events);
       setNextStationCode(nextStationCode);
+      setNextTrain(
+        nextTrain
+          ? { departureDate: nextTrain.departureDate, trainNumber: nextTrain.trainNumber }
+          : { departureDate: null, trainNumber: null }
+      );
     },
     isTracking ? 1000 : null
   );

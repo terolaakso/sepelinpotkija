@@ -27,7 +27,7 @@ export default function useTrain(trainNumber: number | null, departureDate?: str
       setFollowedDepartureDate(fixedTrain.departureDate);
       setTrain(fixedTrain);
     }
-    console.log(new Date().toLocaleTimeString(), 'Calling useTrain/useEffect');
+
     setFollowedDepartureDate(departureDate ?? null);
     fetchTrain();
   }, [departureDate, trainNumber, setTrain]);
