@@ -2,6 +2,7 @@ import { isNil, pickBy } from 'lodash';
 import { DateTime } from 'luxon';
 import create from 'zustand';
 
+import { TrackSegmentCollection } from '@/features/trainTracking';
 import {
   FirstLevelCauseCollection,
   SecondLevelCauseCollection,
@@ -18,6 +19,7 @@ interface TrainDataStore {
   thirdLevelCauses: ThirdLevelCauseCollection;
   trains: TrainCollection;
   locations: LocationCollection;
+  extras: TrackSegmentCollection;
   setStations: (station: StationCollection) => void;
   setFirstLevelCauses: (causes: FirstLevelCauseCollection) => void;
   setSecondLevelCauses: (causes: SecondLevelCauseCollection) => void;
@@ -26,6 +28,7 @@ interface TrainDataStore {
   setTrain: (train: Train) => void;
   getLocation: (departureDate: string, trainNumber: number) => TrainLocation | null;
   setLocation: (location: TrainLocation) => void;
+  setExtras: (extras: TrackSegmentCollection) => void;
 }
 
 const MAX_TRAIN_AGE_MINUTES = 6;
@@ -59,6 +62,7 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     thirdLevelCauses: {},
     trains: {},
     locations: {},
+    extras: {},
     setStations: (stations) => {
       set((state) => ({
         ...state,
@@ -127,6 +131,12 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
           return cleanedState;
         }
       });
+    },
+    setExtras: (extras: TrackSegmentCollection) => {
+      set((state) => ({
+        ...state,
+        extras,
+      }));
     },
   };
 });

@@ -7,6 +7,7 @@ import useTrain from '@/hooks/useTrain';
 import useTrainLocationWatch from '@/hooks/useTrainLocationWatch';
 import { useTrainDataStore } from '@/stores/trainData';
 
+import useTrackSegmentExtras from '../hooks/useTrackSegmentExtras';
 import { TrainEvent } from '../types/TrainEvent';
 import { calculateCurrentEventsForTrain } from '../utils/trainTracking';
 
@@ -27,23 +28,13 @@ export default function TrainTracking() {
 
   const getTrain = useTrainDataStore((state) => state.getTrain);
 
-  async function startTracking(trainNumber: number) {
-    setTrainNumber(trainNumber);
-    setErrorMessage(null);
-    setIsTracking(true);
-    setEvents([]);
-  }
-
-  async function stopTracking() {
-    setIsTracking(false);
-  }
-
   const departureDate = useTrain(isTracking ? trainNumber ?? null : null);
   useStationWatch(isTracking ? nextStationCode : null);
   useTrainLocationWatch(
     isTracking ? nextTrain.departureDate : null,
     isTracking ? nextTrain.trainNumber : null
   );
+  useTrackSegmentExtras();
 
   const train = getTrain(departureDate, trainNumber);
 
@@ -62,6 +53,17 @@ export default function TrainTracking() {
     },
     isTracking ? 1000 : null
   );
+
+  async function startTracking(trainNumber: number) {
+    setTrainNumber(trainNumber);
+    setErrorMessage(null);
+    setIsTracking(true);
+    setEvents([]);
+  }
+
+  async function stopTracking() {
+    setIsTracking(false);
+  }
 
   return (
     <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">

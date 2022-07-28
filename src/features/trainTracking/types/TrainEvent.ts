@@ -9,6 +9,7 @@ export interface TrainEvent {
   departureTime: DateTime | null;
   eventType: TrainEventType;
   lineId: string | null;
+  wikiPage: string | null;
   lateMinutes: number | null;
   lateCauses: LateCause[];
   countdown: string;
