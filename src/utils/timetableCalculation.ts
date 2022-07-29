@@ -25,6 +25,7 @@ interface StationSegment extends StationSegmentLocation {
   toIndex: number;
 }
 
+const EXPIRATION_ALERT_THRESHOLD = Duration.fromDurationLike({ minutes: 5 });
 const LOCATION_USABLE_MAX_MINUTES = 1;
 const MAX_ALLOWED_GPS_DISTANCE_KM = 10;
 
@@ -393,12 +394,13 @@ export function adjustWithLocationFromStore(train: Train): Train {
   return fixedTrain;
 }
 
-export function timetableExpirationDuration(train: Train): Duration {
-  const index = train.latestGpsIndex ? train.latestGpsIndex + 1 : train.latestActualTimeIndex + 1;
+export function timetableExpiresAt(train: Train): DateTime | null {
+  const index = isNotNil(train.latestGpsIndex)
+    ? train.latestGpsIndex + 1
+    : train.latestActualTimeIndex + 1;
 
   if (index < train.timetableRows.length) {
-    const age = DateTime.now().diff(train.timetableRows[index].time);
-    return age;
+    return train.timetableRows[index].time.plus(EXPIRATION_ALERT_THRESHOLD);
   }
-  return Duration.fromMillis(0);
+  return null;
 }

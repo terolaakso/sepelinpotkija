@@ -4,6 +4,7 @@ import { DateTime, DurationLike } from 'luxon';
 import { useTrainDataStore } from '@/stores/trainData';
 import { TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
+import { timetableExpiresAt } from '@/utils/timetableCalculation';
 
 import { TrainEvent, TrainEventType } from '../types/TrainEvent';
 
@@ -124,6 +125,7 @@ function createTrainEvent(train: Train, time: DateTime): TrainEvent {
     subEvents: [],
     time,
     wikiPage: null,
+    expiresAt: timetableExpiresAt(train),
   };
 }
 

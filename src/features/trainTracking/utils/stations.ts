@@ -114,5 +114,6 @@ function createTimetableRowEvent(rows: TimetableRow[], index: number): TrainEven
     relativeProgress: 0,
     subEvents: [],
     wikiPage: null,
+    expiresAt: null,
   };
 }

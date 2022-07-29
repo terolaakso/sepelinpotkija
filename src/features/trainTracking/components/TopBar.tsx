@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { Duration } from 'luxon';
+import { DateTime } from 'luxon';
 
 import { Train } from '@/types/Train';
-import { timetableExpirationDuration } from '@/utils/timetableCalculation';
+import { timetableExpiresAt } from '@/utils/timetableCalculation';
 
 import TrainHeader from './TrainHeader';
 import TrainNumberInputForm from './TrainNumberInputForm';
@@ -13,11 +13,9 @@ export interface TopBarProps {
   startTracking: (trainNumber: number) => void;
 }
 
-const EXPIRATION_ALERT_THRESHOLD = Duration.fromDurationLike({ minutes: 5 });
-
 export default function TopBar({ train, isTracking, startTracking }: TopBarProps) {
-  const isTimetableExpired =
-    train !== null && timetableExpirationDuration(train) > EXPIRATION_ALERT_THRESHOLD;
+  const expiresAt = train !== null ? timetableExpiresAt(train) : null;
+  const isTimetableExpired = expiresAt !== null && DateTime.now() > expiresAt;
 
   const className = classNames('px-1', 'mb-1', {
     'bg-red-800': isTimetableExpired,

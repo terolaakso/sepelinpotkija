@@ -12,6 +12,7 @@ export interface TrainEvent {
   wikiPage: string | null;
   lateMinutes: number | null;
   lateCauses: LateCause[];
+  expiresAt: DateTime | null;
   countdown: string;
   relativeProgress: number;
   subEvents: TrainEvent[];

@@ -22,4 +22,5 @@ const defaultEvent: TrainEvent = {
   relativeProgress: 0,
   subEvents: [],
   time: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+  expiresAt: null,
 };

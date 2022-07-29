@@ -188,6 +188,7 @@ function createLocationExtraEvent(
     lineId: null,
     relativeProgress: 0,
     subEvents: [],
+    expiresAt: null,
   };
   return result;
 }
