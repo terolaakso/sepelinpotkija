@@ -11,9 +11,5 @@ export default function EventText({ event }: EventTextProps) {
   const textClasses = classNames('mr-1', {
     'text-red-700': event.expiresAt !== null && DateTime.now() > event.expiresAt,
   });
-  return (
-    <span className={textClasses}>
-      {event.name} {event.time.toFormat('HH:mm:ss')} {event.departureTime?.toFormat('HH:mm:ss')}
-    </span>
-  );
+  return <span className={textClasses}>{event.name}</span>;
 }
