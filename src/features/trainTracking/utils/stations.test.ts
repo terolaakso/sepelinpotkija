@@ -92,7 +92,7 @@ describe('selecting events', () => {
 
   it('should return correct stations after passing a station', () => {
     const { train } = getTrainData();
-    const result = getCurrentStations(train, 5); // seuraavana paimio
+    const result = getCurrentStations(train, 5); // next stop paimio
     expect(result.length).toBe(2);
 
     expect(result[0].id).toBe('PIK');
@@ -116,7 +116,7 @@ describe('selecting events', () => {
 
   it('should return correct stations before arriving to final station', () => {
     const { train } = getTrainData();
-    const result = getCurrentStations(train, 13); // seuraavana helsinki
+    const result = getCurrentStations(train, 13); // next stop helsinki
     expect(result.length).toBe(2);
 
     expect(result[0].id).toBe('PKU');
@@ -128,17 +128,20 @@ describe('selecting events', () => {
 
   it('should return correct commercial stops after arriving to final station', () => {
     const { train } = getTrainData();
-    const result = getCurrentCommercialStops(train, 14); // helsingissä
+    const result = getCurrentCommercialStops(train, 14); // at helsinki
     expect(result.length).toBe(0);
   });
 
   it('should return correct stations after arriving to final station', () => {
     const { train } = getTrainData();
-    const result = getCurrentStations(train, 14); // helsingissä
-    expect(result.length).toBe(1);
+    const result = getCurrentStations(train, 14); // at helsinki
+    expect(result.length).toBe(2);
 
-    expect(result[0].id).toBe('HKI');
+    expect(result[0].id).toBe('PKU');
     expect(result[0].departureTime).toBeNull();
+
+    expect(result[1].id).toBe('HKI');
+    expect(result[1].departureTime).toBeNull();
   });
 
   function getTrainData() {

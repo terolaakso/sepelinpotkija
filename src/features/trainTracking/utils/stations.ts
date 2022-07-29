@@ -33,10 +33,11 @@ function findPrevious(
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
 ): TrainEvent | null {
-  if (includePast && nextRowIndex > 0 && nextRowIndex < rows.length) {
+  if (includePast && nextRowIndex > 0 && nextRowIndex <= rows.length) {
     const stepToPrevious =
-      nextRowIndex < rows.length &&
-      rows[nextRowIndex].stationShortCode === rows[nextRowIndex - 1].stationShortCode
+      nextRowIndex === rows.length ||
+      (nextRowIndex < rows.length &&
+        rows[nextRowIndex].stationShortCode === rows[nextRowIndex - 1].stationShortCode)
         ? 2
         : 1;
     const index = findLastIndex(
