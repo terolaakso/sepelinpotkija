@@ -98,19 +98,23 @@ export function isTrainAtStation(train: Train, location: TrainLocation | null): 
   const MAX_STATION_RANGE_KM = 1;
   const now = DateTime.now();
   const rows = train.timetableRows;
-  const actualIndex = train.latestActualTimeIndex;
+  const nextIndex = findIndex(
+    rows,
+    (r) => now < r.bestDigitrafficTime,
+    Math.max(train.latestActualTimeIndex, 0)
+  );
   const isAtStationAccordingToActualTime =
-    (actualIndex === -1 && now < rows[0].bestDigitrafficTime) ||
-    actualIndex === rows.length - 1 ||
-    (actualIndex >= 0 &&
-      actualIndex + 1 < rows.length &&
-      rows[actualIndex].stationShortCode === rows[actualIndex + 1].stationShortCode &&
-      rows[actualIndex].stopType !== StopType.None &&
-      now < rows[actualIndex + 1].bestDigitrafficTime);
+    nextIndex === 0 ||
+    nextIndex === -1 ||
+    (nextIndex > 0 &&
+      rows[nextIndex].stopType !== StopType.None &&
+      rows[nextIndex - 1].stationShortCode === rows[nextIndex].stationShortCode) ||
+    (nextIndex === train.latestActualTimeIndex &&
+      rows[nextIndex - 1].stationShortCode !== rows[nextIndex].stationShortCode);
   const result = isAtStationAccordingToActualTime;
   if (result && location) {
     const stations = useTrainDataStore.getState().stations;
-    const station = stations[rows[Math.max(actualIndex, 0)].stationShortCode];
+    const station = stations[rows[nextIndex === -1 ? rows.length - 1 : nextIndex].stationShortCode];
     if (station) {
       const distance = distanceBetweenCoordsInKm(location.location, station.location);
       return distance < MAX_STATION_RANGE_KM;

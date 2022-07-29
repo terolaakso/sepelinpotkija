@@ -281,7 +281,7 @@ describe('when is train at station when location is not available', () => {
     expect(isAtStation).toBe(true);
   });
 
-  it("is not at station when arrival time has passed and it's not actual", () => {
+  it("is at station when arrival time has passed and it's not actual", () => {
     const train = trainFixture({
       latestActualTimeIndex: 0,
       timetableRows: rowsForTest({ minutes: -10 }, { firstStopDuration: { minutes: 2 } }).map(
@@ -291,7 +291,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(false);
+    expect(isAtStation).toBe(true);
   });
 
   it('is not at station when has no actual time for arrival', () => {
