@@ -15,8 +15,8 @@ interface EncounterResult {
   time: DateTime;
 }
 
-const VIEW_OTHER_TRAINS_SINCE: DurationLike = { minutes: 5 };
-const SHOW_ALL_OTHER_TRAINS_FOR_DURATION: DurationLike = { minutes: 10 };
+const VIEW_OTHER_TRAINS_SINCE: DurationLike = { minutes: 10 };
+const SHOW_ALL_OTHER_FUTURE_TRAINS_FOR: DurationLike = { minutes: 10 };
 const TOTAL_TRAIN_EVENT_MAX_COUNT = 3;
 const PAST_EVENT_MIN_COUNT = 1;
 
@@ -86,7 +86,7 @@ export function filterTrains(encounters: EncounterResult[]): {
   nextTrain: Train | null;
 } {
   const now = DateTime.now();
-  const showAllUntil = now.plus(SHOW_ALL_OTHER_TRAINS_FOR_DURATION);
+  const showAllUntil = now.plus(SHOW_ALL_OTHER_FUTURE_TRAINS_FOR);
 
   const past = getEncountersAtOrEarlierThan(encounters, now);
   const nextEncounter = getNextEncounter(encounters, now);
