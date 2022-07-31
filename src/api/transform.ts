@@ -45,7 +45,7 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
     lineId: train.commuterLineID ?? null,
     currentSpeed: null,
     currentLateCauses: calculateCauses(fixedRows, latestActualTimeIndex + 1),
-    lateMinutes: calculateLateMins(fixedRows, latestActualTimeIndex + 1),
+    lateMinutes: calculateLateMins(fixedRows, latestActualTimeIndex + 1, latestActualTimeIndex),
     isReady,
     latestActualTimeIndex,
     latestGpsIndex: null,

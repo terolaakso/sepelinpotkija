@@ -68,7 +68,11 @@ function createTrainFromNewData(
   return {
     ...train,
     timetableRows: rows,
-    lateMinutes: calculateLateMins(rows, (fixedFromIndex ?? train.latestActualTimeIndex) + 1),
+    lateMinutes: calculateLateMins(
+      rows,
+      (fixedFromIndex ?? train.latestActualTimeIndex) + 1,
+      train.latestActualTimeIndex
+    ),
     currentSpeed: location.speed,
     currentLateCauses: calculateCauses(rows, (fixedFromIndex ?? train.latestActualTimeIndex) + 1),
     latestGpsIndex: fixedFromIndex,
@@ -130,8 +134,12 @@ function resetTimes(rows: TimetableRow[]): TimetableRow[] {
   }));
 }
 
-export function calculateLateMins(rows: TimetableRow[], index: number): number | null {
-  if (index <= 0 || rows[0].scheduledTime > DateTime.now()) {
+export function calculateLateMins(
+  rows: TimetableRow[],
+  index: number,
+  latestActualTimeIndex: number
+): number | null {
+  if (latestActualTimeIndex < 0 && DateTime.now() < rows[0].scheduledTime) {
     // Get latemins only for trains that have departed their origin station
     return null;
   }
