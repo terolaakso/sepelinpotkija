@@ -110,11 +110,10 @@ export function isTrainAtStation(train: Train, location: TrainLocation | null): 
   const isAtStationAccordingToActualTime =
     nextIndex === 0 ||
     nextIndex === -1 ||
-    (nextIndex > 0 &&
-      rows[nextIndex].stopType !== StopType.None &&
-      rows[nextIndex - 1].stationShortCode === rows[nextIndex].stationShortCode) ||
-    (nextIndex === train.latestActualTimeIndex &&
-      rows[nextIndex - 1].stationShortCode !== rows[nextIndex].stationShortCode);
+    (rows[nextIndex].stopType !== StopType.None &&
+      (rows[nextIndex - 1].stationShortCode === rows[nextIndex].stationShortCode ||
+        (nextIndex === train.latestActualTimeIndex &&
+          rows[nextIndex - 1].stationShortCode !== rows[nextIndex].stationShortCode)));
   const result = isAtStationAccordingToActualTime;
   if (result && location) {
     const stations = useTrainDataStore.getState().stations;
