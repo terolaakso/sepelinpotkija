@@ -2,12 +2,15 @@ import { DateTime } from 'luxon';
 
 import { LatLon } from '@/utils/geography';
 
-export interface TrainLocation {
-  trainNumber: number;
-  departureDate: string;
-  timestamp: DateTime;
+export interface LocationAndSpeed {
   location: LatLon;
   speed: number;
+  timestamp: DateTime;
+}
+
+export interface TrainLocation extends LocationAndSpeed {
+  trainNumber: number;
+  departureDate: string;
 }
 
 export interface LocationCollection {

@@ -1,21 +1,28 @@
 import { isNil } from 'lodash';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { getLocation } from '@/api/digitrafficClient';
 import { transformLocation } from '@/api/transform';
 import { useSubscription } from '@/features/mqtt';
 import { useTrainDataStore } from '@/stores/trainData';
 import { GpsLocation } from '@/types/digitraffic';
+import { TrainLocation } from '@/types/TrainLocation';
 import { isNotNil } from '@/utils/misc';
 import { adjustTimetableByLocation } from '@/utils/timetableCalculation';
 
-export default function useTrainLocationWatch(
+export default function useTrainDigitrafficLocationWatch(
   departureDate: string | null,
-  trainNumber: number | null
+  trainNumber: number | null,
+  onLocationReceived?: (newLocation: TrainLocation) => void
 ) {
   const getTrain = useTrainDataStore((state) => state.getTrain);
   const setTrain = useTrainDataStore((state) => state.setTrain);
   const setLocation = useTrainDataStore((state) => state.setLocation);
+
+  const savedOnLocationReceived = useRef(onLocationReceived);
+  useEffect(() => {
+    savedOnLocationReceived.current = onLocationReceived;
+  }, [onLocationReceived]);
 
   useSubscription<GpsLocation>(
     isNotNil(departureDate) && isNotNil(trainNumber)
@@ -31,6 +38,7 @@ export default function useTrainLocationWatch(
       if (train) {
         const fixedTrain = adjustTimetableByLocation(train, location);
         setTrain(fixedTrain);
+        savedOnLocationReceived.current?.(location);
       }
     }
   );
@@ -40,8 +48,6 @@ export default function useTrainLocationWatch(
       if (isNil(departureDate) || isNil(trainNumber)) {
         return;
       }
-      console.log(new Date().toLocaleTimeString(), 'Fetching initial location');
-
       const latestLocation = await getLocation(trainNumber);
       if (!latestLocation) {
         return;
@@ -51,6 +57,7 @@ export default function useTrainLocationWatch(
       if (train) {
         const fixedTrain = adjustTimetableByLocation(train, latestLocation);
         setTrain(fixedTrain);
+        savedOnLocationReceived.current?.(latestLocation);
       }
     }
     fetchLocation();

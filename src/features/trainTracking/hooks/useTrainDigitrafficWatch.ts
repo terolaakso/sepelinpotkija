@@ -7,7 +7,10 @@ import { Train as DigitrafficTrain } from '@/types/digitraffic';
 import { isNotNil } from '@/utils/misc';
 import { adjustWithLocationFromStore } from '@/utils/timetableCalculation';
 
-export default function useTrainWatch(departureDate: string | null, trainNumber: number | null) {
+export default function useTrainDigitrafficWatch(
+  departureDate: string | null,
+  trainNumber: number | null
+) {
   const setTrain = useTrainDataStore((state) => state.setTrain);
 
   useSubscription<DigitrafficTrain>(

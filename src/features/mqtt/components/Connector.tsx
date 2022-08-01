@@ -27,7 +27,6 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
       connectionStatus: 'Connecting',
       client: mqtt,
     }));
-    console.log('Got client from connect');
     mqtt.on('connect', () => {
       if (mountedRef.current) {
         console.log('Connected');
@@ -72,12 +71,8 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
         }));
       }
     });
-    mqtt.on('message', (topic) => {
-      console.log(new Date().toLocaleTimeString(), `Message received: ${topic}`);
-    });
 
     return () => {
-      console.log('useEffect teardown', 'client: ', !!clientRef.current);
       if (mountedRef.current) {
         clientRef.current?.end(true);
         clientRef.current = null;

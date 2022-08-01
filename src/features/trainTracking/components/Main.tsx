@@ -3,11 +3,11 @@ import { useState } from 'react';
 import ErrorBar from '@/components/ErrorBar';
 import { useInterval } from '@/hooks/useInterval';
 import useStationWatch from '@/hooks/useStationWatch';
-import useTrain from '@/hooks/useTrain';
-import useTrainLocationWatch from '@/hooks/useTrainLocationWatch';
 import { useTrainDataStore } from '@/stores/trainData';
 
 import useTrackSegmentExtras from '../hooks/useTrackSegmentExtras';
+import useTrain from '../hooks/useTrain';
+import useTrainLocationWatch from '../hooks/useTrainDigitrafficLocationWatch';
 import { TrainEvent } from '../types/TrainEvent';
 import { calculateCurrentEventsForTrain } from '../utils/trainTracking';
 
@@ -28,7 +28,7 @@ export default function TrainTracking() {
 
   const getTrain = useTrainDataStore((state) => state.getTrain);
 
-  const departureDate = useTrain(isTracking ? trainNumber ?? null : null);
+  const departureDate = useTrain(isTracking ? trainNumber ?? null : null, null, true);
   useStationWatch(isTracking ? nextStationCode : null);
   useTrainLocationWatch(
     isTracking ? nextTrain.departureDate : null,
