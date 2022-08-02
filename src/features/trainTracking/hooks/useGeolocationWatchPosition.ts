@@ -5,7 +5,6 @@ import { LocationAndSpeed } from '@/types/TrainLocation';
 import { isNotNil } from '@/utils/misc';
 
 const M_PER_SEC_TO_KM_PER_H_COEFF = 3.6;
-const POSITION_MAX_CACHE_AGE_SEC = 10;
 
 export default function useGeolocationWatchPosition(
   isWatching: boolean,
@@ -26,7 +25,9 @@ export default function useGeolocationWatchPosition(
               lat: pos.coords.latitude,
               lon: pos.coords.longitude,
             },
-            speed: isNotNil(pos.coords.speed) ? pos.coords.speed * M_PER_SEC_TO_KM_PER_H_COEFF : 0,
+            speed: isNotNil(pos.coords.speed)
+              ? Math.round(pos.coords.speed * M_PER_SEC_TO_KM_PER_H_COEFF)
+              : 0,
             timestamp: DateTime.fromMillis(pos.timestamp),
           });
         },
@@ -35,7 +36,7 @@ export default function useGeolocationWatchPosition(
         },
         {
           enableHighAccuracy: true,
-          maximumAge: POSITION_MAX_CACHE_AGE_SEC * 1000,
+          maximumAge: 0,
         }
       );
     }
