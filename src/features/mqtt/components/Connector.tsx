@@ -39,6 +39,7 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
     });
     mqtt.on('reconnect', () => {
       if (mountedRef.current) {
+        console.log('Reconnect');
         setContextState((prevState) => ({
           ...prevState,
           connectionStatus: 'Reconnecting',

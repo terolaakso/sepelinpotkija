@@ -26,6 +26,7 @@ interface TrainDataStore {
   setThirdLevelCauses: (causes: ThirdLevelCauseCollection) => void;
   getTrain: (departureDate: string | null, trainNumber: number | null) => Train | null;
   setTrain: (train: Train) => void;
+  setTrains: (trains: Train[]) => void;
   getLocation: (departureDate: string, trainNumber: number) => TrainLocation | null;
   setLocation: (location: TrainLocation) => void;
   setExtras: (extras: TrackSegmentCollection) => void;
@@ -109,6 +110,27 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
         } else {
           return cleanedState;
         }
+      });
+    },
+    setTrains: (trains: Train[]) => {
+      set((state) => {
+        const cleanedState = cleanup(state);
+
+        const newState = trains.reduce((accState, train) => {
+          const { departureDate, trainNumber } = train;
+          const key = `${departureDate}-${trainNumber}`;
+          const oldVersion = accState.trains[key];
+          if (oldVersion?.version ?? 0 <= train.version) {
+            return {
+              ...accState,
+              trains: { ...accState.trains, [key]: train },
+            };
+          } else {
+            return accState;
+          }
+        }, cleanedState);
+
+        return newState;
       });
     },
     getLocation: (departureDate: string, trainNumber: number) => {

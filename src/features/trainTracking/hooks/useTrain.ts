@@ -5,7 +5,7 @@ import { getTrain } from '@/api/digitrafficClient';
 import { useTrainDataStore } from '@/stores/trainData';
 import { adjustWithLocationFromStore } from '@/utils/timetableCalculation';
 
-import useTrainWatch from './useTrainDigitrafficWatch';
+import useTrainDigitrafficWatch from './useTrainDigitrafficWatch';
 import useTrainLocationWatch from './useTrainLocationWatch';
 
 export default function useTrain(
@@ -36,7 +36,7 @@ export default function useTrain(
     fetchTrain();
   }, [departureDate, trainNumber, setTrain]);
 
-  useTrainWatch(followedDepartureDate, trainNumber);
+  useTrainDigitrafficWatch(followedDepartureDate, trainNumber);
   useTrainLocationWatch(followedDepartureDate, trainNumber, true, useDeviceLocationForTrain);
 
   return followedDepartureDate;
