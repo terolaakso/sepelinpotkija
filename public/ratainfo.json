@@ -173,22 +173,22 @@
     "locations": [
       {
         "name": "Kupittaa",
-        "km": 0,
         "info": "Kupittaan_rautatieasema"
       },
       {
         "name": "Ikituuri",
-        "km": 11,
+        "lat": 60.4605,
+        "lon": 22.28137,
         "info": null
       },
       {
-        "name": "Aurajoki",
-        "km": 14,
+        "name": "Aurajoen silta",
+        "lat": 60.460780000,
+        "lon": 22.279385833,
         "info": "Aurajoen_ratasilta"
       },
       {
         "name": "Turku",
-        "km": 33,
         "info": "Turun_päärautatieasema"
       }
     ]
@@ -197,42 +197,46 @@
     "locations": [
       {
         "name": "Kupittaa",
-        "km": 0,
         "info": "Kupittaan_rautatieasema"
       },
       {
         "name": "Lauste",
-        "km": 20,
+        "lat": 60.4378203,
+        "lon": 22.3330667,
         "info": "Lausteen_seisake"
       },
       {
         "name": "Varissuo",
-        "km": 30,
+        "lat": 60.438788,
+        "lon": 22.356735,
         "info": "Varissuon_seisake"
       },
       {
         "name": "Littoinen",
-        "km": 46,
+        "lat": 60.444081,
+        "lon": 22.394007,
         "info": "Littoisten_rautatieasema"
       },
       {
         "name": "Nunna",
-        "km": 62,
+        "lat": 60.4434256,
+        "lon": 22.4311934,
         "info": null
       },
       {
         "name": "Uitto",
-        "km": 72,
+        "lat": 60.439221,
+        "lon": 22.450541,
         "info": null
       },
       {
         "name": "Runko",
-        "km": 89,
+        "lat": 60.4254161,
+        "lon": 22.4818144,
         "info": "Rungon_seisake"
       },
       {
         "name": "Piikkiö",
-        "km": 104,
         "info": "Piikkiön_rautatieasema"
       }
     ]
@@ -241,32 +245,34 @@
     "locations": [
       {
         "name": "Piikkiö",
-        "km": 0,
         "info": "Piikkiön_rautatieasema"
       },
       {
         "name": "Makarla",
-        "km": 14,
+        "lat": 60.4305900,
+        "lon": 22.5421288,
         "info": "Makarlan_seisake"
       },
       {
         "name": "Villisi",
-        "km": 40,
+        "lat": 60.446907,
+        "lon": 22.590914,
         "info": "Villisin_seisake"
       },
       {
         "name": "Kauhainen",
-        "km": 52,
+        "lat": 60.454959,
+        "lon": 22.611725,
         "info": null
       },
       {
         "name": "Toikkala",
-        "km": 68,
+        "lat": 60.4619333,
+        "lon": 22.6444705,
         "info": "Toikkalan_seisake"
       },
       {
         "name": "Paimio",
-        "km": 85,
         "info": "Paimion_rautatieasema"
       }
     ]
@@ -275,52 +281,58 @@
     "locations": [
       {
         "name": "Paimio",
-        "km": 0,
         "info": "Paimion_rautatieasema"
       },
       {
         "name": "Preitilä",
-        "km": 10,
+        "lat": 60.453394722,
+        "lon": 22.703788611,
         "info": "Preitilän_seisake"
       },
       {
         "name": "Heikoinen",
-        "km": 34,
+        "lat": 60.4353784,
+        "lon": 22.7466785,
         "info": "Heikoisten_seisake"
       },
       {
         "name": "Kevola",
-        "km": 53,
+        "lat": 60.426925,
+        "lon": 22.786061,
         "info": "Kevolan_seisake"
       },
       {
         "name": "Pitkäporras",
-        "km": 85,
+        "lat": 60.416896,
+        "lon": 22.852612,
         "info": null
       },
       {
         "name": "Hajala",
-        "km": 111,
+        "lat": 60.415881389,
+        "lon": 22.912192500,
         "info": "Hajalan_rautatieasema"
       },
       {
         "name": "Halikko",
-        "km": 171,
+        "lat": 60.4000650,
+        "lon": 23.0407634,
         "info": "Halikon_rautatieasema"
       },
       {
-        "name": "Halikonjoki",
-        "km": 185,
+        "name": "Halikonjoen silta",
+        "lat": 60.395783056,
+        "lon": 23.070035556,
         "info": "Halikonjoen_rautatiesilta"
       },
       {
         "name": "Puistokuja",
-        "km": 188,
+        "lat": 60.395607778,
+        "lon": 23.076467500,
         "info": "Puistokujan_seisake"
       },
       {
         "name": "Salo",
-        "km": 211,
         "info": "Salon_rautatieasema"
       }
     ]
@@ -329,37 +341,46 @@
     "locations": [
       {
         "name": "Ervelä",
-        "km": 0,
         "info": "Ervelän_rautatieasema"
       },
       {
         "name": "Märjänmäki",
-        "km": 59,
+        "lat": 60.258916111,
+        "lon": 23.145712778,
         "info": "Märjänmäen_rautatietunneli"
       },
       {
         "name": "Ristikulma",
-        "km": 75,
+        "lat": 60.2742766,
+        "lon": 23.1271913,
         "info": null
       },
       {
         "name": "Kotalato",
-        "km": 105,
-        "info": null
+        "lat": 60.304938,
+        "lon": 23.107376,
+        "info": "Kotaladon_rautatieasema"
       },
       {
         "name": "Tottola",
-        "km": 126,
+        "lat": 60.326789,
+        "lon": 23.096389,
         "info": null
       },
       {
+        "name": "Tottolan tunneli",
+        "lat": 60.352681667,
+        "lon": 23.116825000,
+        "info": "Tottolan_rautatietunneli"
+      },
+      {
         "name": "Tehtaankatu",
-        "km": 171,
+        "lat": 60.381607,
+        "lon": 23.125675,
         "info": null
       },
       {
         "name": "Salo",
-        "km": 175,
         "info": "Salon_rautatieasema"
       }
     ]
@@ -368,22 +389,22 @@
     "locations": [
       {
         "name": "Ervelä",
-        "km": 0,
         "info": "Ervelän_rautatieasema"
       },
       {
         "name": "Kuovila",
-        "km": 96,
+        "lat": 60.139192778,
+        "lon": 23.388402500,
         "info": "Kuovilan_seisake"
       },
       {
         "name": "Fiskari",
-        "km": 167,
+        "lat": 60.107152,
+        "lon": 23.528752,
         "info": null
       },
       {
         "name": "Pohjankuru",
-        "km": 180,
         "info": "Pohjankurun_rautatieasema"
       }
     ]
@@ -392,22 +413,28 @@
     "locations": [
       {
         "name": "Karjaa",
-        "km": 0,
         "info": "Karjaan_rautatieasema"
       },
       {
-        "name": "Åminne",
-        "km": 38,
+        "name": "Bäljensin tunneli",
+        "lat": 60.063675556,
+        "lon": 23.629263333,
+        "info": "Bäljensin_rautatietunneli"
+      },
+      {
+        "name": "Åminnen tunneli",
+        "lat": 60.081891667,
+        "lon": 23.581656944,
         "info": "Åminnen_rautatietunneli"
       },
       {
-        "name": "Högbacka",
-        "km": 54,
+        "name": "Högbackan tunneli",
+        "lat": 60.095094167,
+        "lon": 23.556731111,
         "info": "Pohjankurun_rautatietunnelit"
       },
       {
         "name": "Pohjankuru",
-        "km": 58,
         "info": "Pohjankurun_rautatieasema"
       }
     ]
@@ -6585,7 +6612,7 @@
       },
       {
         "name": "Kultakivi",
-        "lat": 61.686668,
+        "lat": 61.6866680,
         "lon": 29.4190582,
         "info": null
       },
@@ -6651,7 +6678,7 @@
       },
       {
         "name": "Syrjärinne",
-        "lat": 61.456215,
+        "lat": 61.4562150,
         "lon": 29.4523718,
         "info": null
       },
@@ -6700,7 +6727,7 @@
       {
         "name": "Punasvaara",
         "lat": 61.3779633,
-        "lon": 29.3139,
+        "lon": 29.3139000,
         "info": null
       },
       {
@@ -6753,7 +6780,7 @@
       },
       {
         "name": "Vuoksenniska",
-        "lat": 61.228719,
+        "lat": 61.2287190,
         "lon": 28.8422006,
         "info": null
       },
@@ -6849,7 +6876,7 @@
       },
       {
         "name": "Siltala",
-        "lat": 61.097605,
+        "lat": 61.097605000,
         "lon": 25.905014444,
         "info": null
       },
