@@ -28,6 +28,9 @@ export default function useStation(stationCode: string | null) {
         return;
       }
       const train = transformTrains([receivedTrain])[0];
+      if (isNil(train)) {
+        return;
+      }
       const fixedTrain = adjustWithLocationFromStore(train);
       setTrain(fixedTrain);
     }

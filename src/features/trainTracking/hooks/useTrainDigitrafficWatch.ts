@@ -22,6 +22,9 @@ export default function useTrainDigitrafficWatch(
         return;
       }
       const transformedTrain = transformTrains([receivedTrain])[0];
+      if (isNil(transformedTrain)) {
+        return;
+      }
       const fixedTrain = adjustWithLocationFromStore(transformedTrain);
       setTrain(fixedTrain);
     }
