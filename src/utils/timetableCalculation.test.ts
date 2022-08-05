@@ -222,6 +222,29 @@ describe('timetable adjustment using gps location', () => {
       expect(row.time).toEqual(row.bestDigitrafficTime);
     });
   });
+
+  it('calculates latemins for correct station after correction', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 0,
+      timetableRows: rowsForTest({ minutes: -7 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    train.timetableRows[2].bestDigitrafficTime = train.timetableRows[2].scheduledTime.plus({
+      minutes: 15,
+    });
+    train.timetableRows[3].bestDigitrafficTime = train.timetableRows[3].scheduledTime.plus({
+      minutes: 15,
+    });
+
+    const location = trainLocationFixture({ location: locations.halfKmNorthOfKLO });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    // Next is KLO, and we are arriving early
+    // Departure from KLO will be 15 minutes late
+    expect(adjusted.lateMinutes).toBeLessThan(0);
+  });
 });
 
 describe('when is train at station when location is not available', () => {

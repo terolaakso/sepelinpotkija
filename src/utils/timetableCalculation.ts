@@ -282,12 +282,12 @@ function fixTimetable(
     segment.toIndex
   );
   if (fixedBeforeStation) {
-    return { fixedRows: fixedBeforeStation, fixedFromIndex: segment.toIndex + 1 };
+    return { fixedRows: fixedBeforeStation, fixedFromIndex: segment.toIndex };
   }
   const pastTimesFixed = doPastTimesFix(train, location, segment);
   const allTimesFixed = doFutureTimesFix(pastTimesFixed, location, segment);
 
-  return { fixedRows: allTimesFixed, fixedFromIndex: segment.toIndex };
+  return { fixedRows: allTimesFixed, fixedFromIndex: segment.fromIndex };
 }
 
 /**

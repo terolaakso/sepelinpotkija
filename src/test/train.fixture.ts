@@ -11,9 +11,9 @@ export function trainFixture(props?: Partial<Train>): Train {
       timetableRowFixture(),
       timetableRowFixture({
         stationShortCode: 'KUT',
-        scheduledTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-        actualTime: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
-        time: DateTime.fromISO('2018-12-30T06:00:00.000Z'),
+        scheduledTime: DateTime.fromISO('2018-12-30T06:06:00.000Z'),
+        actualTime: DateTime.fromISO('2018-12-30T06:06:00.000Z'),
+        time: DateTime.fromISO('2018-12-30T06:06:00.000Z'),
       }),
     ],
     ...props,
