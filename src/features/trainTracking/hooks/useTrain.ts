@@ -15,6 +15,7 @@ export default function useTrain(
 ) {
   const [followedDepartureDate, setFollowedDepartureDate] = useState<string | null>(null);
   const setTrain = useTrainDataStore((state) => state.setTrain);
+  const connectionRestored = useTrainDataStore((state) => state.connectionRestoredTimestamp);
 
   useEffect(() => {
     async function fetchTrain() {
@@ -34,7 +35,7 @@ export default function useTrain(
 
     setFollowedDepartureDate(departureDate ?? null);
     fetchTrain();
-  }, [departureDate, trainNumber, setTrain]);
+  }, [departureDate, trainNumber, setTrain, connectionRestored]);
 
   useTrainDigitrafficWatch(followedDepartureDate, trainNumber);
   useTrainLocationWatch(followedDepartureDate, trainNumber, true, useDeviceLocationForTrain);

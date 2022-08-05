@@ -1,6 +1,8 @@
 import { connect, MqttClient } from 'mqtt';
 import { useState, useEffect, useRef } from 'react';
 
+import { useTrainDataStore } from '@/stores/trainData';
+
 import { ConnectorProps, IMqttContext } from '../types';
 
 import MqttContext from './Context';
@@ -12,6 +14,7 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
     connectionStatus: 'Offline',
     isClientReady: false,
   });
+  const setConnectionRestored = useTrainDataStore((state) => state.setConnectionRestored);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -40,6 +43,7 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
     mqtt.on('reconnect', () => {
       if (mountedRef.current) {
         console.log('Reconnect');
+        setConnectionRestored();
         setContextState((prevState) => ({
           ...prevState,
           connectionStatus: 'Reconnecting',
@@ -85,7 +89,7 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
       }
       mountedRef.current = false;
     };
-  }, [brokerUrl]);
+  }, [brokerUrl, setConnectionRestored]);
 
   return <MqttContext.Provider value={contextState}>{children}</MqttContext.Provider>;
 }

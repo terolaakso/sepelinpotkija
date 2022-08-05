@@ -20,6 +20,7 @@ interface TrainDataStore {
   trains: TrainCollection;
   locations: LocationCollection;
   extras: TrackSegmentCollection;
+  connectionRestoredTimestamp: number;
   setStations: (station: StationCollection) => void;
   setFirstLevelCauses: (causes: FirstLevelCauseCollection) => void;
   setSecondLevelCauses: (causes: SecondLevelCauseCollection) => void;
@@ -30,6 +31,7 @@ interface TrainDataStore {
   getLocation: (departureDate: string, trainNumber: number) => TrainLocation | null;
   setLocation: (location: TrainLocation) => void;
   setExtras: (extras: TrackSegmentCollection) => void;
+  setConnectionRestored: () => void;
 }
 
 const MAX_TRAIN_AGE_MINUTES = 6;
@@ -64,6 +66,7 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     trains: {},
     locations: {},
     extras: {},
+    connectionRestoredTimestamp: 0,
     setStations: (stations) => {
       set((state) => ({
         ...state,
@@ -158,6 +161,12 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
       set((state) => ({
         ...state,
         extras,
+      }));
+    },
+    setConnectionRestored: () => {
+      set((state) => ({
+        ...state,
+        connectionRestoredTimestamp: DateTime.now().toMillis(),
       }));
     },
   };

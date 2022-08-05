@@ -1,6 +1,6 @@
 import { isNil } from 'lodash';
 import { DateTime } from 'luxon';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getTrainsOfStation } from '@/api/digitrafficClient';
 import { transformTrains } from '@/api/transform';
@@ -19,6 +19,7 @@ export default function useStation(stationCode: string | null) {
   const [currentStation, setCurrentStation] = useState('');
   const setTrain = useTrainDataStore((state) => state.setTrain);
   const setTrains = useTrainDataStore((state) => state.setTrains);
+  const connectionRestored = useTrainDataStore((state) => state.connectionRestoredTimestamp);
 
   useSubscription<DigitrafficTrain>(
     isNotNil(stationCode) ? `trains-by-station/${stationCode}` : null,
@@ -51,4 +52,9 @@ export default function useStation(stationCode: string | null) {
     },
     stationCode !== null ? 1000 : null
   );
+
+  useEffect(() => {
+    // Force REST reload after connection is restored
+    previousFetchTimestampRef.current = DateTime.fromMillis(0);
+  }, [connectionRestored]);
 }
