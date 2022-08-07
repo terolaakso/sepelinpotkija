@@ -5,7 +5,7 @@ import useTimeout from '@/hooks/useTimeout';
 import useTrainDigitrafficLocationWatch from './useTrainDigitrafficLocationWatch';
 import useTrainGeolocationWatch from './useTrainGeolocationWatch';
 
-const DIGITRAFFIC_LOCATION_WAIT_MINUTES = 0.5;
+const DIGITRAFFIC_LOCATION_WAIT_MINUTES = 1;
 
 export default function useTrainLocationWatchManager(
   departureDate: string | null,
@@ -17,7 +17,9 @@ export default function useTrainLocationWatchManager(
   const [geolocationStartDelayMs, setGeolocationStartDelayMs] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!useDigitrafficLocations && useDeviceLocations) {
+    if (useDigitrafficLocations && useDeviceLocations) {
+      setGeolocationStartDelayMs(DIGITRAFFIC_LOCATION_WAIT_MINUTES * 60 * 1000);
+    } else if (!useDigitrafficLocations && useDeviceLocations) {
       setActivateGeolocation(true);
     }
   }, [useDigitrafficLocations, useDeviceLocations]);
