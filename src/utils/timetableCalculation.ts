@@ -37,13 +37,18 @@ export function adjustTimetableByLocation(train: Train, location: TrainLocation 
     return train;
   }
   const segment = findClosestStationSegment(train, location);
-  if (isTrainAtStation(train, location)) {
+  const isAtStation = isTrainAtStation(train, location);
+  if (isAtStation.result) {
     const rowsWithoutLocationAdjustment = resetTimes(train.timetableRows);
     return createTrainFromNewData(
       train,
       rowsWithoutLocationAdjustment,
       location,
-      isNotNil(segment) ? segment.fromIndex : null
+      isAtStation.stationIndex === 0
+        ? 0
+        : isAtStation.stationIndex === -1
+        ? rowsWithoutLocationAdjustment.length
+        : isAtStation.stationIndex - 1
     );
   }
   if (!segment) {
@@ -99,7 +104,10 @@ function fixTimesInWrongOrder(rows: TimetableRow[], fixFromIndex: number): Timet
  * According to times from Digitraffic, the train is at the station based on the current time,
  *  and if we have a GPS location, it is not more than 1 km from the station.
  */
-export function isTrainAtStation(train: Train, location: TrainLocation | null): boolean {
+export function isTrainAtStation(
+  train: Train,
+  location: TrainLocation | null
+): { result: true; stationIndex: number } | { result: false } {
   const MAX_STATION_RANGE_KM = 1;
   const now = DateTime.now();
   const rows = train.timetableRows;
@@ -115,16 +123,23 @@ export function isTrainAtStation(train: Train, location: TrainLocation | null): 
       (rows[nextIndex - 1].stationShortCode === rows[nextIndex].stationShortCode ||
         (nextIndex === train.latestActualTimeIndex &&
           rows[nextIndex - 1].stationShortCode !== rows[nextIndex].stationShortCode)));
-  const result = isAtStationAccordingToActualTime;
-  if (result && location) {
+  if (isAtStationAccordingToActualTime && location) {
     const stations = useTrainDataStore.getState().stations;
     const station = stations[rows[nextIndex === -1 ? rows.length - 1 : nextIndex].stationShortCode];
     if (station) {
       const distance = distanceBetweenCoordsInKm(location.location, station.location);
-      return distance < MAX_STATION_RANGE_KM;
+      const isLocationClose = distance < MAX_STATION_RANGE_KM;
+      return isLocationClose
+        ? {
+            result: true,
+            stationIndex: nextIndex === train.latestActualTimeIndex ? -1 : nextIndex,
+          }
+        : { result: false };
     }
   }
-  return result;
+  return isAtStationAccordingToActualTime
+    ? { result: true, stationIndex: nextIndex === train.latestActualTimeIndex ? -1 : nextIndex }
+    : { result: false };
 }
 
 function resetTimes(rows: TimetableRow[]): TimetableRow[] {
@@ -140,7 +155,7 @@ export function calculateLateMins(
   latestActualTimeIndex: number
 ): number | null {
   if (latestActualTimeIndex < 0 && DateTime.now() < rows[0].scheduledTime) {
-    // Get latemins only for trains that have departed their origin station
+    // Get latemins only for trains that (should) have departed their origin station
     return null;
   }
   const nextRowIndex = Math.min(index, rows.length - 1);

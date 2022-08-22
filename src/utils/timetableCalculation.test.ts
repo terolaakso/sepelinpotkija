@@ -236,7 +236,6 @@ describe('timetable adjustment using gps location', () => {
     train.timetableRows[3].bestDigitrafficTime = train.timetableRows[3].scheduledTime.plus({
       minutes: 15,
     });
-
     const location = trainLocationFixture({ location: locations.halfKmNorthOfKLO });
 
     const adjusted = adjustTimetableByLocation(train, location);
@@ -244,6 +243,32 @@ describe('timetable adjustment using gps location', () => {
     // Next is KLO, and we are arriving early
     // Departure from KLO will be 15 minutes late
     expect(adjusted.lateMinutes).toBeLessThan(0);
+  });
+
+  it('calculates latemins correctly when stopped at station', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 1,
+      timetableRows: rowsForTest({ minutes: -15 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    train.timetableRows[0].bestDigitrafficTime = train.timetableRows[0].scheduledTime.plus({
+      minutes: 2,
+    });
+    train.timetableRows[1].bestDigitrafficTime = train.timetableRows[1].scheduledTime.plus({
+      minutes: 4,
+    });
+    train.timetableRows[2].bestDigitrafficTime = train.timetableRows[2].scheduledTime.plus({
+      minutes: 5,
+    });
+    train.timetableRows[3].bestDigitrafficTime = train.timetableRows[3].scheduledTime.plus({
+      minutes: 3,
+    });
+    const location = trainLocationFixture({ location: locations.atKLOStationSouthOfStationPoint });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    expect(adjusted.lateMinutes).toBe(5);
   });
 });
 
@@ -256,7 +281,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(true);
+    expect(isAtStation).toEqual({ result: true, stationIndex: 0 });
   });
 
   it('is not at station when departure time has passed at the origin station', () => {
@@ -267,7 +292,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(false);
+    expect(isAtStation.result).toBe(false);
   });
 
   it('is at station when arrived to the final station', () => {
@@ -277,7 +302,7 @@ describe('when is train at station when location is not available', () => {
     });
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(true);
+    expect(isAtStation).toEqual({ result: true, stationIndex: -1 });
   });
 
   it('is at station when arrived to the final station even if arrival time has not yet passed', () => {
@@ -288,7 +313,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(true);
+    expect(isAtStation).toEqual({ result: true, stationIndex: -1 });
   });
 
   it('is at station when has actual time for arrival and departure time has not yet passed', () => {
@@ -301,7 +326,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(true);
+    expect(isAtStation).toEqual({ result: true, stationIndex: 2 });
   });
 
   it("is at station when arrival time has passed and it's not actual", () => {
@@ -314,7 +339,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(true);
+    expect(isAtStation).toEqual({ result: true, stationIndex: 2 });
   });
 
   it('is not at station when has no actual time for arrival', () => {
@@ -327,7 +352,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(false);
+    expect(isAtStation.result).toBe(false);
   });
 
   it('is not at station when there is no stop in the timetable', () => {
@@ -342,7 +367,7 @@ describe('when is train at station when location is not available', () => {
 
     const isAtStation = isTrainAtStation(train, null);
 
-    expect(isAtStation).toBe(false);
+    expect(isAtStation.result).toBe(false);
   });
 });
 
@@ -363,7 +388,7 @@ describe('when is train at station when location is available', () => {
 
     const isAtStation = isTrainAtStation(train, location);
 
-    expect(isAtStation).toBe(false);
+    expect(isAtStation.result).toBe(false);
   });
 
   it('is at station when location is less than 1 km away', () => {
@@ -377,7 +402,7 @@ describe('when is train at station when location is available', () => {
 
     const isAtStation = isTrainAtStation(train, location);
 
-    expect(isAtStation).toBe(true);
+    expect(isAtStation).toEqual({ result: true, stationIndex: 2 });
   });
 });
 
@@ -530,7 +555,7 @@ describe('findig the closest station segment', () => {
 });
 
 // function logTimes(rows: TimetableRow[]): void {
-//   const times = rows.map((row) => [row.time.toISO(), row.bestDigitrafficTime.toISO()]);
+//   const times = rows.map((row) => [row.time.toISO(), row.scheduledTime.toISO()]);
 //   console.log(times, DateTime.now().toISO());
 // }
 
@@ -720,16 +745,3 @@ const locations = createLocations({
     lon: 24.507885556,
   },
 });
-
-// {
-//   actualTime: DateTime.fromISO(''),
-//   bestDigitrafficTime: DateTime.fromISO(''),
-//   differenceInMinutes: 0,
-//   estimatedTime: DateTime.fromISO(''),
-//   isTrainReady: false,
-//   lateCauses: [],
-//   scheduledTime: DateTime.fromISO(''),
-//   stationShortCode: '',
-//   stopType: StopType.Commercial,
-//   time: DateTime.fromISO(''),
-// },
