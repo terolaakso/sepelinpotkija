@@ -115,33 +115,38 @@ export function generateExtras(items: TrainEvent[]): TrainEvent[] {
     const fromItem = items[i];
     const toItem = items[i + 1];
     const segmentExtras = getExtrasForSegment(fromItem.id, toItem.id, extras);
-    const segmentEvents = segmentExtras.map((extra, i) => {
-      if (i === 0) {
-        return {
-          ...fromItem,
-          wikiPage: extra.wikiPage,
-        };
-      } else if (i === segmentExtras.length - 1) {
-        return {
-          ...toItem,
-          wikiPage: extra.wikiPage,
-        };
-      } else {
-        return createLocationExtraEvent(extra, fromItem, toItem);
-      }
-    });
+    const segmentEvents = segmentExtras
+      .map((extra, j) => {
+        if (j === 0) {
+          return {
+            ...fromItem,
+            wikiPage: extra.wikiPage,
+          };
+        } else if (j === segmentExtras.length - 1) {
+          return i === items.length - 2 // last round of i
+            ? {
+                ...toItem,
+                wikiPage: extra.wikiPage,
+              }
+            : null;
+        } else {
+          return createLocationExtraEvent(extra, fromItem, toItem);
+        }
+      })
+      .filter(isNotNil);
     eventsWithExtras = eventsWithExtras.concat(segmentEvents);
   }
 
   const now = DateTime.now();
-  const isFirstInFuture = eventsWithExtras.length > 0 && eventsWithExtras[0].time > now;
   const lastInPastIndex = Math.max(
     findLastIndex(eventsWithExtras, (e) => e.time <= now),
     0
   );
+  const isLastInPastAStop = isNotNil(eventsWithExtras[lastInPastIndex].departureTime);
+
   const result = eventsWithExtras.slice(
-    lastInPastIndex,
-    lastInPastIndex + (isFirstInFuture ? 1 : 2)
+    isLastInPastAStop ? Math.max(lastInPastIndex - 1, 0) : lastInPastIndex,
+    lastInPastIndex + 2
   );
   return result;
 }
