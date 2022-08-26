@@ -137,6 +137,10 @@ export function generateExtras(items: TrainEvent[]): TrainEvent[] {
     eventsWithExtras = eventsWithExtras.concat(segmentEvents);
   }
 
+  if (eventsWithExtras.length === 0) {
+    return [];
+  }
+
   const now = DateTime.now();
   const lastInPastIndex = Math.max(
     findLastIndex(eventsWithExtras, (e) => e.time <= now),
