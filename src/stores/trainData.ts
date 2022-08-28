@@ -116,6 +116,9 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
       });
     },
     setTrains: (trains: Train[]) => {
+      if (trains.length === 0) {
+        return;
+      }
       set((state) => {
         const cleanedState = cleanup(state);
 
