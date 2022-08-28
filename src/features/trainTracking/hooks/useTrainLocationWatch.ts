@@ -7,7 +7,7 @@ import useTrainGeolocationWatch from './useTrainGeolocationWatch';
 
 const DIGITRAFFIC_LOCATION_WAIT_MINUTES = 1;
 
-export default function useTrainLocationWatchManager(
+export default function useTrainLocationWatch(
   departureDate: string | null,
   trainNumber: number | null,
   useDigitrafficLocations: boolean,
@@ -22,7 +22,7 @@ export default function useTrainLocationWatchManager(
     } else if (!useDigitrafficLocations && useDeviceLocations) {
       setActivateGeolocation(true);
     }
-  }, [useDigitrafficLocations, useDeviceLocations]);
+  }, [useDigitrafficLocations, useDeviceLocations, departureDate, trainNumber]);
 
   useTimeout(() => {
     setActivateGeolocation(useDeviceLocations);
