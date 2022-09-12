@@ -27,7 +27,12 @@ export function getOtherTrains(forTrain: Train): { result: TrainEvent[]; nextTra
       (train.trainNumber !== forTrain.trainNumber || train.departureDate !== forTrain.departureDate)
   );
   const startTime = DateTime.now().minus(VIEW_OTHER_TRAINS_SINCE);
-  const rows = forTrain.timetableRows.filter((row) => row.time >= startTime);
+  const firstSinceStartTimeIndex = forTrain.timetableRows.findIndex((r) => r.time >= startTime);
+  const startIndex =
+    firstSinceStartTimeIndex == -1
+      ? forTrain.timetableRows.length
+      : Math.max(firstSinceStartTimeIndex - 1, 0);
+  const rows = forTrain.timetableRows.slice(startIndex);
   const encounters = otherTrains
     .map((otherTrain) => {
       const encounterTime = trainsIntersectionTime(rows, otherTrain.timetableRows, startTime);

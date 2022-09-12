@@ -1,10 +1,12 @@
 import { DateTime } from 'luxon';
 
+import { useTrainDataStore } from '@/stores/trainData';
+import { timetableRowFixture } from '@/test/timetablerow.fixture';
 import { trainFixture } from '@/test/train.fixture';
 
-import { filterTrains } from './otherTrains';
+import { filterTrains, getOtherTrains } from './otherTrains';
 
-describe('selecting trains', () => {
+describe('selecting trains to show', () => {
   it('should filter trains when not departed', () => {
     const data = fillDataToFilter([1, 7, 15]);
     const { result } = filterTrains(data);
@@ -88,4 +90,46 @@ describe('selecting trains', () => {
     }));
     return result;
   }
+});
+
+describe('choosing encountering trains', () => {
+  it('should include past encounter when previous station more than 10 mins away', () => {
+    const { setTrains } = useTrainDataStore.getState();
+    const now = DateTime.now();
+    const thisTrain = trainFixture({
+      trainNumber: 1,
+      timetableRows: [
+        timetableRowFixture({
+          stationShortCode: 'TKU',
+          time: now.minus({ minutes: 15 }),
+        }),
+        timetableRowFixture({
+          stationShortCode: 'KUT',
+          time: now.plus({ minutes: 5 }),
+        }),
+      ],
+    });
+    const otherTrain = trainFixture({
+      trainNumber: 2,
+      timetableRows: [
+        timetableRowFixture({
+          stationShortCode: 'KUT',
+          time: now.minus({ minutes: 5 }),
+        }),
+        timetableRowFixture({
+          stationShortCode: 'TKU',
+          time: now.plus({ minutes: 5 }),
+        }),
+      ],
+    });
+    setTrains([thisTrain, otherTrain]);
+
+    const result = getOtherTrains(thisTrain);
+    expect(result.nextTrain).toBeNull();
+    expect(result.result).toEqual([
+      expect.objectContaining({
+        id: '2',
+      }),
+    ]);
+  });
 });
