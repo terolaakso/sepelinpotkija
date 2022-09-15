@@ -3,32 +3,34 @@
     "locations": [
       {
         "name": "Maaria",
-        "km": 0,
         "info": null
       },
       {
         "name": "Paju",
-        "km": 132,
+        "lat": 60.531495,
+        "lon": 22.317291,
         "info": null
       },
       {
         "name": "Saramäki",
-        "km": 257,
+        "lat": 60.5137436,
+        "lon": 22.3059519,
         "info": null
       },
       {
         "name": "Räntämäki",
-        "km": 470,
+        "lat": 60.48179,
+        "lon": 22.291612,
         "info": "Räntämäen_rautatieasema"
       },
       {
         "name": "Alfa",
-        "km": 567,
+        "lat": 60.4676494,
+        "lon": 22.2851579,
         "info": null
       },
       {
         "name": "Turku",
-        "km": 705,
         "info": "Turun_päärautatieasema"
       }
     ]
@@ -37,32 +39,34 @@
     "locations": [
       {
         "name": "Karviainen",
-        "km": 0,
         "info": null
       },
       {
         "name": "Käyrä",
-        "km": 151,
+        "lat": 60.604437778,
+        "lon": 22.53401,
         "info": null
       },
       {
         "name": "Maaniittu",
-        "km": 388,
+        "lat": 60.5836637,
+        "lon": 22.4794332,
         "info": null
       },
       {
         "name": "Lieto",
-        "km": 562,
+        "lat": 60.566597,
+        "lon": 22.441985,
         "info": "Liedon_rautatieasema"
       },
       {
         "name": "Rauhakylä",
-        "km": 804,
+        "lat": 60.542666,
+        "lon": 22.390773,
         "info": null
       },
       {
         "name": "Maaria",
-        "km": 888,
         "info": null
       }
     ]
@@ -71,27 +75,28 @@
     "locations": [
       {
         "name": "Karviainen",
-        "km": 0,
         "info": null
       },
       {
         "name": "Aura",
-        "km": 334,
+        "lat": 60.6450784,
+        "lon": 22.5843874,
         "info": null
       },
       {
         "name": "Takalisto",
-        "km": 783,
+        "lat": 60.6615354,
+        "lon": 22.6422323,
         "info": null
       },
       {
         "name": "Hevossaari",
-        "km": 1136,
+        "lat": 60.6748033,
+        "lon": 22.6868664,
         "info": null
       },
       {
         "name": "Kyrö",
-        "km": 1712,
         "info": "Kyrön_rautatieasema"
       }
     ]
@@ -100,37 +105,40 @@
     "locations": [
       {
         "name": "Kyrö",
-        "km": 0,
         "info": "Kyrön_rautatieasema"
       },
       {
         "name": "Savimäki",
-        "km": 231,
+        "lat": 60.7265770,
+        "lon": 22.7961273,
         "info": null
       },
       {
         "name": "Kumila",
-        "km": 343,
+        "lat": 60.7380234,
+        "lon": 22.8188476,
         "info": "Kumilan_pysäkki"
       },
       {
         "name": "Huovintie",
-        "km": 620,
+        "lat": 60.760904,
+        "lon": 22.886668,
         "info": null
       },
       {
         "name": "Mellilä",
-        "km": 815,
+        "lat": 60.780959,
+        "lon": 22.926741,
         "info": null
       },
       {
         "name": "Piltola",
-        "km": 1131,
+        "lat": 60.8072561,
+        "lon": 23.0043839,
         "info": null
       },
       {
         "name": "Loimaa",
-        "km": 1463,
         "info": "Loimaan_rautatieasema"
       }
     ]
@@ -139,32 +147,34 @@
     "locations": [
       {
         "name": "Humppila",
-        "km": 0,
         "info": "Humppilan_rautatieasema"
       },
       {
         "name": "Rautavuori",
-        "km": 239,
+        "lat": 60.8959080,
+        "lon": 23.3083280,
         "info": null
       },
       {
         "name": "Ypäjä",
-        "km": 593,
+        "lat": 60.8767538,
+        "lon": 23.2109435,
         "info": "Ypäjän_rautatieasema"
       },
       {
         "name": "Sipilä",
-        "km": 766,
+        "lat": 60.8789621,
+        "lon": 23.1522458,
         "info": null
       },
       {
         "name": "Kaukoniitty",
-        "km": 847,
+        "lat": 60.8732667,
+        "lon": 23.1311356,
         "info": null
       },
       {
         "name": "Loimaa",
-        "km": 1143,
         "info": "Loimaan_rautatieasema"
       }
     ]
@@ -729,22 +739,22 @@
     "locations": [
       {
         "name": "Kuurila",
-        "km": 0,
         "info": "Kuurilan_rautatieasema"
       },
       {
         "name": "Santti",
-        "km": 28,
+        "lat": 61.1355267,
+        "lon": 23.9924015,
         "info": null
       },
       {
         "name": "Ilomäki",
-        "km": 539,
+        "lat": 61.1589350,
+        "lon": 23.9327663,
         "info": null
       },
       {
         "name": "Toijala",
-        "km": 1039,
         "info": "Toijalan_rautatieasema"
       }
     ]
@@ -753,12 +763,10 @@
     "locations": [
       {
         "name": "Kuurila",
-        "km": 0,
         "info": "Kuurilan_rautatieasema"
       },
       {
         "name": "Vinnilä",
-        "km": 1,
         "info": null
       }
     ]
@@ -767,12 +775,10 @@
     "locations": [
       {
         "name": "Iittala",
-        "km": 0,
         "info": "Iittalan_rautatieasema"
       },
       {
         "name": "Vinnilä",
-        "km": 1,
         "info": null
       }
     ]
@@ -3075,42 +3081,46 @@
     "locations": [
       {
         "name": "Humppila",
-        "km": 0,
         "info": "Humppilan_rautatieasema"
       },
       {
         "name": "Savikko",
-        "km": 249,
+        "lat": 60.9392643,
+        "lon": 23.4268207,
         "info": null
       },
       {
         "name": "Siro",
-        "km": 344,
+        "lat": 60.9482597,
+        "lon": 23.4484391,
         "info": null
       },
       {
         "name": "Matku",
-        "km": 555,
+        "lat": 60.9620743,
+        "lon": 23.5102056,
         "info": "Matkun_rautatieasema"
       },
       {
         "name": "Kölli",
-        "km": 699,
+        "lat": 60.9748828,
+        "lon": 23.5448616,
         "info": null
       },
       {
         "name": "Raitoo",
-        "km": 845,
+        "lat": 60.9943240,
+        "lon": 23.5642071,
         "info": null
       },
       {
         "name": "Hanhisuo",
-        "km": 1085,
+        "lat": 61.0251809,
+        "lon": 23.5993884,
         "info": "Hanhisuon_rautatieasema"
       },
       {
         "name": "Urjala",
-        "km": 1343,
         "info": "Urjalan_rautatieasema"
       }
     ]
@@ -3119,27 +3129,28 @@
     "locations": [
       {
         "name": "Toijala",
-        "km": 0,
         "info": "Toijalan_rautatieasema"
       },
       {
         "name": "Sotkia",
-        "km": 272,
+        "lat": 61.1437270,
+        "lon": 23.8030547,
         "info": "Sotkia"
       },
       {
         "name": "Kylmäkoski",
-        "km": 746,
+        "lat": 61.1070127,
+        "lon": 23.6811032,
         "info": "Kylmäkosken_rautatieasema"
       },
       {
         "name": "Tolva",
-        "km": 911,
+        "lat": 61.0866765,
+        "lon": 23.6535239,
         "info": null
       },
       {
         "name": "Urjala",
-        "km": 1089,
         "info": "Urjalan_rautatieasema"
       }
     ]
@@ -3148,12 +3159,10 @@
     "locations": [
       {
         "name": "Iittala",
-        "km": 0,
         "info": "Iittalan_rautatieasema"
       },
       {
         "name": "Leteensuo",
-        "km": 1,
         "info": null
       }
     ]
@@ -3162,17 +3171,16 @@
     "locations": [
       {
         "name": "Leteensuo",
-        "km": 0,
         "info": null
       },
       {
         "name": "Ihalempi",
-        "km": 487,
+        "lat": 61.0624934,
+        "lon": 24.3052185,
         "info": null
       },
       {
         "name": "Parola",
-        "km": 930,
         "info": "Parolan_rautatieasema"
       }
     ]
