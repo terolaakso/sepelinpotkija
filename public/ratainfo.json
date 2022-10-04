@@ -6941,5 +6941,323 @@
         "info": "Myllyojan_rautatieasema"
       }
     ]
+  },
+  "KOS-SK": {
+    "locations": [
+      {
+        "name": "Koskenkorva",
+        "info": "Koskenkorvan_rautatieasema"
+      },
+      {
+        "name": "Kataja",
+        "lat": 62.6956102,
+        "lon": 22.4979034,
+        "info": null
+      },
+      {
+        "name": "Akkala",
+        "lat": 62.7034327,
+        "lon": 22.5187357,
+        "info": null
+      },
+      {
+        "name": "Isokoivu",
+        "lat": 62.7082891,
+        "lon": 22.5317425,
+        "info": null
+      },
+      {
+        "name": "Peurala",
+        "lat": 62.7146173,
+        "lon": 22.5485889,
+        "info": null
+      },
+      {
+        "name": "Rinne",
+        "lat": 62.7173002,
+        "lon": 22.5557695,
+        "info": null
+      },
+      {
+        "name": "Ilmajoki",
+        "lat": 62.7285969,
+        "lon": 22.5860267,
+        "info": "Ilmajoen_rautatieasema"
+      },
+      {
+        "name": "Nikkola",
+        "lat": 62.7511007,
+        "lon": 22.6463803,
+        "info": null
+      },
+      {
+        "name": "Nieminikkola",
+        "lat": 62.7597053,
+        "lon": 22.6653828,
+        "info": null
+      },
+      {
+        "name": "Tuomikylä",
+        "lat": 62.7663678,
+        "lon": 22.6720907,
+        "info": null
+      },
+      {
+        "name": "Saunio",
+        "lat": 62.7847157,
+        "lon": 22.7079696,
+        "info": null
+      },
+      {
+        "name": "Kosola",
+        "lat": 62.7931539,
+        "lon": 22.7443833,
+        "info": null
+      },
+      {
+        "name": "Latomäki",
+        "lat": 62.7944749,
+        "lon": 22.7604961,
+        "info": null
+      },
+      {
+        "name": "Jouppi",
+        "lat": 62.7952989,
+        "lon": 22.7716970,
+        "info": null
+      },
+      {
+        "name": "Itikka",
+        "lat": 62.7975776,
+        "lon": 22.8282331,
+        "info": null
+      },
+      {
+        "name": "Seinäjoki",
+        "info": "Seinäjoen_rautatieasema"
+      }
+    ]
+  },
+  "KOS-LUO": {
+    "locations": [
+      {
+        "name": "Koskenkorva",
+        "info": "Koskenkorvan_rautatieasema"
+      },
+      {
+        "name": "Jouppila",
+        "lat": 62.6760543,
+        "lon": 22.4245909,
+        "info": null
+      },
+      {
+        "name": "Koivistonkylä",
+        "lat": 62.6666954,
+        "lon": 22.4108446,
+        "info": null
+      },
+      {
+        "name": "Panttila",
+        "lat": 62.6619637,
+        "lon": 22.4069880,
+        "info": null
+      },
+      {
+        "name": "Antilankylä",
+        "lat": 62.6527680,
+        "lon": 22.4055379,
+        "info": null
+      },
+      {
+        "name": "Levula",
+        "lat": 62.6431609,
+        "lon": 22.4039608,
+        "info": null
+      },
+      {
+        "name": "Paavolankylä",
+        "lat": 62.6269604,
+        "lon": 22.3999468,
+        "info": null
+      },
+      {
+        "name": "Kurikka",
+        "lat": 62.6182639,
+        "lon": 22.3952033,
+        "info": "Kurikan_rautatieasema"
+      },
+      {
+        "name": "Louvonmäki",
+        "lat": 62.5982574,
+        "lon": 22.3685282,
+        "info": null
+      },
+      {
+        "name": "Mieto",
+        "lat": 62.5821958,
+        "lon": 22.3397643,
+        "info": null
+      },
+      {
+        "name": "Kakkuri",
+        "lat": 62.5750218,
+        "lon": 22.3122063,
+        "info": null
+      },
+      {
+        "name": "Hakuni",
+        "lat": 62.5658016,
+        "lon": 22.2984472,
+        "info": null
+      },
+      {
+        "name": "Koukkari",
+        "lat": 62.5579709,
+        "lon": 22.2931098,
+        "info": null
+      },
+      {
+        "name": "Lahoo",
+        "lat": 62.5459988,
+        "lon": 22.2868473,
+        "info": null
+      },
+      {
+        "name": "Lohiluoma",
+        "info": null
+      }
+    ]
+  },
+  "KJI-LUO": {
+    "locations": [
+      {
+        "name": "Kauhajoki",
+        "info": "Kauhajoen_rautatieasema"
+      },
+      {
+        "name": "Turja",
+        "lat": 62.4762524,
+        "lon": 22.2261951,
+        "info": null
+      },
+      {
+        "name": "Kohlu",
+        "lat": 62.4942900,
+        "lon": 22.2562116,
+        "info": null
+      },
+      {
+        "name": "Laturi",
+        "lat": 62.4987976,
+        "lon": 22.2637419,
+        "info": null
+      },
+      {
+        "name": "Harjankylä",
+        "lat": 62.5101957,
+        "lon": 22.2702386,
+        "info": null
+      },
+      {
+        "name": "Lohiluoma",
+        "info": null
+      }
+    ]
+  },
+  "KJI-TUV": {
+    "locations": [
+      {
+        "name": "Kauhajoki",
+        "info": "Kauhajoen_rautatieasema"
+      },
+      {
+        "name": "Luomankylä",
+        "lat": 62.4594584,
+        "lon": 22.1160340,
+        "info": null
+      },
+      {
+        "name": "Survoneva",
+        "lat": 62.4608573,
+        "lon": 22.0801756,
+        "info": null
+      },
+      {
+        "name": "Kainasto",
+        "lat": 62.4623591,
+        "lon": 22.0256404,
+        "info": null
+      },
+      {
+        "name": "Äystö",
+        "lat": 62.4671065,
+        "lon": 21.9152867,
+        "info": null
+      },
+      {
+        "name": "Hirsiahde",
+        "lat": 62.4707366,
+        "lon": 21.8604195,
+        "info": null
+      },
+      {
+        "name": "Teuva",
+        "info": "Teuvan_rautatieasema"
+      }
+    ]
+  },
+  "NÄR-TUV": {
+    "locations": [
+      {
+        "name": "Närpiö",
+        "info": null
+      },
+      {
+        "name": "Karila",
+        "lat": 62.4580035,
+        "lon": 21.4932951,
+        "info": null
+      },
+      {
+        "name": "Perälä",
+        "lat": 62.4540181,
+        "lon": 21.5978283,
+        "info": "Perälän_rautatieasema"
+      },
+      {
+        "name": "Kaleva",
+        "lat": 62.4607613,
+        "lon": 21.6524893,
+        "info": null
+      },
+      {
+        "name": "Aurala",
+        "lat": 62.4692132,
+        "lon": 21.7118129,
+        "info": null
+      },
+      {
+        "name": "Teuva",
+        "info": "Teuvan_rautatieasema"
+      }
+    ]
+  },
+  "KSK-NÄR": {
+    "locations": [
+      {
+        "name": "Kaskinen",
+        "info": "Kaskisten_rautatieasema"
+      },
+      {
+        "name": "Puronkylä",
+        "lat": 62.4392839,
+        "lon": 21.3052694,
+        "info": null
+      },
+      {
+        "name": "Närpiö",
+        "info": null
+      }
+    ]
   }
 }
