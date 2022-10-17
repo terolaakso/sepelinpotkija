@@ -13,6 +13,7 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
   const [contextState, setContextState] = useState<IMqttContext>({
     connectionStatus: 'Offline',
     isClientReady: false,
+    isConnectionDropped: false,
   });
   const setConnectionRestored = useTrainDataStore((state) => state.setConnectionRestored);
 
@@ -33,11 +34,17 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
     mqtt.on('connect', () => {
       if (mountedRef.current) {
         console.log('Connected');
-        setContextState((prevState) => ({
-          ...prevState,
-          connectionStatus: 'Connected',
-          isClientReady: true,
-        }));
+        setContextState((prevState) => {
+          if (prevState.isConnectionDropped) {
+            setConnectionRestored();
+          }
+          return {
+            ...prevState,
+            connectionStatus: 'Connected',
+            isClientReady: true,
+            isConnectionDropped: false,
+          };
+        });
       }
     });
     mqtt.on('reconnect', () => {
@@ -47,6 +54,7 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
         setContextState((prevState) => ({
           ...prevState,
           connectionStatus: 'Reconnecting',
+          isConnectionDropped: true,
         }));
       }
     });

@@ -16,6 +16,7 @@ export interface ConnectorProps {
 export interface IMqttContext {
   connectionStatus: string | Error;
   isClientReady: boolean;
+  isConnectionDropped: boolean;
   client?: MqttClient | null;
   parserMethod?: (message: any) => string;
 }
