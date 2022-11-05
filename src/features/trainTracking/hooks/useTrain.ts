@@ -24,8 +24,7 @@ export default function useTrain(
         return;
       }
       const train = await getTrain(trainNumber, departureDate ?? undefined);
-      if (!train) {
-        setFollowedDepartureDate(null);
+      if (isNil(train)) {
         return;
       }
       const fixedTrain = adjustWithLocationFromStore(train);
@@ -33,7 +32,7 @@ export default function useTrain(
       setTrain(fixedTrain);
     }
 
-    setFollowedDepartureDate(departureDate ?? null);
+    setFollowedDepartureDate(departureDate);
     fetchTrain();
   }, [departureDate, trainNumber, setTrain, connectionRestored]);
 
