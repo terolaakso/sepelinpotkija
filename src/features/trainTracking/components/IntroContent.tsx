@@ -27,9 +27,11 @@ export default function IntroContent() {
           <li>Toijala - Turku</li>
           <li>Turku - Hangonsaari</li>
           <li>Raisio - Naantali</li>
+          <li>Tampere - Vammala</li>
           <li>Harjavalta - Mäntyluoto</li>
-          <li>Oulu - Oulainen</li>
+          <li>Ylivieska - Oulu</li>
           <li>Tuomioja - Raahe</li>
+          <li>Seinäjoki - Kaskinen</li>
           <li>Seinäjoki - Vaasa</li>
           <li>Tampere - Orivesi</li>
           <li>Jyväskylä - Pieksämäki</li>
@@ -39,9 +41,13 @@ export default function IntroContent() {
           <li>Riihimäki - Kouvola</li>
           <li>Kytömaa - Lahti</li>
           <li>Lahti - Loviisan satama</li>
+          <li>Lahti - Heinola</li>
           <li>Kouvola - Siilinjärvi</li>
+          <li>Ylivieska - Iisalmi</li>
           <li>Lappeenranta - Joutseno</li>
+          <li>Imatra - Parikkala</li>
           <li>Lappeenranta - Mustolan satama</li>
+          <li>Parikkala - Savonlinna</li>
           <li>Nurmes - Valtimo</li>
         </ul>
       </small>

@@ -7259,5 +7259,251 @@
         "info": null
       }
     ]
+  },
+  "HNO-VMA": {
+    "locations": [
+      {
+        "name": "Heinoo",
+        "info": "Heinoon_rautatieasema"
+      },
+      {
+        "name": "Mäenkylä",
+        "lat": 61.3864372,
+        "lon": 22.9715096,
+        "info": null
+      },
+      {
+        "name": "Rautajoki",
+        "lat": 61.3690993,
+        "lon": 22.9483284,
+        "info": null
+      },
+      {
+        "name": "Käki",
+        "lat": 61.3603770,
+        "lon": 22.9256350,
+        "info": null
+      },
+      {
+        "name": "Vammala",
+        "info": "Vammalan_rautatieasema"
+      }
+    ]
+  },
+  "HNO-KRU": {
+    "locations": [
+      {
+        "name": "Heinoo",
+        "info": "Heinoon_rautatieasema"
+      },
+      {
+        "name": "Äijäri",
+        "lat": 61.4198432,
+        "lon": 23.0143700,
+        "info": null
+      },
+      {
+        "name": "Karkku",
+        "info": "Karkun_rautatieasema"
+      }
+    ]
+  },
+  "KRU-SNM": {
+    "locations": [
+      {
+        "name": "Karkku",
+        "info": "Karkun_rautatieasema"
+      },
+      {
+        "name": "Krouvi",
+        "lat": 61.4533275,
+        "lon": 23.0680186,
+        "info": null
+      },
+      {
+        "name": "Nohkua",
+        "lat": 61.4610785,
+        "lon": 23.1268347,
+        "info": null
+      },
+      {
+        "name": "Aatami",
+        "lat": 61.4592531,
+        "lon": 23.1884690,
+        "info": null
+      },
+      {
+        "name": "Suoniemi",
+        "info": "Suoniemen_rautatieasema"
+      }
+    ]
+  },
+  "SIU-SNM": {
+    "locations": [
+      {
+        "name": "Siuro",
+        "info": "Siuron_rautatieasema"
+      },
+      {
+        "name": "Kulovesi",
+        "lat": 61.4743837,
+        "lon": 23.2897586,
+        "info": null
+      },
+      {
+        "name": "Kesäniemi",
+        "lat": 61.4722420,
+        "lon": 23.2683009,
+        "info": null
+      },
+      {
+        "name": "Leukaluut",
+        "lat": 61.4729491,
+        "lon": 23.2449335,
+        "info": "Leukaluiden_seisake"
+      },
+      {
+        "name": "Myrrä",
+        "lat": 61.4677839,
+        "lon": 23.2262868,
+        "info": null
+      },
+      {
+        "name": "Suoniemi",
+        "info": "Suoniemen_rautatieasema"
+      }
+    ]
+  },
+  "NOA-SIU": {
+    "locations": [
+      {
+        "name": "Nokia",
+        "info": "Nokian_rautatieasema"
+      },
+      {
+        "name": "Harjuniitty",
+        "lat": 61.4752745,
+        "lon": 23.4829237,
+        "info": null
+      },
+      {
+        "name": "Haavisto",
+        "lat": 61.4674742,
+        "lon": 23.4524420,
+        "info": null
+      },
+      {
+        "name": "Jaakkola",
+        "lat": 61.4668387,
+        "lon": 23.4069518,
+        "info": null
+      },
+      {
+        "name": "Lukkila",
+        "lat": 61.4689808,
+        "lon": 23.3807090,
+        "info": null
+      },
+      {
+        "name": "Knuutila",
+        "lat": 61.4718914,
+        "lon": 23.3590153,
+        "info": null
+      },
+      {
+        "name": "Siuro",
+        "info": "Siuron_rautatieasema"
+      }
+    ]
+  },
+  "KAU-NOA": {
+    "locations": [
+      {
+        "name": "Kalkku",
+        "info": "Kalkun_rautatieasema"
+      },
+      {
+        "name": "Välimaa",
+        "lat": 61.4946439,
+        "lon": 23.5637569,
+        "info": null
+      },
+      {
+        "name": "Vihnusjärvi",
+        "lat": 61.4915204,
+        "lon": 23.5306906,
+        "info": null
+      },
+      {
+        "name": "Kaisko",
+        "lat": 61.4913975,
+        "lon": 23.5249185,
+        "info": null
+      },
+      {
+        "name": "Nahkola",
+        "lat": 61.4891750,
+        "lon": 23.5148978,
+        "info": null
+      },
+      {
+        "name": "Nokia",
+        "info": "Nokian_rautatieasema"
+      }
+    ]
+  },
+  "KAU-TSO": {
+    "locations": [
+      {
+        "name": "Kalkku",
+        "info": "Kalkun_rautatieasema"
+      },
+      {
+        "name": "Tesoma",
+        "info": "Tesoman_seisake"
+      }
+    ]
+  },
+  "LLH-TSO": {
+    "locations": [
+      {
+        "name": "Lielahti",
+        "info": "Lielahden_rautatieasema"
+      },
+      {
+        "name": "Epilä",
+        "lat": 61.5074768,
+        "lon": 23.6624705,
+        "info": "Epilän_rautatieasema"
+      },
+      {
+        "name": "Tesoma",
+        "info": "Tesoman_seisake"
+      }
+    ]
+  },
+  "LLH-TPE": {
+    "locations": [
+      {
+        "name": "Lielahti",
+        "info": "Lielahden_rautatieasema"
+      },
+      {
+        "name": "Santalahti",
+        "lat": 61.5049297,
+        "lon": 23.7143061,
+        "info": "Santalahden_seisake"
+      },
+      {
+        "name": "Amuri",
+        "lat": 61.5020529,
+        "lon": 23.7399051,
+        "info": "Amurin_seisake"
+      },
+      {
+        "name": "Tampere",
+        "info": "Tampereen_rautatieasema"
+      }
+    ]
   }
 }
