@@ -13,7 +13,7 @@
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "buffer": "^6.0.3",
-    "classnames": "^2.3.1",
+    "classnames": "2.3.2",
     "lodash": "^4.17.21",
     "luxon": "^2.4.0",
     "mqtt": "^4.3.7",
