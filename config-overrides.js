@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = function override(config) {
   config.resolve.fallback = Object.assign({}, config.resolve.fallback, {
-    stream: require.resolve('url'),
+    url: require.resolve('url'),
     buffer: require.resolve('buffer'),
   });
   config.plugins = [
