@@ -7505,5 +7505,395 @@
         "info": "Tampereen_rautatieasema"
       }
     ]
+  },
+  "HPA-TRR": {
+    "locations": [
+      {
+        "name": "Haaparanta",
+        "info": "Haaparannan_rautatieasema"
+      },
+      {
+        "name": "Tornio-raja",
+        "info": "Tornionjoen_rautatiesilta"
+      }
+    ]
+  },
+  "TOR-TRR": {
+    "locations": [
+      {
+        "name": "Tornio",
+        "info": "Tornion_rautatieasema"
+      },
+      {
+        "name": "Tornio-raja",
+        "info": "Tornionjoen_rautatiesilta"
+      }
+    ]
+  },
+  "TOR-TRI": {
+    "locations": [
+      {
+        "name": "Tornio",
+        "info": "Tornion_rautatieasema"
+      },
+      {
+        "name": "Tornio-Itäinen",
+        "info": "Tornio-Itäinen"
+      }
+    ]
+  },
+  "LLA-TRI": {
+    "locations": [
+      {
+        "name": "Laurila",
+        "info": "Laurilan_rautatieasema"
+      },
+      {
+        "name": "Pörhölä",
+        "lat": 65.8052507,
+        "lon": 24.4866712,
+        "info": null
+      },
+      {
+        "name": "Kaakamo",
+        "lat": 65.8117985,
+        "lon": 24.4449977,
+        "info": "Kaakamon_seisake"
+      },
+      {
+        "name": "Iisakka",
+        "lat": 65.8128887,
+        "lon": 24.4359640,
+        "info": null
+      },
+      {
+        "name": "Kortelainen",
+        "lat": 65.8126689,
+        "lon": 24.4276599,
+        "info": null
+      },
+      {
+        "name": "Toppa",
+        "lat": 65.8140931,
+        "lon": 24.4167165,
+        "info": null
+      },
+      {
+        "name": "Pasanen",
+        "lat": 65.8253412,
+        "lon": 24.3414182,
+        "info": null
+      },
+      {
+        "name": "Vapunmäki",
+        "lat": 65.8302641,
+        "lon": 24.3048202,
+        "info": null
+      },
+      {
+        "name": "Kyläjoki",
+        "lat": 65.8388244,
+        "lon": 24.2743600,
+        "info": "Kyläjoen_seisake"
+      },
+      {
+        "name": "Konu",
+        "lat": 65.8474117,
+        "lon": 24.2535865,
+        "info": null
+      },
+      {
+        "name": "Raumonjoen silta",
+        "lat": 65.849370278,
+        "lon": 24.240276667,
+        "info": "Raumonjoen_rautatiesilta"
+      },
+      {
+        "name": "Lanki",
+        "lat": 65.8491473,
+        "lon": 24.2360048,
+        "info": null
+      },
+      {
+        "name": "Keropudas",
+        "lat": 65.8505453,
+        "lon": 24.2116469,
+        "info": null
+      },
+      {
+        "name": "Tornio-Itäinen",
+        "info": "Tornio-Itäinen"
+      }
+    ]
+  },
+  "LI-LLA": {
+    "locations": [
+      {
+        "name": "Lautiosaari",
+        "info": "Lautiosaaren_vaihde"
+      },
+      {
+        "name": "Kemijoki",
+        "lat": 65.7897853,
+        "lon": 24.5589807,
+        "info": null
+      },
+      {
+        "name": "Isohaaran vesivoimalaitos",
+        "lat": 65.792341111,
+        "lon": 24.546476667,
+        "info": "Isohaaran_vesivoimalaitos"
+      },
+      {
+        "name": "Laurila",
+        "info": "Laurilan_rautatieasema"
+      }
+    ]
+  },
+  "KEM-LI": {
+    "locations": [
+      {
+        "name": "Kemi",
+        "info": "Kemin_rautatieasema"
+      },
+      {
+        "name": "Koivuharju",
+        "lat": 65.7464142,
+        "lon": 24.5699025,
+        "info": null
+      },
+      {
+        "name": "Hakala",
+        "lat": 65.7505620,
+        "lon": 24.5690599,
+        "info": null
+      },
+      {
+        "name": "Ristikangas",
+        "lat": 65.7576401,
+        "lon": 24.5671432,
+        "info": null
+      },
+      {
+        "name": "Ruutti",
+        "lat": 65.7664498,
+        "lon": 24.5666973,
+        "info": null
+      },
+      {
+        "name": "Paattio",
+        "lat": 65.7746662,
+        "lon": 24.5658024,
+        "info": null
+      },
+      {
+        "name": "Lautiosaari",
+        "info": "Lautiosaaren_vaihde"
+      }
+    ]
+  },
+  "KEM-SIM": {
+    "locations": [
+      {
+        "name": "Kemi",
+        "info": "Kemin_rautatieasema"
+      },
+      {
+        "name": "Kulma",
+        "lat": 65.7246479,
+        "lon": 24.6035576,
+        "info": null
+      },
+      {
+        "name": "Ritikka",
+        "lat": 65.720564,
+        "lon": 24.616933,
+        "info": null
+      },
+      {
+        "name": "Nälli",
+        "lat": 65.7156607,
+        "lon": 24.6328791,
+        "info": null
+      },
+      {
+        "name": "Pyy",
+        "lat": 65.7105317,
+        "lon": 24.6508022,
+        "info": "Pyyn_seisake"
+      },
+      {
+        "name": "Maksniemi",
+        "lat": 65.6835103,
+        "lon": 24.7871620,
+        "info": "Maksniemen_seisake"
+      },
+      {
+        "name": "Horsma",
+        "lat": 65.680391,
+        "lon": 24.870201,
+        "info": null
+      },
+      {
+        "name": "Viantie",
+        "lat": 65.6758899,
+        "lon": 24.9304445,
+        "info": "Viantien_seisake"
+      },
+      {
+        "name": "Simo",
+        "info": "Simon_rautatieasema"
+      }
+    ]
+  },
+  "MYS-SIM": {
+    "locations": [
+      {
+        "name": "Myllykangas",
+        "info": "Myllykankaan_rautatieasema"
+      },
+      {
+        "name": "Halttula",
+        "lat": 65.5579428,
+        "lon": 25.2430167,
+        "info": null
+      },
+      {
+        "name": "Harjula",
+        "lat": 65.5788704,
+        "lon": 25.2221081,
+        "info": null
+      },
+      {
+        "name": "Kuivaniemi",
+        "lat": 65.5986044,
+        "lon": 25.2017373,
+        "info": "Kuivaniemen_rautatieasema"
+      },
+      {
+        "name": "Simo",
+        "info": "Simon_rautatieasema"
+      }
+    ]
+  },
+  "II-MYS": {
+    "locations": [
+      {
+        "name": "Ii",
+        "info": "Iin_rautatieasema"
+      },
+      {
+        "name": "Iijoen silta",
+        "lat": 65.321461389,
+        "lon": 25.442121944,
+        "info": "Iijoen_rautatie-_ja_maantiesilta"
+      },
+      {
+        "name": "Lähessuo",
+        "lat": 65.4080270,
+        "lon": 25.4076664,
+        "info": "Lähessuon_laituri"
+      },
+      {
+        "name": "Olhava",
+        "lat": 65.4623050,
+        "lon": 25.3894235,
+        "info": "Olhavan_rautatieasema"
+      },
+      {
+        "name": "Mustikka",
+        "lat": 65.5167370,
+        "lon": 25.3048376,
+        "info": null
+      },
+      {
+        "name": "Myllykangas",
+        "info": "Myllykankaan_rautatieasema"
+      }
+    ]
+  },
+  "HD-II": {
+    "locations": [
+      {
+        "name": "Haukipudas",
+        "info": "Haukiputaan_rautatieasema"
+      },
+      {
+        "name": "Luukela",
+        "lat": 65.2384117,
+        "lon": 25.4247394,
+        "info": null
+      },
+      {
+        "name": "Ii",
+        "info": "Iin_rautatieasema"
+      }
+    ]
+  },
+  "HD-TUA": {
+    "locations": [
+      {
+        "name": "Haukipudas",
+        "info": "Haukiputaan_rautatieasema"
+      },
+      {
+        "name": "Kiiminkijoen silta",
+        "lat": 65.193402222,
+        "lon": 25.407450278,
+        "info": "Kiiminkijoen_rautatiesilta"
+      },
+      {
+        "name": "Takkuranta",
+        "lat": 65.1410958,
+        "lon": 25.4206932,
+        "info": null
+      },
+      {
+        "name": "Kello",
+        "lat": 65.1130437,
+        "lon": 25.4179806,
+        "info": "Kellon_rautatieasema"
+      },
+      {
+        "name": "Seelanti",
+        "lat": 65.0992064,
+        "lon": 25.4215045,
+        "info": null
+      },
+      {
+        "name": "Pateniemi",
+        "lat": 65.0819207,
+        "lon": 25.4276395,
+        "info": "Pateniemen_seisake"
+      },
+      {
+        "name": "Koskelankylä",
+        "lat": 65.0464900,
+        "lon": 25.4388505,
+        "info": "Koskelankylän_seisake"
+      },
+      {
+        "name": "Tuira",
+        "info": "Tuiran_rautatieasema"
+      }
+    ]
+  },
+  "OL-TUA": {
+    "locations": [
+      {
+        "name": "Oulu",
+        "info": "Oulun_rautatieasema"
+      },
+      {
+        "name": "Oulujoen silta",
+        "lat": 65.022567222,
+        "lon": 25.496415000,
+        "info": "Rautasilta"
+      },
+      {
+        "name": "Tuira",
+        "info": "Tuiran_rautatieasema"
+      }
+    ]
   }
 }

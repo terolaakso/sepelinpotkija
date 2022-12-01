@@ -38,6 +38,8 @@ export default function IntroContent() {
           <li>Haapamäki - Alavus</li>
           <li>Haapamäki - Jyväskylä</li>
           <li>Jyväskylä - Saarijärvi</li>
+          <li>Oulu - Laurila</li>
+          <li>Laurila - Haaparanta</li>
           <li>Riihimäki - Kouvola</li>
           <li>Kytömaa - Lahti</li>
           <li>Lahti - Loviisan satama</li>
