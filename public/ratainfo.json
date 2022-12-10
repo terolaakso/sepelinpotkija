@@ -7895,5 +7895,125 @@
         "info": "Tuiran_rautatieasema"
       }
     ]
+  },
+  "RHA-SK": {
+    "locations": [
+      {
+        "name": "Ruha",
+        "info": "Ruhan_rautatieasema"
+      },
+      {
+        "name": "Pauhu",
+        "lat": 62.8792355,
+        "lon": 22.9690513,
+        "info": null
+      },
+      {
+        "name": "Korkonen",
+        "lat": 62.8706237,
+        "lon": 22.9590723,
+        "info": null
+      },
+      {
+        "name": "Hemminki",
+        "lat": 62.8606262,
+        "lon": 22.9488612,
+        "info": null
+      },
+      {
+        "name": "Latikka",
+        "lat": 62.8560940,
+        "lon": 22.9442264,
+        "info": null
+      },
+      {
+        "name": "Nurmo",
+        "lat": 62.8297059,
+        "lon": 22.9076723,
+        "info": null
+      },
+      {
+        "name": "Paukkaneva",
+        "lat": 62.8156425,
+        "lon": 22.8774823,
+        "info": null
+      },
+      {
+        "name": "Seinäjoki",
+        "info": "Seinäjoen_rautatieasema"
+      }
+    ]
+  },
+  "LPA-RHA": {
+    "locations": [
+      {
+        "name": "Lapua",
+        "info": "Lapuan_rautatieasema"
+      },
+      {
+        "name": "Muurimäki",
+        "lat": 62.9295482,
+        "lon": 23.0231812,
+        "info": null
+      },
+      {
+        "name": "Alanurmo",
+        "lat": 62.9166391,
+        "lon": 23.0127061,
+        "info": null
+      },
+      {
+        "name": "Ruha",
+        "info": "Ruhan_rautatieasema"
+      }
+    ]
+  },
+  "LPA-RJP": {
+    "locations": [
+      {
+        "name": "Lapua",
+        "info": "Lapuan_rautatieasema"
+      },
+      {
+        "name": "Kylmäkorpi",
+        "lat": 62.9997822,
+        "lon": 23.0098813,
+        "info": null
+      },
+      {
+        "name": "Säilönneva",
+        "lat": 63.033613,
+        "lon": 23.013084,
+        "info": null
+      },
+      {
+        "name": "Rajaperkiö",
+        "info": "Rajaperkiön_rautatieasema"
+      }
+    ]
+  },
+  "KHA-RJP": {
+    "locations": [
+      {
+        "name": "Kauhava",
+        "info": "Kauhavan_rautatieasema"
+      },
+      {
+        "name": "Somppi",
+        "lat": 63.0738017,
+        "lon": 23.0374529,
+        "info": null
+      },
+      {
+        "name": "Hahtomaa",
+        "lat": 63.0503939,
+        "lon": 23.0185058,
+        "info": null
+      },
+      {
+        "name": "Rajaperkiö",
+        "info": "Rajaperkiön_rautatieasema"
+      }
+    ]
   }
 }
