@@ -18,7 +18,7 @@ export default function EventContent({ event }: EventContentProps) {
           <EventText event={event} />
           <DifferenceBadge difference={event.lateMinutes} />
         </div>
-        <div>{event.countdown}</div>
+        <div className="tabular-nums">{event.countdown}</div>
       </div>
       <LateCauses causes={event.lateCauses} />
     </>
