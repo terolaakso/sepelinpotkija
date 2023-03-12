@@ -3414,12 +3414,10 @@
     "locations": [
       {
         "name": "Kerava",
-        "km": 0,
         "info": "Keravan_rautatieasema"
       },
       {
         "name": "Kytömaa",
-        "km": 1,
         "info": "Kytömaan_liikennepaikka"
       }
     ]
@@ -3517,37 +3515,40 @@
     "locations": [
       {
         "name": "Hakosilta",
-        "km": 0,
         "info": "Hakosillan_vaihde"
       },
       {
         "name": "Vähäjoki",
-        "km": 173,
+        "lat": 60.9373770,
+        "lon": 25.5265993,
         "info": null
       },
       {
         "name": "Nostava",
-        "km": 299,
+        "lat": 60.9457510,
+        "lon": 25.5364787,
         "info": null
       },
       {
         "name": "Tikkakallio",
-        "km": 400,
+        "lat": 60.9518881,
+        "lon": 25.5437314,
         "info": null
       },
       {
         "name": "Okeroinen",
-        "km": 649,
+        "lat": 60.9645173,
+        "lon": 25.5723551,
         "info": null
       },
       {
         "name": "Hennala",
-        "km": 915,
+        "lat": 60.9695412,
+        "lon": 25.6136080,
         "info": null
       },
       {
         "name": "Lahti",
-        "km": 1212,
         "info": "Lahden_rautatieasema"
       }
     ]
