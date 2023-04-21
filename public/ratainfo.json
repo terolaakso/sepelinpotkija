@@ -932,46 +932,39 @@
       }
     ]
   },
-  "HMK-PH": {
+  "HPK-PH": {
     "locations": [
       {
+        "name": "Haapamäki",
+        "info": "Haapamäen_rautatieasema"
+      },
+      {
+        "name": "Lausamo",
+        "lat": 62.2785946,
+        "lon": 24.4086223,
+        "info": null
+      },
+      {
         "name": "Haapamäen kyllästämö",
-        "km": 304.94,
+        "lat": 62.2806267,
+        "lon": 24.4069334,
         "info": "Haapamäen_kyllästämön_vaihde"
       },
       {
         "name": "Valkeiskangas",
-        "km": 307.61,
+        "lat": 62.3041757,
+        "lon": 24.4080649,
         "info": null
       },
       {
         "name": "Leppälä",
-        "km": 310.638,
+        "lat": 62.3294386,
+        "lon": 24.3962017,
         "info": null
       },
       {
         "name": "Pihlajavesi",
-        "km": 312.5,
         "info": "Pihlajaveden_rautatieasema"
-      }
-    ]
-  },
-  "HMK-HPK": {
-    "locations": [
-      {
-        "name": "Haapamäen kyllästämö",
-        "km": 304.94,
-        "info": "Haapamäen_kyllästämön_vaihde"
-      },
-      {
-        "name": "Lausamo",
-        "km": 304.6,
-        "info": null
-      },
-      {
-        "name": "Haapamäki",
-        "km": 300.235,
-        "info": "Haapamäen_rautatieasema"
       }
     ]
   },
@@ -8014,6 +8007,96 @@
       {
         "name": "Rajaperkiö",
         "info": "Rajaperkiön_rautatieasema"
+      }
+    ]
+  },
+  "ALV-NII": {
+    "locations": [
+      {
+        "name": "Alavus",
+        "info": "Alavuden_rautatieasema"
+      },
+      {
+        "name": "Vahermäki",
+        "lat": 62.6281648,
+        "lon": 23.5214179,
+        "info": null
+      },
+      {
+        "name": "Vetämäjärvi",
+        "lat": 62.6295337,
+        "lon": 23.4978888,
+        "info": null
+      },
+      {
+        "name": "Pynttäri",
+        "lat": 62.6340937,
+        "lon": 23.4625133,
+        "info": null
+      },
+      {
+        "name": "Niinimaa",
+        "info": "Niinimaan_rautatieasema"
+      }
+    ]
+  },
+  "NII-SK": {
+    "locations": [
+      {
+        "name": "Niinimaa",
+        "info": "Niinimaan_rautatieasema"
+      },
+      {
+        "name": "Kuotesluoma",
+        "lat": 62.6469822,
+        "lon": 23.3349931,
+        "info": null
+      },
+      {
+        "name": "Sääskiniemi",
+        "lat": 62.6496574,
+        "lon": 23.2847839,
+        "info": null
+      },
+      {
+        "name": "Kuorasjärvi",
+        "lat": 62.6563701,
+        "lon": 23.2539707,
+        "info": null
+      },
+      {
+        "name": "Sydänmaa",
+        "lat": 62.6724935,
+        "lon": 23.2105917,
+        "info": null
+      },
+      {
+        "name": "Rimmijoki",
+        "lat": 62.6954877,
+        "lon": 23.1572669,
+        "info": null
+      },
+      {
+        "name": "Koura",
+        "lat": 62.7170998,
+        "lon": 23.0910795,
+        "info": null
+      },
+      {
+        "name": "Rahkola",
+        "lat": 62.7542932,
+        "lon": 22.9537003,
+        "info": null
+      },
+      {
+        "name": "Kiikunmäki",
+        "lat": 62.7629955,
+        "lon": 22.9242604,
+        "info": null
+      },
+      {
+        "name": "Seinäjoki",
+        "info": "Seinäjoen_rautatieasema"
       }
     ]
   }
