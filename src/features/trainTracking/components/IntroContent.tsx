@@ -36,7 +36,7 @@ export default function IntroContent() {
           <li>Seinäjoki - Vaasa</li>
           <li>Tampere - Orivesi</li>
           <li>Jyväskylä - Pieksämäki</li>
-          <li>Haapamäki - Alavus</li>
+          <li>Haapamäki - Seinäjoki</li>
           <li>Haapamäki - Jyväskylä</li>
           <li>Jyväskylä - Saarijärvi</li>
           <li>Oulu - Laurila</li>
