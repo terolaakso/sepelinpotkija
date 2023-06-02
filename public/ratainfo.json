@@ -580,42 +580,34 @@
     "locations": [
       {
         "name": "Sääksjärvi",
-        "km": 0,
         "info": "Sääksjärven_rautatieasema"
       },
       {
         "name": "Multisilta",
-        "km": 109,
+        "lat": 61.4348630,
+        "lon": 23.7439095,
         "info": "Multisillan_seisake"
       },
       {
         "name": "Rukkamäki",
-        "km": 272,
-        "info": null
-      },
-      {
-        "name": "Tampere tavara",
-        "km": 360,
-        "info": null
+        "lat": 61.4585620,
+        "lon": 23.7476363,
+        "info": "Rukkamäen_seisake"
       },
       {
         "name": "Rantaperkiö",
-        "km": 379,
+        "lat": 61.4716514,
+        "lon": 23.7649690,
         "info": "Rantaperkiön_seisake"
       },
       {
-        "name": "Viinikka",
-        "km": 436,
-        "info": null
-      },
-      {
         "name": "Hatanpää",
-        "km": 456,
+        "lat": 61.4833395,
+        "lon": 23.7720682,
         "info": null
       },
       {
         "name": "Tampere",
-        "km": 562,
         "info": "Tampereen_rautatieasema"
       }
     ]
@@ -624,22 +616,22 @@
     "locations": [
       {
         "name": "Sääksjärvi",
-        "km": 0,
         "info": "Sääksjärven_rautatieasema"
       },
       {
         "name": "Höytämö",
-        "km": 51,
+        "lat": 61.4152823,
+        "lon": 23.7526217,
         "info": null
       },
       {
         "name": "Kulju",
-        "km": 414,
+        "lat": 61.3891937,
+        "lon": 23.7578133,
         "info": "Kuljun_seisake"
       },
       {
         "name": "Vanattara",
-        "km": 670,
         "info": null
       }
     ]
@@ -648,27 +640,28 @@
     "locations": [
       {
         "name": "Lempäälä",
-        "km": 0,
         "info": "Lempäälän_rautatieasema"
       },
       {
         "name": "Hollo",
-        "km": 213,
+        "lat": 61.3293764,
+        "lon": 23.7586537,
         "info": null
       },
       {
         "name": "Hakkari",
-        "km": 334,
+        "lat": 61.3379611,
+        "lon": 23.7589755,
         "info": null
       },
       {
         "name": "Moisio",
-        "km": 471,
+        "lat": 61.3479016,
+        "lon": 23.7614002,
         "info": "Moision_seisake"
       },
       {
         "name": "Vanattara",
-        "km": 787,
         "info": null
       }
     ]
@@ -677,17 +670,16 @@
     "locations": [
       {
         "name": "Lempäälä",
-        "km": 0,
         "info": "Lempäälän_rautatieasema"
       },
       {
         "name": "Hulaus",
-        "km": 332,
+        "lat": 61.2903481,
+        "lon": 23.7470964,
         "info": null
       },
       {
         "name": "Mattila",
-        "km": 741,
         "info": null
       }
     ]
@@ -696,17 +688,16 @@
     "locations": [
       {
         "name": "Mattila",
-        "km": 0,
         "info": null
       },
       {
         "name": "Hinkka",
-        "km": 451,
+        "lat": 61.2295168,
+        "lon": 23.7615528,
         "info": null
       },
       {
         "name": "Viiala",
-        "km": 692,
         "info": "Viialan_rautatieasema"
       }
     ]
@@ -715,22 +706,22 @@
     "locations": [
       {
         "name": "Toijala",
-        "km": 0,
         "info": "Toijalan_rautatieasema"
       },
       {
         "name": "Junkkari",
-        "km": 250,
+        "lat": 61.1805877,
+        "lon": 23.8302803,
         "info": null
       },
       {
         "name": "Arometsä",
-        "km": 556,
+        "lat": 61.1931468,
+        "lon": 23.7915988,
         "info": null
       },
       {
         "name": "Viiala",
-        "km": 835,
         "info": "Viialan_rautatieasema"
       }
     ]
@@ -3182,17 +3173,16 @@
     "locations": [
       {
         "name": "Hämeenlinna",
-        "km": 0,
         "info": "Hämeenlinnan_rautatieasema"
       },
       {
         "name": "Hopealinja",
-        "km": 293,
+        "lat": 61.0152176,
+        "lon": 24.4443527,
         "info": "Hopealinjan_pysäkki"
       },
       {
         "name": "Parola",
-        "km": 1008,
         "info": "Parolan_rautatieasema"
       }
     ]
@@ -3201,22 +3191,22 @@
     "locations": [
       {
         "name": "Hämeenlinna",
-        "km": 0,
         "info": "Hämeenlinnan_rautatieasema"
       },
       {
         "name": "Kantolanniemi",
-        "km": 333,
+        "lat": 60.9815545,
+        "lon": 24.5052875,
         "info": null
       },
       {
         "name": "Vanaja",
-        "km": 545,
+        "lat": 60.9678013,
+        "lon": 24.5212091,
         "info": null
       },
       {
         "name": "Harviala",
-        "km": 950,
         "info": "Harvialan_rautatieasema"
       }
     ]
@@ -3225,17 +3215,16 @@
     "locations": [
       {
         "name": "Harviala",
-        "km": 0,
         "info": "Harvialan_rautatieasema"
       },
       {
         "name": "Sokeri",
-        "km": 931,
+        "lat": 60.9313024,
+        "lon": 24.6288088,
         "info": null
       },
       {
         "name": "Turenki",
-        "km": 1291,
         "info": "Turengin_rautatieasema"
       }
     ]
@@ -3244,17 +3233,16 @@
     "locations": [
       {
         "name": "Leppäkoski",
-        "km": 0,
         "info": "Leppäkosken_rautatieasema"
       },
       {
         "name": "Huhtola",
-        "km": 282,
+        "lat": 60.8900358,
+        "lon": 24.6742225,
         "info": null
       },
       {
         "name": "Turenki",
-        "km": 745,
         "info": "Turengin_rautatieasema"
       }
     ]
@@ -3263,17 +3251,16 @@
     "locations": [
       {
         "name": "Leppäkoski",
-        "km": 0,
         "info": "Leppäkosken_rautatieasema"
       },
       {
         "name": "Kelhä",
-        "km": 421,
+        "lat": 60.8460010,
+        "lon": 24.7228247,
         "info": null
       },
       {
         "name": "Ryttylä",
-        "km": 874,
         "info": "Ryttylän_rautatieasema"
       }
     ]
@@ -3282,17 +3269,16 @@
     "locations": [
       {
         "name": "Ryttylä",
-        "km": 0,
         "info": "Ryttylän_rautatieasema"
       },
       {
         "name": "Hirvenoja",
-        "km": 477,
+        "lat": 60.7851448,
+        "lon": 24.7783820,
         "info": null
       },
       {
         "name": "Sammalisto",
-        "km": 776,
         "info": "Sammaliston_seisake"
       }
     ]
