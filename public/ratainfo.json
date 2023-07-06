@@ -1315,32 +1315,28 @@
     "locations": [
       {
         "name": "Oulu",
-        "km": 752.778,
         "info": "Oulun_rautatieasema"
       },
       {
-        "name": "Oulu tavara",
-        "km": 751.36,
-        "info": null
-      },
-      {
         "name": "Kiskotie",
-        "km": 750.232,
+        "lat": 64.9943795,
+        "lon": 25.4764832,
         "info": "Kiskotien_seisake"
       },
       {
         "name": "Oulu Nokela",
-        "km": 750.03,
+        "lat": 64.989283,
+        "lon": 25.475726,
         "info": null
       },
       {
         "name": "Lumijärvi",
-        "km": 747.84,
+        "lat": 64.9708961,
+        "lon": 25.4960607,
         "info": null
       },
       {
         "name": "Oulunlahti",
-        "km": 746.876,
         "info": "Oulunlahden_seisake"
       }
     ]
@@ -1349,17 +1345,16 @@
     "locations": [
       {
         "name": "Kempele",
-        "km": 741.075,
         "info": "Kempeleen_rautatieasema"
       },
       {
         "name": "Kuivala",
-        "km": 744.6,
+        "lat": 64.9442665,
+        "lon": 25.5226324,
         "info": null
       },
       {
         "name": "Oulunlahti",
-        "km": 746.876,
         "info": "Oulunlahden_seisake"
       }
     ]
@@ -1368,22 +1363,22 @@
     "locations": [
       {
         "name": "Kempele",
-        "km": 741.075,
         "info": "Kempeleen_rautatieasema"
       },
       {
         "name": "Tupos",
-        "km": 735.5,
+        "lat": 64.8630497,
+        "lon": 25.4981678,
         "info": "Tupoksen_seisake"
       },
       {
         "name": "Temmesjoki",
-        "km": 730.7,
+        "lat": 64.8234383,
+        "lon": 25.4542809,
         "info": null
       },
       {
         "name": "Liminka",
-        "km": 728.483,
         "info": "Limingan_rautatieasema"
       }
     ]
@@ -1392,32 +1387,34 @@
     "locations": [
       {
         "name": "Liminka",
-        "km": 728.483,
         "info": "Limingan_rautatieasema"
       },
       {
         "name": "Pappila",
-        "km": 727.3,
+        "lat": 64.8049579,
+        "lon": 25.4105190,
         "info": null
       },
       {
         "name": "Matinlauri",
-        "km": 726.8,
+        "lat": 64.8007010,
+        "lon": 25.3954460,
         "info": null
       },
       {
         "name": "Rasila",
-        "km": 726.0,
+        "lat": 64.7976494,
+        "lon": 25.3804900,
         "info": null
       },
       {
         "name": "Värminkoski",
-        "km": 724.9,
+        "lat": 64.7935283,
+        "lon": 25.3600409,
         "info": null
       },
       {
         "name": "Tikkaperä",
-        "km": 720.741,
         "info": "Tikkaperän_rautatieasema"
       }
     ]
@@ -1426,12 +1423,10 @@
     "locations": [
       {
         "name": "Hirvineva",
-        "km": 0,
         "info": "Hirvinevan_rautatieasema"
       },
       {
         "name": "Tikkaperä",
-        "km": 1,
         "info": "Tikkaperän_rautatieasema"
       }
     ]
@@ -1440,27 +1435,28 @@
     "locations": [
       {
         "name": "Hirvineva",
-        "km": 715.5,
         "info": "Hirvinevan_rautatieasema"
       },
       {
         "name": "Sopero",
-        "km": 713.308,
+        "lat": 64.7174755,
+        "lon": 25.1991504,
         "info": null
       },
       {
         "name": "Sammalkangas",
-        "km": 706.697,
+        "lat": 64.6696224,
+        "lon": 25.1173526,
         "info": null
       },
       {
         "name": "Saha",
-        "km": 706.1,
+        "lat": 64.6647455,
+        "lon": 25.1083396,
         "info": null
       },
       {
         "name": "Ruukki",
-        "km": 705.228,
         "info": "Ruukin_rautatieasema"
       }
     ]
@@ -1469,22 +1465,22 @@
     "locations": [
       {
         "name": "Ruukki",
-        "km": 705.228,
         "info": "Ruukin_rautatieasema"
       },
       {
         "name": "Puusaari",
-        "km": 702.7,
+        "lat": 64.6415017,
+        "lon": 25.0693171,
         "info": null
       },
       {
         "name": "Matela",
-        "km": 699.9,
+        "lat": 64.6193918,
+        "lon": 25.0416926,
         "info": null
       },
       {
         "name": "Tuomioja",
-        "km": 698.504,
         "info": "Tuomiojan_rautatieasema"
       }
     ]
