@@ -157,15 +157,14 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     setLocation: (location: TrainLocation) => {
       const key = getTrainKey(location);
       set((state) => {
-        const cleanedState = cleanup(state);
-        const oldVersion = cleanedState.locations[key];
+        const oldVersion = state.locations[key];
         if ((oldVersion?.timestamp ?? DateTime.fromMillis(0)) <= location.timestamp) {
           return {
-            ...cleanedState,
-            locations: { ...cleanedState.locations, [key]: location },
+            ...state,
+            locations: { ...state.locations, [key]: location },
           };
         } else {
-          return cleanedState;
+          return state;
         }
       });
     },
