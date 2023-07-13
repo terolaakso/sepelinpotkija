@@ -11,6 +11,7 @@ import {
 import { StationCollection } from '@/types/Station';
 import { Train, TrainCollection } from '@/types/Train';
 import { LocationCollection, TrainLocation } from '@/types/TrainLocation';
+import { isNotNil } from '@/utils/misc';
 
 interface TrainDataStore {
   stations: StationCollection;
@@ -21,6 +22,7 @@ interface TrainDataStore {
   locations: LocationCollection;
   extras: TrackSegmentCollection;
   connectionRestoredTimestamp: number;
+  trackedTrainKey: string | null;
   setStations: (station: StationCollection) => void;
   setFirstLevelCauses: (causes: FirstLevelCauseCollection) => void;
   setSecondLevelCauses: (causes: SecondLevelCauseCollection) => void;
@@ -32,6 +34,7 @@ interface TrainDataStore {
   setLocation: (location: TrainLocation) => void;
   setExtras: (extras: TrackSegmentCollection) => void;
   setConnectionRestored: () => void;
+  setTrackedTrain: (train: Train | null) => void;
 }
 
 const MAX_TRAIN_AGE_MINUTES = 6;
@@ -44,6 +47,10 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
       state.trains,
       (train) => (train?.timestamp ?? DateTime.fromMillis(0)) >= oldestTrainTimestampToKeep
     );
+    if (isNotNil(state.trackedTrainKey) && isNil(trainsToKeep[state.trackedTrainKey])) {
+      // Don't cleanup if the tracked train is going to get lost
+      return state;
+    }
     const oldestLocationTimestampToKeep = DateTime.now().minus({
       minutes: MAX_LOCATION_AGE_MINUTES,
     });
@@ -58,6 +65,10 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     };
   }
 
+  function getTrainKey(params: { departureDate: string; trainNumber: number }) {
+    return `${params.departureDate}-${params.trainNumber}`;
+  }
+
   return {
     stations: {},
     firstLevelCauses: {},
@@ -67,6 +78,7 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     locations: {},
     extras: {},
     connectionRestoredTimestamp: 0,
+    trackedTrainKey: '',
     setStations: (stations) => {
       set((state) => ({
         ...state,
@@ -96,12 +108,11 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
         return null;
       }
       const trains = get().trains;
-      const train = trains[`${departureDate}-${trainNumber}`] ?? null;
+      const train = trains[getTrainKey({ departureDate, trainNumber })] ?? null;
       return train;
     },
     setTrain: (train: Train) => {
-      const { departureDate, trainNumber } = train;
-      const key = `${departureDate}-${trainNumber}`;
+      const key = getTrainKey(train);
       set((state) => {
         const cleanedState = cleanup(state);
         const oldVersion = cleanedState.trains[key];
@@ -123,8 +134,7 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
         const cleanedState = cleanup(state);
 
         const newState = trains.reduce((accState, train) => {
-          const { departureDate, trainNumber } = train;
-          const key = `${departureDate}-${trainNumber}`;
+          const key = getTrainKey(train);
           const oldVersion = accState.trains[key];
           if (oldVersion?.version ?? 0 <= train.version) {
             return {
@@ -141,12 +151,11 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     },
     getLocation: (departureDate: string, trainNumber: number) => {
       const locations = get().locations;
-      const location = locations[`${departureDate}-${trainNumber}`] ?? null;
+      const location = locations[getTrainKey({ departureDate, trainNumber })] ?? null;
       return location;
     },
     setLocation: (location: TrainLocation) => {
-      const { departureDate, trainNumber } = location;
-      const key = `${departureDate}-${trainNumber}`;
+      const key = getTrainKey(location);
       set((state) => {
         const cleanedState = cleanup(state);
         const oldVersion = cleanedState.locations[key];
@@ -170,6 +179,12 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
       set((state) => ({
         ...state,
         connectionRestoredTimestamp: DateTime.now().toMillis(),
+      }));
+    },
+    setTrackedTrain: (train: Train | null) => {
+      set((state) => ({
+        ...state,
+        trackedTrainKey: isNotNil(train) ? getTrainKey(train) : null,
       }));
     },
   };
