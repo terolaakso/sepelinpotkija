@@ -23,7 +23,6 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
       return;
     }
 
-    console.log('Connecting');
     const mqtt = connect(brokerUrl);
     clientRef.current = mqtt;
     setContextState((prevState) => ({
@@ -33,7 +32,6 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
     }));
     mqtt.on('connect', () => {
       if (mountedRef.current) {
-        console.log('Connected');
         setContextState((prevState) => {
           if (prevState.isConnectionDropped) {
             setConnectionRestored();
@@ -49,7 +47,6 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
     });
     mqtt.on('reconnect', () => {
       if (mountedRef.current) {
-        console.log('Reconnect');
         setContextState((prevState) => ({
           ...prevState,
           connectionStatus: 'Reconnecting',
@@ -76,7 +73,6 @@ export default function Connector({ children, brokerUrl }: ConnectorProps) {
     });
     mqtt.on('end', () => {
       if (mountedRef.current) {
-        console.log('connection END');
         setContextState((prevState) => ({
           ...prevState,
           connectionStatus: 'Offline',

@@ -46,7 +46,6 @@ export default function useStation(stationCode: string | null) {
       ) {
         return;
       }
-      console.log(new Date().toLocaleTimeString(), `Fetching trains for station ${stationCode}`);
       previousFetchTimestampRef.current = now;
       setCurrentStation(stationCode);
       const trains = await getTrainsOfStation(stationCode);
