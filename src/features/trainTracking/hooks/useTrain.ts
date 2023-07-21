@@ -35,7 +35,6 @@ export default function useTrain(
       setTrain(fixedTrain);
     }
 
-    setFollowedDepartureDate(departureDate);
     fetchTrain();
   }, [departureDate, trainNumber, setTrain, setTrackedTrain, connectionRestored]);
 
