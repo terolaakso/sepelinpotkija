@@ -8081,5 +8081,449 @@
         "info": "Seinäjoen_rautatieasema"
       }
     ]
+  },
+  "PSK-ÄM": {
+    "locations": [
+      {
+        "name": "Pesiökylä",
+        "info": "Pesiökylän_rautatieasema"
+      },
+      {
+        "name": "Kuvaja-aho",
+        "lat": 64.934614,
+        "lon": 28.584179,
+        "info": null
+      },
+      {
+        "name": "Raappana",
+        "lat": 64.920924,
+        "lon": 28.662887,
+        "info": null
+      },
+      {
+        "name": "Vähä",
+        "lat": 64.9103594,
+        "lon": 28.7445194,
+        "info": null
+      },
+      {
+        "name": "Kurimo",
+        "lat": 64.902808,
+        "lon": 28.805587,
+        "info": null
+      },
+      {
+        "name": "Siikaranta",
+        "lat": 64.894354,
+        "lon": 28.846432,
+        "info": null
+      },
+      {
+        "name": "Ämmänsaari",
+        "info": "Ämmänsaaren_rautatieasema"
+      }
+    ]
+  },
+  "HYS-PSK": {
+    "locations": [
+      {
+        "name": "Hyrynsalmi",
+        "info": "Hyrynsalmen_rautatieasema"
+      },
+      {
+        "name": "Hyrynjärvi",
+        "lat": 64.7125373,
+        "lon": 28.4867527,
+        "info": null
+      },
+      {
+        "name": "Pihkala",
+        "lat": 64.72514,
+        "lon": 28.497074,
+        "info": null
+      },
+      {
+        "name": "Vannevaara",
+        "lat": 64.7345411,
+        "lon": 28.4951070,
+        "info": null
+      },
+      {
+        "name": "Honkamaa",
+        "lat": 64.768364,
+        "lon": 28.519823,
+        "info": null
+      },
+      {
+        "name": "Hallavaara",
+        "lat": 64.7849036,
+        "lon": 28.5176741,
+        "info": null
+      },
+      {
+        "name": "Laaja",
+        "lat": 64.8356557,
+        "lon": 28.5369649,
+        "info": "Laajan_rautatieasema"
+      },
+      {
+        "name": "Olkiaho",
+        "lat": 64.8569888,
+        "lon": 28.5532218,
+        "info": null
+      },
+      {
+        "name": "Piilikangas",
+        "lat": 64.8787090,
+        "lon": 28.5722011,
+        "info": null
+      },
+      {
+        "name": "Haukivaara",
+        "lat": 64.9084592,
+        "lon": 28.5773325,
+        "info": null
+      },
+      {
+        "name": "Pesiökylä",
+        "info": "Pesiökylän_rautatieasema"
+      }
+    ]
+  },
+  "HYS-RJV": {
+    "locations": [
+      {
+        "name": "Hyrynsalmi",
+        "info": "Hyrynsalmen_rautatieasema"
+      },
+      {
+        "name": "Tervatie",
+        "lat": 64.667139,
+        "lon": 28.450134,
+        "info": null
+      },
+      {
+        "name": "Oravivaara",
+        "lat": 64.6423025,
+        "lon": 28.4382860,
+        "info": "Oravivaaran_seisake"
+      },
+      {
+        "name": "Housuvaara",
+        "lat": 64.621515,
+        "lon": 28.409537,
+        "info": null
+      },
+      {
+        "name": "Karppila",
+        "lat": 64.5875098,
+        "lon": 28.3546481,
+        "info": "Karppilan_seisake"
+      },
+      {
+        "name": "Kalliokoski",
+        "lat": 64.566619,
+        "lon": 28.331498,
+        "info": null
+      },
+      {
+        "name": "Jokikylä",
+        "lat": 64.5548706,
+        "lon": 28.3169856,
+        "info": "Jokikylän_rautatieasema"
+      },
+      {
+        "name": "Siltasuo",
+        "lat": 64.4960522,
+        "lon": 28.2197868,
+        "info": null
+      },
+      {
+        "name": "Ristijärvi",
+        "info": "Ristijärven_rautatieasema"
+      }
+    ]
+  },
+  "KON-RJV": {
+    "locations": [
+      {
+        "name": "Kontiomäki",
+        "info": "Kontiomäen_rautatieasema"
+      },
+      {
+        "name": "Matkala",
+        "lat": 64.367392,
+        "lon": 28.11041,
+        "info": "Matkalan_vaihde"
+      },
+      {
+        "name": "Laajakangas",
+        "lat": 64.381768,
+        "lon": 28.120427,
+        "info": "Laajakankaan_seisake"
+      },
+      {
+        "name": "Härmänmäki",
+        "lat": 64.403109,
+        "lon": 28.129497,
+        "info": "Härmänmäen_pysäkki"
+      },
+      {
+        "name": "Sipola",
+        "lat": 64.446727,
+        "lon": 28.139257,
+        "info": null
+      },
+      {
+        "name": "Ristijärvi",
+        "info": "Ristijärven_rautatieasema"
+      }
+    ]
+  },
+  "KON-KSN": {
+    "locations": [
+      {
+        "name": "Kontiomäki",
+        "info": "Kontiomäen_rautatieasema"
+      },
+      {
+        "name": "Jokimäki",
+        "lat": 64.377353,
+        "lon": 28.02477,
+        "info": null
+      },
+      {
+        "name": "Mieslahti",
+        "lat": 64.3817260,
+        "lon": 27.9952029,
+        "info": "Mieslahden_seisake"
+      },
+      {
+        "name": "Meriläinen",
+        "lat": 64.390403,
+        "lon": 27.936566,
+        "info": null
+      },
+      {
+        "name": "Kuusikkoniemi",
+        "info": "Kuusikkoniemen_rautatieasema"
+      }
+    ]
+  },
+  "KSN-PTO": {
+    "locations": [
+      {
+        "name": "Kuusikkoniemi",
+        "info": "Kuusikkoniemen_rautatieasema"
+      },
+      {
+        "name": "Palta Oy",
+        "lat": 64.398051,
+        "lon": 27.886124,
+        "info": "Palta_Oy:n_linjavaihde"
+      },
+      {
+        "name": "Meteli",
+        "lat": 64.4015715,
+        "lon": 27.8629208,
+        "info": "Metelin_seisake"
+      },
+      {
+        "name": "Paltamo",
+        "info": "Paltamon_rautatieasema"
+      }
+    ]
+  },
+  "MLL-PTO": {
+    "locations": [
+      {
+        "name": "Melalahti",
+        "info": "Melalahden_rautatieasema"
+      },
+      {
+        "name": "Lepikko",
+        "lat": 64.407244,
+        "lon": 27.769135,
+        "info": null
+      },
+      {
+        "name": "Paltamo",
+        "info": "Paltamon_rautatieasema"
+      }
+    ]
+  },
+  "KVJ-MLL": {
+    "locations": [
+      {
+        "name": "Kivesjärvi",
+        "info": "Kivesjärven_rautatieasema"
+      },
+      {
+        "name": "Virpelä",
+        "lat": 64.428202,
+        "lon": 27.477108,
+        "info": null
+      },
+      {
+        "name": "Hakasuo",
+        "lat": 64.4118980,
+        "lon": 27.5068423,
+        "info": "Hakasuon_seisake"
+      },
+      {
+        "name": "Sahi",
+        "lat": 64.414145,
+        "lon": 27.592561,
+        "info": null
+      },
+      {
+        "name": "Melalahti",
+        "info": "Melalahden_rautatieasema"
+      }
+    ]
+  },
+  "KVJ-LMP": {
+    "locations": [
+      {
+        "name": "Kivesjärvi",
+        "info": "Kivesjärven_rautatieasema"
+      },
+      {
+        "name": "Petäjälahti",
+        "lat": 64.487746,
+        "lon": 27.396462,
+        "info": null
+      },
+      {
+        "name": "Liminpuro",
+        "info": "Liminpuron_rautatieasema"
+      }
+    ]
+  },
+  "LMP-VAA": {
+    "locations": [
+      {
+        "name": "Liminpuro",
+        "info": "Liminpuron_rautatieasema"
+      },
+      {
+        "name": "Jaalanka",
+        "lat": 64.5578928,
+        "lon": 27.1435771,
+        "info": "Jaalangan_seisake"
+      },
+      {
+        "name": "Kankari",
+        "lat": 64.5593485,
+        "lon": 27.0255914,
+        "info": "Kankarin_seisake"
+      },
+      {
+        "name": "Laajalampi",
+        "lat": 64.5606333,
+        "lon": 26.9162062,
+        "info": null
+      },
+      {
+        "name": "Vaala",
+        "info": "Vaalan_rautatieasema"
+      }
+    ]
+  },
+  "NSK-VAA": {
+    "locations": [
+      {
+        "name": "Niska",
+        "info": "Niskan_rautatieasema"
+      },
+      {
+        "name": "Pyykkö",
+        "lat": 64.620367,
+        "lon": 26.563068,
+        "info": null
+      },
+      {
+        "name": "Nuojua",
+        "lat": 64.5654185,
+        "lon": 26.6650306,
+        "info": "Nuojuan_rautatieasema"
+      },
+      {
+        "name": "Santamäki",
+        "lat": 64.551745,
+        "lon": 26.713483,
+        "info": "Santamäen_linjavaihde"
+      },
+      {
+        "name": "Vaalankurkku",
+        "lat": 64.5548668,
+        "lon": 26.8196966,
+        "info": null
+      },
+      {
+        "name": "Vaalankurkun silta",
+        "lat": 64.555189167,
+        "lon": 26.822120556,
+        "info": "Vaalankurkun_rautatiesilta"
+      },
+      {
+        "name": "Vaala",
+        "info": "Vaalan_rautatieasema"
+      }
+    ]
+  },
+  "NSK-UTJ": {
+    "locations": [
+      {
+        "name": "Niska",
+        "info": "Niskan_rautatieasema"
+      },
+      {
+        "name": "Lotvola",
+        "lat": 64.648169,
+        "lon": 26.521932,
+        "info": null
+      },
+      {
+        "name": "Ahmas",
+        "lat": 64.6562294,
+        "lon": 26.5132251,
+        "info": "Ahmaksen_rautatieasema"
+      },
+      {
+        "name": "Vanhatie",
+        "lat": 64.6877,
+        "lon": 26.48281,
+        "info": null
+      },
+      {
+        "name": "Ruostesuo",
+        "lat": 64.704023,
+        "lon": 26.468141,
+        "info": null
+      },
+      {
+        "name": "Miettula",
+        "lat": 64.7129487,
+        "lon": 26.4635876,
+        "info": null
+      },
+      {
+        "name": "Mustikkakangas",
+        "lat": 64.7365651,
+        "lon": 26.4443033,
+        "info": null
+      },
+      {
+        "name": "Putaala",
+        "lat": 64.751099,
+        "lon": 26.424328,
+        "info": null
+      },
+      {
+        "name": "Utajärvi",
+        "info": "Utajärven_rautatieasema"
+      }
+    ]
   }
 }
