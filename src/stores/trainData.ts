@@ -1,6 +1,6 @@
 import { isNil, pickBy } from 'lodash';
 import { DateTime } from 'luxon';
-import create from 'zustand';
+import { create } from 'zustand';
 
 import { TrackSegmentCollection } from '@/features/trainTracking';
 import {

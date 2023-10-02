@@ -185,9 +185,10 @@ describe('train transformation', () => {
       train.timeTableRows[1].actualTime = undefined;
       train.timeTableRows[1].commercialStop = commercialStop;
       train.timeTableRows[2].actualTime = undefined;
-      train.timeTableRows[2].scheduledTime = DateTime.fromISO('2022-07-15T06:09:00.000Z')
-        .plus({ seconds: stopDurationSeconds })
-        .toISO();
+      train.timeTableRows[2].scheduledTime =
+        DateTime.fromISO('2022-07-15T06:09:00.000Z')
+          .plus({ seconds: stopDurationSeconds })
+          .toISO() ?? undefined;
       train.timeTableRows[2].commercialStop = commercialStop;
       train.timeTableRows[3].actualTime = undefined;
 
