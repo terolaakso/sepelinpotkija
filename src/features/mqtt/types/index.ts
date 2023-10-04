@@ -13,10 +13,16 @@ export interface ConnectorProps {
   children: React.ReactNode;
 }
 
+export type ConnectionStatus =
+  | 'Offline'
+  | 'Connecting'
+  | 'Connected'
+  | 'Reconnecting'
+  | 'Reconnected';
+
 export interface IMqttContext {
-  connectionStatus: string | Error;
+  connectionStatus: ConnectionStatus | Error;
   isClientReady: boolean;
-  isConnectionDropped: boolean;
   client?: MqttClient | null;
   parserMethod?: (message: any) => string;
 }
@@ -29,5 +35,3 @@ export interface IMessage {
   topic: string;
   message?: string | IMessageStructure;
 }
-
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
