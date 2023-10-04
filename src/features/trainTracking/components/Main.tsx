@@ -7,7 +7,7 @@ import { useTrainDataStore } from '@/stores/trainData';
 
 import useTrackSegmentExtras from '../hooks/useTrackSegmentExtras';
 import useTrain from '../hooks/useTrain';
-import useTrainLocationWatch from '../hooks/useTrainDigitrafficLocationWatch';
+import useTrainDigitrafficLocationWatch from '../hooks/useTrainDigitrafficLocationWatch';
 import { TrainEvent } from '../types/TrainEvent';
 import { calculateCurrentEventsForTrain } from '../utils/trainTracking';
 
@@ -30,7 +30,7 @@ export default function TrainTracking() {
 
   const departureDate = useTrain(isTracking ? trainNumber ?? null : null, null, true);
   useStation(isTracking ? nextStationCode : null);
-  useTrainLocationWatch(
+  useTrainDigitrafficLocationWatch(
     isTracking ? nextTrain.departureDate : null,
     isTracking ? nextTrain.trainNumber : null
   );

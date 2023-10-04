@@ -44,6 +44,9 @@ export default function useTrainLocationWatch(
       if (waitTimeMs > 0) {
         setActivateGeolocation(false);
       }
+    },
+    () => {
+      setActivateGeolocation(true);
     }
   );
 
