@@ -49,6 +49,11 @@ export default function useTrainDigitrafficLocationWatch(
       const train = getTrain(departureDate, trainNumber);
       if (train) {
         const fixedTrain = adjustTimetableByLocation(train, location);
+        if (fixedTrain === train) {
+          // Location was invalid and train was not adjusted
+          onInvalidLocationReceived?.();
+          return;
+        }
         setTrain(fixedTrain);
         savedOnLocationReceived.current?.(location);
       }

@@ -37,6 +37,9 @@ export function adjustTimetableByLocation(train: Train, location: TrainLocation 
     return train;
   }
   const segment = findClosestStationSegment(train, location);
+  if (!segment) {
+    return train;
+  }
   const isAtStation = isTrainAtStation(train, location);
   if (isAtStation.result) {
     const rowsWithoutLocationAdjustment = resetTimes(train.timetableRows);
@@ -50,9 +53,6 @@ export function adjustTimetableByLocation(train: Train, location: TrainLocation 
         ? rowsWithoutLocationAdjustment.length
         : isAtStation.stationIndex - 1
     );
-  }
-  if (!segment) {
-    return createTrainFromNewData(train, train.timetableRows, location, null);
   }
   const { fixedRows, fixedFromIndex } = fixTimetable(train, location, segment);
   const result = createTrainFromNewData(
