@@ -270,6 +270,32 @@ describe('timetable adjustment using gps location', () => {
 
     expect(adjusted.lateMinutes).toBe(5);
   });
+
+  it('calculates latemins correctly when arriving to station and a future actual time exists', () => {
+    const train = trainFixture({
+      latestActualTimeIndex: 1,
+      timetableRows: rowsForTest({ minutes: -10 }, { firstStopDuration: { minutes: 2 } }).map(
+        timetableRowFixture
+      ),
+    });
+    train.timetableRows[0].bestDigitrafficTime = train.timetableRows[0].scheduledTime.plus({
+      minutes: 0,
+    });
+    train.timetableRows[1].bestDigitrafficTime = train.timetableRows[1].scheduledTime.plus({
+      minutes: 2,
+    });
+    train.timetableRows[2].bestDigitrafficTime = train.timetableRows[2].scheduledTime.plus({
+      minutes: 1,
+    });
+    train.timetableRows[3].bestDigitrafficTime = train.timetableRows[3].scheduledTime.plus({
+      minutes: 0,
+    });
+    const location = trainLocationFixture({ location: locations.atKLOStationSouthOfStationPoint });
+
+    const adjusted = adjustTimetableByLocation(train, location);
+
+    expect(adjusted.lateMinutes).toBe(2);
+  });
 });
 
 describe('when is train at station when location is not available', () => {

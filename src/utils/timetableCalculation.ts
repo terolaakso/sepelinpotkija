@@ -47,11 +47,7 @@ export function adjustTimetableByLocation(train: Train, location: TrainLocation 
       train,
       rowsWithoutLocationAdjustment,
       location,
-      isAtStation.stationIndex === 0
-        ? 0
-        : isAtStation.stationIndex === -1
-        ? rowsWithoutLocationAdjustment.length
-        : isAtStation.stationIndex - 1
+      Math.max(isAtStation.stationIndex - 1, 0)
     );
   }
   const { fixedRows, fixedFromIndex } = fixTimetable(train, location, segment);
@@ -132,7 +128,7 @@ export function isTrainAtStation(
       return isLocationClose
         ? {
             result: true,
-            stationIndex: nextIndex === train.latestActualTimeIndex ? -1 : nextIndex,
+            stationIndex: nextIndex,
           }
         : { result: false };
     }
