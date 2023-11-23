@@ -5972,8 +5972,8 @@
       },
       {
         "name": "Luoma",
-        "lat": 60.178391,
-        "lon": 24.558821,
+        "lat": 60.1783070,
+        "lon": 24.5586667,
         "info": "Luoman_rautatieasema"
       },
       {
@@ -5989,15 +5989,15 @@
         "info": "Espoon_rautatieasema"
       },
       {
-        "name": "Kaupunginkallio",
+        "name": "Espoon tunneli",
         "lat": 60.203258333,
         "lon": 24.646603889,
         "info": "Espoon_rautatietunneli"
       },
       {
         "name": "Pelto",
-        "lat": 60.199647,
-        "lon": 24.626592,
+        "lat": 60.1994595,
+        "lon": 24.6260909,
         "info": "Pellon_seisake"
       },
       {
