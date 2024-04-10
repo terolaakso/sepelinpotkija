@@ -4452,7 +4452,7 @@
       }
     ]
   },
-  "ARP-HY": {
+  "ARP-PVL": {
     "locations": [
       {
         "name": "Riihimäki Arolampi",
@@ -4465,8 +4465,20 @@
         "info": "Monnin_seisake"
       },
       {
+        "name": "Hyvinkää Paavola",
+        "info": null
+      }
+    ]
+  },
+  "HY-PVL": {
+    "locations": [
+      {
         "name": "Hyvinkää",
         "info": "Hyvinkään_rautatieasema"
+      },
+      {
+        "name": "Hyvinkää Paavola",
+        "info": null
       }
     ]
   },
