@@ -46,13 +46,14 @@ export default function IntroContent() {
           <li>Lahti - Loviisan satama</li>
           <li>Lahti - Heinola</li>
           <li>Kouvola - Siilinjärvi</li>
+          <li>Kontiomäki - Murtomäki</li>
           <li>Ylivieska - Iisalmi</li>
           <li>Lappeenranta - Joutseno</li>
           <li>Imatra - Parikkala</li>
           <li>Lappeenranta - Mustolan satama</li>
           <li>Parikkala - Savonlinna</li>
           <li>Nurmes - Valtimo</li>
-          <li>Kontiomäki - Utajärvi</li>
+          <li>Kontiomäki - Oulu</li>
           <li>Kontiomäki - Ämmänsaari</li>
         </ul>
       </small>
