@@ -7680,7 +7680,7 @@
       }
     ]
   },
-  "KEM-SIM": {
+  "KEM-MKN": {
     "locations": [
       {
         "name": "Kemi",
@@ -7712,8 +7712,14 @@
       },
       {
         "name": "Maksniemi",
-        "lat": 65.6835103,
-        "lon": 24.7871620,
+        "info": "Maksniemen_seisake"
+      }
+    ]
+  },
+  "MKN-SIM": {
+    "locations": [
+      {
+        "name": "Maksniemi",
         "info": "Maksniemen_seisake"
       },
       {
@@ -7764,7 +7770,7 @@
       }
     ]
   },
-  "II-MYS": {
+  "II-LHS": {
     "locations": [
       {
         "name": "Ii",
@@ -7778,8 +7784,14 @@
       },
       {
         "name": "Lähessuo",
-        "lat": 65.4080270,
-        "lon": 25.4076664,
+        "info": "Lähessuon_laituri"
+      }
+    ]
+  },
+  "LHS-MYS": {
+    "locations": [
+      {
+        "name": "Lähessuo",
         "info": "Lähessuon_laituri"
       },
       {
@@ -8829,6 +8841,18 @@
       {
         "name": "Murtomäki",
         "info": "Murtomäen_rautatieasema"
+      }
+    ]
+  },
+  "AJO-KEM": {
+    "locations": [
+      {
+        "name": "Ajos",
+        "info": "Ajoksen_ratapiha"
+      },
+      {
+        "name": "Kemi",
+        "info": "Kemin_rautatieasema"
       }
     ]
   }
