@@ -22,10 +22,10 @@ export default function TrainHeader({ train, isExpired }: TrainHeaderProps) {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex space-x-1">
         <DifferenceBadge difference={train.lateMinutes} />
         {isExpired && <div>❗️</div>}
-        <div className="flex-grow">
+        <div className="flex-grow space-x-1">
           <CommuterBadge lineId={train.lineId} />
           <span>
             {train.name} {origin} - {destination}

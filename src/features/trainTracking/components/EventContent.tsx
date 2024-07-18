@@ -13,7 +13,7 @@ export default function EventContent({ event }: EventContentProps) {
   return (
     <>
       <div className="flex">
-        <div className="flex-grow">
+        <div className="flex-grow space-x-1">
           <CommuterBadge lineId={event.lineId} />
           <EventText event={event} />
           <DifferenceBadge difference={event.lateMinutes} />

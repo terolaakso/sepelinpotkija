@@ -626,6 +626,7 @@ function rowsForTest(
       stationShortCode: 'HPK',
       stopType: StopType.Commercial,
       time: departureFromOrigin.plus(gpsFixOffset),
+      track: null,
     },
     {
       actualTime: firstStopping,
@@ -641,6 +642,7 @@ function rowsForTest(
           ? StopType.None
           : StopType.OtherTraffic,
       time: firstStopping.plus(gpsFixOffset),
+      track: null,
     },
     {
       actualTime: firstStopDeparture,
@@ -656,6 +658,7 @@ function rowsForTest(
           ? StopType.None
           : StopType.OtherTraffic,
       time: firstStopDeparture.plus(gpsFixOffset),
+      track: null,
     },
     {
       actualTime: secondStopping,
@@ -668,6 +671,7 @@ function rowsForTest(
       stationShortCode: 'VLP',
       stopType: StopType.Commercial,
       time: secondStopping.plus(gpsFixOffset),
+      track: null,
     },
     {
       actualTime: secondStopDeparture,
@@ -680,6 +684,7 @@ function rowsForTest(
       stationShortCode: 'VLP',
       stopType: StopType.Commercial,
       time: secondStopDeparture.plus(gpsFixOffset),
+      track: null,
     },
     {
       actualTime: thirdStop,
@@ -692,6 +697,7 @@ function rowsForTest(
       stationShortCode: 'KAS',
       stopType: StopType.Commercial,
       time: thirdStop.plus(gpsFixOffset),
+      track: null,
     },
   ].slice(0, rowCount);
 }

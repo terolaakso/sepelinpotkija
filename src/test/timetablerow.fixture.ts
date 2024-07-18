@@ -19,4 +19,5 @@ const defaultTimetableRow: TimetableRow = {
   estimatedTime: null,
   isTrainReady: true,
   lateCauses: [],
+  track: null,
 };

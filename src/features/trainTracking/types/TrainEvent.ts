@@ -4,7 +4,7 @@ import { LateCause } from '@/features/lateCauses';
 
 export interface TrainEvent {
   id: string;
-  name: string | null;
+  name: string;
   time: DateTime;
   departureTime: DateTime | null;
   eventType: TrainEventType;

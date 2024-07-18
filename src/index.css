@@ -20,7 +20,7 @@ input:disabled {
 button,
 input,
 select {
-  @apply border-gray-600 border;
+  @apply border-gray-500 border;
 }
 
 @tailwind utilities;

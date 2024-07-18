@@ -78,7 +78,7 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     locations: {},
     extras: {},
     connectionRestoredTimestamp: 0,
-    trackedTrainKey: '',
+    trackedTrainKey: null,
     setStations: (stations) => {
       set((state) => ({
         ...state,

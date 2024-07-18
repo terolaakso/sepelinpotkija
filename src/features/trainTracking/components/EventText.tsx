@@ -8,7 +8,7 @@ export interface EventTextProps {
 }
 
 export default function EventText({ event }: EventTextProps) {
-  const textClasses = classNames('mr-1', {
+  const textClasses = classNames({
     'text-red-700': event.expiresAt !== null && DateTime.now() > event.expiresAt,
   });
   return <span className={textClasses}>{event.name}</span>;

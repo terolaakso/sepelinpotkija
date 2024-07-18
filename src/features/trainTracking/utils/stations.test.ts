@@ -172,6 +172,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: true,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'KUT',
@@ -183,6 +184,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'KUT',
@@ -194,6 +196,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'PIK',
@@ -205,6 +208,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'PIK',
@@ -216,6 +220,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'PO',
@@ -227,6 +232,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'PO',
@@ -238,6 +244,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'SLO',
@@ -249,6 +256,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'SLO',
@@ -260,6 +268,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'ERV',
@@ -271,6 +280,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'ERV',
@@ -282,6 +292,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'PKU',
@@ -293,6 +304,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'PKU',
@@ -304,6 +316,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
           {
             stationShortCode: 'HKI',
@@ -315,6 +328,7 @@ describe('selecting events', () => {
             estimatedTime: null,
             isTrainReady: false,
             lateCauses: [],
+            track: null,
           },
         ],
       },

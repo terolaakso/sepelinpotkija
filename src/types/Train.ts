@@ -48,6 +48,7 @@ export interface TimetableRow {
   stopType: StopType;
   isTrainReady: boolean;
   lateCauses: RowCause[];
+  track: string | null;
 }
 
 export interface RowCause {

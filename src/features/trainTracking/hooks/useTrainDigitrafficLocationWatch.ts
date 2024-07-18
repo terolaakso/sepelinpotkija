@@ -66,12 +66,12 @@ export default function useTrainDigitrafficLocationWatch(
         return;
       }
       const latestLocation = await getLocation(trainNumber);
-      if (!latestLocation) {
+      if (isNil(latestLocation)) {
         return;
       }
       setLocation(latestLocation);
       const train = getTrain(departureDate, trainNumber);
-      if (train) {
+      if (isNotNil(train)) {
         const fixedTrain = adjustTimetableByLocation(train, latestLocation);
         setTrain(fixedTrain);
         savedOnLocationReceived.current?.(latestLocation);

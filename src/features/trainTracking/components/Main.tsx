@@ -5,13 +5,13 @@ import { useInterval } from '@/hooks/useInterval';
 import useStation from '@/hooks/useStation';
 import { useTrainDataStore } from '@/stores/trainData';
 
+import BottomBar from '../../../components/BottomBar';
 import useTrackSegmentExtras from '../hooks/useTrackSegmentExtras';
 import useTrain from '../hooks/useTrain';
 import useTrainDigitrafficLocationWatch from '../hooks/useTrainDigitrafficLocationWatch';
 import { TrainEvent } from '../types/TrainEvent';
 import { calculateCurrentEventsForTrain } from '../utils/trainTracking';
 
-import BottomBar from './BottomBar';
 import Content from './Content';
 import TopBar from './TopBar';
 
@@ -54,7 +54,7 @@ export default function TrainTracking() {
     isTracking ? 1000 : null
   );
 
-  async function startTracking(trainNumber: number) {
+  function startTracking(trainNumber: number) {
     setTrainNumber(trainNumber);
     setErrorMessage(null);
     setIsTracking(true);
@@ -63,12 +63,12 @@ export default function TrainTracking() {
     setNextTrain({ departureDate: null, trainNumber: null });
   }
 
-  async function stopTracking() {
+  function stopTracking() {
     setIsTracking(false);
   }
 
   return (
-    <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">
+    <div className="h-dvh bg-gray-900 text-gray-300 flex flex-col">
       <TopBar startTracking={startTracking} train={train} isTracking={isTracking} />
       <ErrorBar errorMessage={errorMessage} />
       <Content events={events} />
