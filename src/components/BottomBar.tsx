@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export interface BottomBarProps {
   isTracking: boolean;
   stopTracking: () => void;
@@ -14,7 +16,7 @@ export default function BottomBar({ isTracking, stopTracking }: BottomBarProps) 
         </div>
       ) : (
         <div className="px-2">
-          <a href="/">← Takaisin päävalikkoon</a>
+          <Link to="/">← Takaisin päävalikkoon</Link>
         </div>
       )}
     </div>

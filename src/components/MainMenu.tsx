@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function MainMenu() {
   return (
     <div className="h-dvh bg-gray-900 text-gray-300 px-1">
@@ -6,23 +8,23 @@ function MainMenu() {
         linkeistä haluamaasi osioon.
       </p>
       <p className="mb-2">
-        <a href="/juna">
+        <Link to="/juna">
           <strong>Junan seuranta</strong> -osio on tarkoitettu yksittäisen junan seuraamiseen sen
           ollessa kulussa.
-        </a>
+        </Link>
       </p>
       <p className="mb-2">
-        <a href="/asema">
+        <Link to="/asema">
           <strong>Asema-aikataulu</strong> tarjoaa reaaliaikaisen aikataulun liikennepaikan
           saapuvista, lähtevistä ja ohittavista junista.
-        </a>
+        </Link>
       </p>
       <p className="mb-2">
         {/* TODO */}
-        <a href="/">
+        <Link to="/">
           <strong>Linja-aikataulu</strong> tarjoaa reaaliaikaisen aikataulun linjalle kahden
           liikennepaikan välille. TODO
-        </a>
+        </Link>
       </p>
     </div>
   );
