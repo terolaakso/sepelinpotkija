@@ -24,13 +24,14 @@ export default function EventTableRow({ event, hasTracks, isNextEvent }: EventTa
   const textClasses = classNames({
     'text-red-700': event.expiresAt !== null && now > event.expiresAt,
   });
+  const numericClasses = classNames(textClasses, 'tabular-nums');
   const rightAlignedTextClasses = classNames(textClasses, 'text-right');
   return (
     <Fragment>
       <tr className={rowClasses}>
         <td>
-          <div className="flex space-x-1">
-            <div className={textClasses}>{event.time.toFormat('H.mm')}</div>
+          <div className="flex flex-wrap space-x-1">
+            <div className={numericClasses}>{event.time.toFormat('H.mm')}</div>
             <DifferenceBadge difference={event.lateMinutes} />
             <TrainReadyBadge isReady={event.isReady} />
           </div>
