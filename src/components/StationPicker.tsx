@@ -30,7 +30,7 @@ interface StationGroup {
 }
 
 // This ensures that Emotion's styles are inserted before Tailwind's styles so that Tailwind classes have precedence over Emotion
-const EmotionCacheProvider = ({ children }: { children: React.ReactNode }) => {
+function EmotionCacheProvider({ children }: { children: React.ReactNode }) {
   const cache = React.useMemo(
     () =>
       createCache({
@@ -42,16 +42,16 @@ const EmotionCacheProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   return <CacheProvider value={cache}>{children}</CacheProvider>;
-};
+}
 
-const StationPicker = ({
+function StationPicker({
   id,
   groupName,
   stationsForGroup,
   isLoading,
   selectedStation,
   onSelectedStationChange,
-}: StationPickerProps) => {
+}: StationPickerProps) {
   const [stations, setStations] = useState<StationGroup[]>([]);
   const stationCollection = useTrainDataStore((state) => state.stations);
 
@@ -130,6 +130,6 @@ const StationPicker = ({
       ></Select>
     </EmotionCacheProvider>
   );
-};
+}
 
 export default StationPicker;

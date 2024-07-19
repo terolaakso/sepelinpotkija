@@ -1,10 +1,11 @@
 import { isNil } from 'lodash';
 import { DateTime } from 'luxon';
 
+import { calculateCauses } from '@/features/lateCauses';
 import { useTrainDataStore } from '@/stores/trainData';
 import { TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
-import { timetableExpiresAt } from '@/utils/timetableCalculation';
+import { calculateLateMins, timetableExpiresAt } from '@/utils/timetableCalculation';
 
 import { StationEvent, StationEventType } from '../types/StationEvent';
 
@@ -54,6 +55,11 @@ function calculateEventType(rows: TimetableRow[], index: number): StationEventTy
   return isArrival ? StationEventType.Arrival : StationEventType.Departure;
 }
 
+function getExpiration(train: Train, time: DateTime): DateTime | null {
+  const expiresAt = timetableExpiresAt(train);
+  return expiresAt !== null && expiresAt < time ? expiresAt : null;
+}
+
 function createEvent(
   train: Train,
   time: DateTime,
@@ -65,14 +71,13 @@ function createEvent(
   const destination =
     stations[train.timetableRows[train.timetableRows.length - 1].stationShortCode]?.name ?? '';
   return {
-    id: train.trainNumber + '-' + index,
     name: `${train.name} ${origin} - ${destination}`,
-    lateCauses: train.currentLateCauses,
-    lateMinutes: train.lateMinutes,
+    lateCauses: calculateCauses(train.timetableRows, index),
+    lateMinutes: calculateLateMins(train.timetableRows, index, train.latestActualTimeIndex),
     lineId: train.lineId,
     track: train.timetableRows[index].track,
     isReady: train.isReady,
-    expiresAt: timetableExpiresAt(train),
+    expiresAt: getExpiration(train, time),
     time,
     eventType,
   };

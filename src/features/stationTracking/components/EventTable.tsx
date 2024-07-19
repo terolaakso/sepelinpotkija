@@ -31,7 +31,7 @@ export default function EventTable({ events }: StationContentProps) {
       <tbody>
         {events.map((event, index, arr) => (
           <EventTableRow
-            key={`${event.id}-${event.time.toMillis()}`}
+            key={`${event.name}-${event.time.toMillis()}`}
             event={event}
             hasTracks={hasTracks}
             isNextEvent={event.time > now && (index === 0 || arr[index - 1].time < now)}

@@ -3,7 +3,6 @@ import { DateTime } from 'luxon';
 import { LateCause } from '@/features/lateCauses';
 
 export interface StationEvent {
-  id: string;
   name: string;
   time: DateTime;
   eventType: StationEventType;
