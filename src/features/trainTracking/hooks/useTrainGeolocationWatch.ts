@@ -33,8 +33,8 @@ export default function useTrainGeolocationWatch(
     setLocation(location);
     const train = getTrain(departureDate, trainNumber);
     if (train) {
-      const fixedTrain = adjustTimetableByLocation(train, location);
-      setTrain(fixedTrain);
+      const adjustmentResult = adjustTimetableByLocation(train, location);
+      setTrain(adjustmentResult.train);
       savedOnLocationReceived.current?.(location);
     }
   });

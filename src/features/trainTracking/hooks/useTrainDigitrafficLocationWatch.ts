@@ -23,9 +23,11 @@ export default function useTrainDigitrafficLocationWatch(
   const setLocation = useTrainDataStore((state) => state.setLocation);
 
   const savedOnLocationReceived = useRef(onLocationReceived);
+  const savedOnInvalidLocationReceived = useRef(onInvalidLocationReceived);
   useEffect(() => {
     savedOnLocationReceived.current = onLocationReceived;
-  }, [onLocationReceived]);
+    savedOnInvalidLocationReceived.current = onInvalidLocationReceived;
+  }, [onLocationReceived, onInvalidLocationReceived]);
 
   useSubscription<GpsLocation>(
     isNotNil(departureDate) && isNotNil(trainNumber)
@@ -48,14 +50,12 @@ export default function useTrainDigitrafficLocationWatch(
       setPreviousLocation(location.location);
       const train = getTrain(departureDate, trainNumber);
       if (train) {
-        const fixedTrain = adjustTimetableByLocation(train, location);
-        if (fixedTrain === train) {
-          // Location was invalid and train was not adjusted
+        const adjustmentResult = adjustTimetableByLocation(train, location);
+        if (!adjustmentResult.wasLocationUsable) {
           onInvalidLocationReceived?.();
-          return;
         }
-        setTrain(fixedTrain);
-        savedOnLocationReceived.current?.(location);
+        setTrain(adjustmentResult.train);
+        onLocationReceived?.(location);
       }
     }
   );
@@ -72,8 +72,11 @@ export default function useTrainDigitrafficLocationWatch(
       setLocation(latestLocation);
       const train = getTrain(departureDate, trainNumber);
       if (isNotNil(train)) {
-        const fixedTrain = adjustTimetableByLocation(train, latestLocation);
-        setTrain(fixedTrain);
+        const adjustmentResult = adjustTimetableByLocation(train, latestLocation);
+        if (!adjustmentResult.wasLocationUsable) {
+          savedOnInvalidLocationReceived.current?.();
+        }
+        setTrain(adjustmentResult.train);
         savedOnLocationReceived.current?.(latestLocation);
       }
     }

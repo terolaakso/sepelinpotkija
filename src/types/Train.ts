@@ -28,6 +28,7 @@ export interface Train {
   latestGpsIndex: number | null;
   latestActualTimeIndex: number;
   timestamp: DateTime;
+  gpsFixAttemptTimestamp: DateTime | null;
   version: number;
 }
 

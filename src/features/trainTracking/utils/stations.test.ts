@@ -152,6 +152,7 @@ describe('selecting events', () => {
         departureDate: '2018-12-30',
         latestActualTimeIndex: 0,
         timestamp: DateTime.now(),
+        gpsFixAttemptTimestamp: DateTime.now(),
         version: 1,
         trainNumber: 1948,
         name: 'MUS 1948',

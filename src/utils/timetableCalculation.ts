@@ -29,16 +29,25 @@ const EXPIRATION_ALERT_THRESHOLD = Duration.fromDurationLike({ minutes: 5 });
 const LOCATION_USABLE_MAX_MINUTES = 1;
 const MAX_ALLOWED_GPS_DISTANCE_KM = 10;
 
-export function adjustTimetableByLocation(train: Train, location: TrainLocation | null): Train {
-  if (
-    !location ||
-    DateTime.now().diff(location.timestamp).as('minutes') > LOCATION_USABLE_MAX_MINUTES
-  ) {
-    return train;
+export interface AdjustTimetableResult {
+  train: Train;
+  wasLocationUsable: boolean;
+}
+
+export function adjustTimetableByLocation(
+  train: Train,
+  location: TrainLocation | null
+): AdjustTimetableResult {
+  const now = DateTime.now();
+  if (!location || now.diff(location.timestamp).as('minutes') > LOCATION_USABLE_MAX_MINUTES) {
+    return {
+      train: { ...train, gpsFixAttemptTimestamp: now },
+      wasLocationUsable: false,
+    };
   }
   const segment = findClosestStationSegment(train, location);
   if (!segment) {
-    return train;
+    return { train: { ...train, gpsFixAttemptTimestamp: now }, wasLocationUsable: false };
   }
   const isAtStation = isTrainAtStation(train, location);
   if (isAtStation.result) {
@@ -65,19 +74,24 @@ function createTrainFromNewData(
   rows: TimetableRow[],
   location: TrainLocation,
   fixedFromIndex: number | null
-): Train {
+): AdjustTimetableResult {
+  const now = DateTime.now();
   return {
-    ...train,
-    timetableRows: rows,
-    lateMinutes: calculateLateMins(
-      rows,
-      (fixedFromIndex ?? train.latestActualTimeIndex) + 1,
-      train.latestActualTimeIndex
-    ),
-    currentSpeed: location.speed,
-    currentLateCauses: calculateCauses(rows, (fixedFromIndex ?? train.latestActualTimeIndex) + 1),
-    latestGpsIndex: fixedFromIndex,
-    timestamp: DateTime.now(),
+    train: {
+      ...train,
+      timetableRows: rows,
+      lateMinutes: calculateLateMins(
+        rows,
+        (fixedFromIndex ?? train.latestActualTimeIndex) + 1,
+        train.latestActualTimeIndex
+      ),
+      currentSpeed: location.speed,
+      currentLateCauses: calculateCauses(rows, (fixedFromIndex ?? train.latestActualTimeIndex) + 1),
+      latestGpsIndex: fixedFromIndex,
+      timestamp: now,
+      gpsFixAttemptTimestamp: now,
+    },
+    wasLocationUsable: true,
   };
 }
 
@@ -413,7 +427,7 @@ function floorDurationToSeconds(duration: Duration): Duration {
 
 export function adjustWithLocationFromStore(train: Train): Train {
   const location = useTrainDataStore.getState().getLocation(train.departureDate, train.trainNumber);
-  const fixedTrain = location ? adjustTimetableByLocation(train, location) : train;
+  const fixedTrain = location ? adjustTimetableByLocation(train, location).train : train;
   return fixedTrain;
 }
 

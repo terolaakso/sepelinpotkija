@@ -25,7 +25,8 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, null);
 
-    expect(adjusted.timetableRows).toEqual(train.timetableRows);
+    expect(adjusted.train.timetableRows).toEqual(train.timetableRows);
+    expect(adjusted.wasLocationUsable).toBe(false);
   });
 
   it('uses original times when location is old', () => {
@@ -34,7 +35,8 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.timetableRows).toEqual(train.timetableRows);
+    expect(adjusted.train.timetableRows).toEqual(train.timetableRows);
+    expect(adjusted.wasLocationUsable).toBe(false);
   });
 
   it('ignores adjustments by gps location when train is at station', () => {
@@ -53,9 +55,10 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    adjusted.timetableRows.forEach((row) => {
+    adjusted.train.timetableRows.forEach((row) => {
       expect(row.time).toEqual(row.bestDigitrafficTime);
     });
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('uses location timestamp as departure time when train stopped before the station point and departure time has passed', () => {
@@ -69,13 +72,18 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.timetableRows[0].time).toEqual(adjusted.timetableRows[0].bestDigitrafficTime);
-    expect(adjusted.timetableRows[1].time).toEqual(adjusted.timetableRows[1].bestDigitrafficTime);
-    expect(adjusted.timetableRows[2].time).toEqual(location.timestamp);
-    expect(adjusted.timetableRows[2].time).not.toEqual(
-      adjusted.timetableRows[2].bestDigitrafficTime
+    expect(adjusted.train.timetableRows[0].time).toEqual(
+      adjusted.train.timetableRows[0].bestDigitrafficTime
     );
-    expect(adjusted.timetableRows[3].time).toEqual(location.timestamp.plus({ minutes: 11 }));
+    expect(adjusted.train.timetableRows[1].time).toEqual(
+      adjusted.train.timetableRows[1].bestDigitrafficTime
+    );
+    expect(adjusted.train.timetableRows[2].time).toEqual(location.timestamp);
+    expect(adjusted.train.timetableRows[2].time).not.toEqual(
+      adjusted.train.timetableRows[2].bestDigitrafficTime
+    );
+    expect(adjusted.train.timetableRows[3].time).toEqual(location.timestamp.plus({ minutes: 11 }));
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('adjusts the origin start time when not yet departed but depature time has passed', () => {
@@ -89,25 +97,28 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.timetableRows[0].time.toMillis()).toBeGreaterThan(
-      adjusted.timetableRows[0].bestDigitrafficTime.toMillis()
+    expect(adjusted.train.timetableRows[0].time.toMillis()).toBeGreaterThan(
+      adjusted.train.timetableRows[0].bestDigitrafficTime.toMillis()
     );
-    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(location.timestamp.toMillis());
-    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
+    expect(adjusted.train.timetableRows[0].time.toMillis()).toBeLessThan(
       location.timestamp.toMillis()
     );
-    expect(adjusted.timetableRows[1].time).not.toEqual(
-      adjusted.timetableRows[1].bestDigitrafficTime
+    expect(adjusted.train.timetableRows[1].time.toMillis()).toBeGreaterThan(
+      location.timestamp.toMillis()
     );
-    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
-      adjusted.timetableRows[0].time.toMillis()
+    expect(adjusted.train.timetableRows[1].time).not.toEqual(
+      adjusted.train.timetableRows[1].bestDigitrafficTime
     );
-    expect(adjusted.timetableRows[2].time.toMillis()).toBeGreaterThan(
-      adjusted.timetableRows[1].time.toMillis()
+    expect(adjusted.train.timetableRows[1].time.toMillis()).toBeGreaterThan(
+      adjusted.train.timetableRows[0].time.toMillis()
     );
-    expect(adjusted.timetableRows[3].time.toMillis()).toBeGreaterThan(
-      adjusted.timetableRows[2].time.toMillis()
+    expect(adjusted.train.timetableRows[2].time.toMillis()).toBeGreaterThan(
+      adjusted.train.timetableRows[1].time.toMillis()
     );
+    expect(adjusted.train.timetableRows[3].time.toMillis()).toBeGreaterThan(
+      adjusted.train.timetableRows[2].time.toMillis()
+    );
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('adjusts the times backwards all the way to latest actual time', () => {
@@ -121,19 +132,22 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.timetableRows[0].time.toMillis()).toBeGreaterThan(
-      adjusted.timetableRows[0].bestDigitrafficTime.toMillis()
+    expect(adjusted.train.timetableRows[0].time.toMillis()).toBeGreaterThan(
+      adjusted.train.timetableRows[0].bestDigitrafficTime.toMillis()
     );
-    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
-      adjusted.timetableRows[1].time.toMillis()
+    expect(adjusted.train.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.train.timetableRows[1].time.toMillis()
     );
-    expect(adjusted.timetableRows[1].time.toMillis()).toBeLessThan(
-      adjusted.timetableRows[2].time.toMillis()
+    expect(adjusted.train.timetableRows[1].time.toMillis()).toBeLessThan(
+      adjusted.train.timetableRows[2].time.toMillis()
     );
-    expect(adjusted.timetableRows[2].time.toMillis()).toBeLessThan(location.timestamp.toMillis());
-    expect(adjusted.timetableRows[3].time.toMillis()).toBeGreaterThan(
+    expect(adjusted.train.timetableRows[2].time.toMillis()).toBeLessThan(
       location.timestamp.toMillis()
     );
+    expect(adjusted.train.timetableRows[3].time.toMillis()).toBeGreaterThan(
+      location.timestamp.toMillis()
+    );
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('does not adjust beyond latest actual time', () => {
@@ -147,20 +161,25 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.timetableRows[0].time).toEqual(adjusted.timetableRows[0].bestDigitrafficTime);
-    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
-      adjusted.timetableRows[1].time.toMillis()
+    expect(adjusted.train.timetableRows[0].time).toEqual(
+      adjusted.train.timetableRows[0].bestDigitrafficTime
     );
-    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
-      adjusted.timetableRows[1].bestDigitrafficTime.toMillis()
+    expect(adjusted.train.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.train.timetableRows[1].time.toMillis()
     );
-    expect(adjusted.timetableRows[1].time.toMillis()).toBeLessThan(
-      adjusted.timetableRows[2].time.toMillis()
+    expect(adjusted.train.timetableRows[1].time.toMillis()).toBeGreaterThan(
+      adjusted.train.timetableRows[1].bestDigitrafficTime.toMillis()
     );
-    expect(adjusted.timetableRows[2].time.toMillis()).toBeLessThan(location.timestamp.toMillis());
-    expect(adjusted.timetableRows[3].time.toMillis()).toBeGreaterThan(
+    expect(adjusted.train.timetableRows[1].time.toMillis()).toBeLessThan(
+      adjusted.train.timetableRows[2].time.toMillis()
+    );
+    expect(adjusted.train.timetableRows[2].time.toMillis()).toBeLessThan(
       location.timestamp.toMillis()
     );
+    expect(adjusted.train.timetableRows[3].time.toMillis()).toBeGreaterThan(
+      location.timestamp.toMillis()
+    );
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('adjusts an early going train until the next stop', () => {
@@ -174,20 +193,25 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
-      adjusted.timetableRows[0].bestDigitrafficTime.toMillis()
+    expect(adjusted.train.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.train.timetableRows[0].bestDigitrafficTime.toMillis()
     );
-    expect(adjusted.timetableRows[0].time.toMillis()).toBeLessThan(
-      adjusted.timetableRows[1].time.toMillis()
+    expect(adjusted.train.timetableRows[0].time.toMillis()).toBeLessThan(
+      adjusted.train.timetableRows[1].time.toMillis()
     );
-    expect(adjusted.timetableRows[1].time.toMillis()).toBeLessThan(
-      adjusted.timetableRows[1].bestDigitrafficTime.toMillis()
+    expect(adjusted.train.timetableRows[1].time.toMillis()).toBeLessThan(
+      adjusted.train.timetableRows[1].bestDigitrafficTime.toMillis()
     );
-    expect(adjusted.timetableRows[1].time.toMillis()).toBeGreaterThan(
+    expect(adjusted.train.timetableRows[1].time.toMillis()).toBeGreaterThan(
       location.timestamp.toMillis()
     );
-    expect(adjusted.timetableRows[2].time).toEqual(adjusted.timetableRows[2].bestDigitrafficTime);
-    expect(adjusted.timetableRows[3].time).toEqual(adjusted.timetableRows[3].bestDigitrafficTime);
+    expect(adjusted.train.timetableRows[2].time).toEqual(
+      adjusted.train.timetableRows[2].bestDigitrafficTime
+    );
+    expect(adjusted.train.timetableRows[3].time).toEqual(
+      adjusted.train.timetableRows[3].bestDigitrafficTime
+    );
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('does not generate invalid time sequence when train is moving early', () => {
@@ -200,10 +224,11 @@ describe('timetable adjustment using gps location', () => {
     const adjusted = adjustTimetableByLocation(train, location);
 
     for (let i = 0; i < 4 - 1; i++) {
-      expect(adjusted.timetableRows[i].time.toMillis()).toBeLessThanOrEqual(
-        adjusted.timetableRows[i + 1].time.toMillis()
+      expect(adjusted.train.timetableRows[i].time.toMillis()).toBeLessThanOrEqual(
+        adjusted.train.timetableRows[i + 1].time.toMillis()
       );
     }
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('does not adjust times when location is too far back', () => {
@@ -218,9 +243,10 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    adjusted.timetableRows.forEach((row) => {
+    adjusted.train.timetableRows.forEach((row) => {
       expect(row.time).toEqual(row.bestDigitrafficTime);
     });
+    expect(adjusted.wasLocationUsable).toBe(false);
   });
 
   it('calculates latemins for correct station after correction', () => {
@@ -242,7 +268,8 @@ describe('timetable adjustment using gps location', () => {
 
     // Next is KLO, and we are arriving early
     // Departure from KLO will be 15 minutes late
-    expect(adjusted.lateMinutes).toBeLessThan(0);
+    expect(adjusted.train.lateMinutes).toBeLessThan(0);
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('calculates latemins correctly when stopped at station', () => {
@@ -268,7 +295,8 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.lateMinutes).toBe(5);
+    expect(adjusted.train.lateMinutes).toBe(5);
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 
   it('calculates latemins correctly when arriving to station and a future actual time exists', () => {
@@ -294,7 +322,8 @@ describe('timetable adjustment using gps location', () => {
 
     const adjusted = adjustTimetableByLocation(train, location);
 
-    expect(adjusted.lateMinutes).toBe(2);
+    expect(adjusted.train.lateMinutes).toBe(2);
+    expect(adjusted.wasLocationUsable).toBe(true);
   });
 });
 
