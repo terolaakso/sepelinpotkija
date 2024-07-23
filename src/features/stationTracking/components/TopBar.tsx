@@ -10,26 +10,21 @@ import { getNearestStations } from '@/utils/stations';
 
 export interface TopBarProps {
   isTracking: boolean;
-  currentlyTrackedStationCode: string | null;
+  trackedStationCode: string | null;
   startTracking: (station: Station) => void;
 }
 
-export default function TopBar({
-  isTracking,
-  currentlyTrackedStationCode,
-  startTracking,
-}: TopBarProps) {
-  const [isLoading, setIsLoading] = useState(true);
+export default function TopBar({ isTracking, trackedStationCode, startTracking }: TopBarProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [didFetchNearestStations, setDidFetchNearestStations] = useState(false);
   const [nearestStations, setNearestStations] = useState<Station[]>([]);
   const stationCollection = useTrainDataStore.getState().stations;
-
-  const [selectedStation, setSelectedStation] = useState<Station | null>(
-    stationCollection[currentlyTrackedStationCode ?? ''] ?? null
-  );
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
 
   useEffect(() => {
     async function getLocation() {
       try {
+        setIsLoading(true);
         const position = await getCurrentLocation();
         const top3Stations = getNearestStations(stationCollection, position, 3);
         setNearestStations(top3Stations);
@@ -37,11 +32,21 @@ export default function TopBar({
         setNearestStations([]);
       } finally {
         setIsLoading(false);
+        setDidFetchNearestStations(true);
       }
     }
-    setIsLoading(true);
-    getLocation();
-  }, [stationCollection]);
+
+    if (Object.values(stationCollection).length > 0) {
+      if (!isTracking && !didFetchNearestStations) {
+        getLocation();
+      } else if (isNotNil(trackedStationCode) && isNil(selectedStation)) {
+        const station = stationCollection[trackedStationCode];
+        if (isNotNil(station)) {
+          setSelectedStation(station);
+        }
+      }
+    }
+  }, [stationCollection, trackedStationCode, selectedStation, isTracking, didFetchNearestStations]);
 
   function onStartTrackingClick() {
     if (isNotNil(selectedStation)) {

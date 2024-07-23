@@ -41,7 +41,7 @@ const StationTracking = () => {
     <div className="h-dvh bg-gray-900 text-gray-300 flex flex-col">
       <TopBar
         isTracking={isTracking}
-        currentlyTrackedStationCode={stationCode}
+        trackedStationCode={stationCode}
         startTracking={showLocation}
       ></TopBar>
       <Content events={events} isTracking={isTracking}></Content>
