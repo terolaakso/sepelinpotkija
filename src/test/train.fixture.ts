@@ -23,7 +23,7 @@ export function trainFixture(props?: Partial<Train>): Train {
 const defaultTrain: Train = {
   departureDate: '2018-12-30',
   latestActualTimeIndex: 1,
-  timestamp: DateTime.now(),
+  receivedTimestamp: DateTime.now(),
   gpsFixAttemptTimestamp: DateTime.now(),
   version: 1,
   trainNumber: 1948,

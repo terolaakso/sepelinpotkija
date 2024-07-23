@@ -45,7 +45,7 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
     const oldestTrainTimestampToKeep = DateTime.now().minus({ minutes: MAX_TRAIN_AGE_MINUTES });
     const trainsToKeep = pickBy(
       state.trains,
-      (train) => (train?.timestamp ?? DateTime.fromMillis(0)) >= oldestTrainTimestampToKeep
+      (train) => (train?.receivedTimestamp ?? DateTime.fromMillis(0)) >= oldestTrainTimestampToKeep
     );
     if (isNotNil(state.trackedTrainKey) && isNil(trainsToKeep[state.trackedTrainKey])) {
       // Don't cleanup if the tracked train is going to get lost
@@ -117,6 +117,8 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
         const cleanedState = cleanup(state);
         const oldVersion = cleanedState.trains[key];
         if ((oldVersion?.version ?? 0) <= train.version) {
+          // Equal versions are also updated, to get at least the new timestamp
+          // In effect, this ensures that the train will remain in store for MAX_TRAIN_AGE_MINUTES still
           return {
             ...cleanedState,
             trains: { ...cleanedState.trains, [key]: train },
@@ -137,6 +139,8 @@ export const useTrainDataStore = create<TrainDataStore>((set, get) => {
           const key = getTrainKey(train);
           const oldVersion = accState.trains[key];
           if (oldVersion?.version ?? 0 <= train.version) {
+            // Equal versions are also updated, to get at least the new timestamp
+            // In effect, this ensures that the train will remain in store for MAX_TRAIN_AGE_MINUTES still
             return {
               ...accState,
               trains: { ...accState.trains, [key]: train },

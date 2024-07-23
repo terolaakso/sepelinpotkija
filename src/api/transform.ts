@@ -49,7 +49,7 @@ function transformTrain(train: DigiTrafficTrain): Train | null {
     isReady,
     latestActualTimeIndex,
     latestGpsIndex: null,
-    timestamp: DateTime.now(),
+    receivedTimestamp: DateTime.now(),
     gpsFixAttemptTimestamp: null,
     version: train.version ?? 0,
   };

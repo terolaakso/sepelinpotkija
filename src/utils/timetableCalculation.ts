@@ -88,7 +88,6 @@ function createTrainFromNewData(
       currentSpeed: location.speed,
       currentLateCauses: calculateCauses(rows, (fixedFromIndex ?? train.latestActualTimeIndex) + 1),
       latestGpsIndex: fixedFromIndex,
-      timestamp: now,
       gpsFixAttemptTimestamp: now,
     },
     wasLocationUsable: true,
