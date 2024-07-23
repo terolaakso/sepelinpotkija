@@ -55,7 +55,7 @@ export default function TopBar({ isTracking, trackedStationCode, startTracking }
   }
 
   return (
-    <div className="bg-gray-800 p-1">
+    <div className="bg-gray-800 px-1">
       {!isTracking ? (
         <form className="max-w-screen-xl">
           <div className="flex flex-col mb-1">
