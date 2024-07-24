@@ -17,10 +17,9 @@ export default function useStalledTrainsRescue(checkIntervalMs: number | null) {
   useInterval(async () => {
     async function fetchAndStoreLocation(departureDate: string, trainNumber: number) {
       const latestLocation = await getLocation(trainNumber);
-      if (isNil(latestLocation)) {
-        return;
+      if (isNotNil(latestLocation)) {
+        setLocation(latestLocation);
       }
-      setLocation(latestLocation);
       const train = getTrain(departureDate, trainNumber);
       if (isNotNil(train)) {
         const adjustmentResult = adjustTimetableByLocation(train, latestLocation);
