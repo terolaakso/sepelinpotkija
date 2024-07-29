@@ -7,15 +7,21 @@ import DifferenceBadge from '@/components/DifferenceBadge';
 import TrainReadyBadge from '@/components/TrainReadyBadge';
 import { LateCauses } from '@/features/lateCauses';
 
-import { StationEvent } from '../types/StationEvent';
+import { TrainEvent } from '../types/TrainEvent';
 
 export interface EventTableRowProps {
-  event: StationEvent;
+  event: TrainEvent;
   hasTracks: boolean;
+  showType: boolean;
   isNextEvent: boolean;
 }
 
-export default function EventTableRow({ event, hasTracks, isNextEvent }: EventTableRowProps) {
+export default function EventTableRow({
+  event,
+  hasTracks,
+  showType,
+  isNextEvent,
+}: EventTableRowProps) {
   const now = DateTime.now();
   const rowClasses = classNames('align-text-top', {
     'bg-gray-800': isNextEvent,
@@ -26,6 +32,8 @@ export default function EventTableRow({ event, hasTracks, isNextEvent }: EventTa
   });
   const numericClasses = classNames(textClasses, 'tabular-nums');
   const rightAlignedTextClasses = classNames(textClasses, 'text-right');
+  const columnCount = showType ? (hasTracks ? 4 : 3) : hasTracks ? 3 : 2;
+
   return (
     <Fragment>
       <tr className={rowClasses}>
@@ -42,12 +50,12 @@ export default function EventTableRow({ event, hasTracks, isNextEvent }: EventTa
             <div className={textClasses}>{event.name}</div>
           </div>
         </td>
-        <td className={textClasses}>{event.eventType}</td>
+        {showType ? <td className={textClasses}>{event.eventType}</td> : null}
         {hasTracks ? <td className={rightAlignedTextClasses}>{event.track}</td> : null}
       </tr>
       {event.lateCauses.length > 0 ? (
         <tr className={rowClasses}>
-          <td colSpan={hasTracks ? 4 : 3} className={textClasses}>
+          <td colSpan={columnCount} className={textClasses}>
             <LateCauses causes={event.lateCauses} />
           </td>
         </tr>

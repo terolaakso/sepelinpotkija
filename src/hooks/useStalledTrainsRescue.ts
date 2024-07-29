@@ -42,13 +42,6 @@ export default function useStalledTrainsRescue(checkIntervalMs: number | null) {
         }
         return false;
       });
-    if (stalledTrains.length > 0) {
-      console.log(
-        new Date().toLocaleTimeString(),
-        'Rescuing stalled trains:',
-        stalledTrains.map((train) => train.trainNumber)
-      );
-    }
     const updates = stalledTrains.map((train) =>
       fetchAndStoreLocation(train.departureDate, train.trainNumber)
     );

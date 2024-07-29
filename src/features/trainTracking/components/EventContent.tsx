@@ -2,12 +2,12 @@ import CommuterBadge from '@/components/CommuterBadge';
 import DifferenceBadge from '@/components/DifferenceBadge';
 import { LateCauses } from '@/features/lateCauses';
 
-import { TrainEvent } from '../types/TrainEvent';
+import { TrackingEvent } from '../types/TrackingEvent';
 
 import EventText from './EventText';
 
 export interface EventContentProps {
-  event: TrainEvent;
+  event: TrackingEvent;
 }
 export default function EventContent({ event }: EventContentProps) {
   return (

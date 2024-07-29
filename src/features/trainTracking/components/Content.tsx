@@ -1,11 +1,11 @@
-import { TrainEvent } from '../types/TrainEvent';
+import { TrackingEvent } from '../types/TrackingEvent';
 
 import IntroContent from './IntroContent';
 import TrainContent from './TrainContent';
 import WikipediaContent from './WikipediaContent';
 
 export interface ContentProps {
-  events: TrainEvent[];
+  events: TrackingEvent[];
 }
 
 export default function Content({ events }: ContentProps) {

@@ -55,20 +55,20 @@ export default function TopBar({ isTracking, trackedStationCode, startTracking }
   }
 
   return (
-    <div className="bg-gray-800 px-1">
+    <div className="bg-gray-800">
       {!isTracking ? (
-        <form className="max-w-screen-xl">
-          <div className="flex flex-col mb-1">
+        <form className="max-w-screen-xl p-1 flex flex-col gap-1">
+          <div>
             <StationPicker
-              id="selectAsema"
+              id="selectStation"
               groupName="Lähimmät liikennepaikat"
               isLoading={isLoading}
-              selectedStation={selectedStation}
+              defaultStation={selectedStation}
               stationsForGroup={nearestStations}
               onSelectedStationChange={setSelectedStation}
             />
           </div>
-          <div className="flex justify-around py-1">
+          <div className="flex justify-around">
             <button
               type="button"
               onClick={onStartTrackingClick}
@@ -80,7 +80,7 @@ export default function TopBar({ isTracking, trackedStationCode, startTracking }
           </div>
         </form>
       ) : (
-        <div>{selectedStation?.name}</div>
+        <div className="px-1">{selectedStation?.name}</div>
       )}
     </div>
   );

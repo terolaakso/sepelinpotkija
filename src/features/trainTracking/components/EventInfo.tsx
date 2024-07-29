@@ -1,10 +1,10 @@
-import { TrainEvent } from '../types/TrainEvent';
+import { TrackingEvent } from '../types/TrackingEvent';
 
 import EventContent from './EventContent';
 import SubEvents from './SubEvents';
 
 export interface EventInfoProps {
-  event: TrainEvent;
+  event: TrackingEvent;
 }
 
 export default function EventInfo({ event }: EventInfoProps) {

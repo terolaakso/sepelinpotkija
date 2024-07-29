@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
-import { TrainEvent } from '../types/TrainEvent';
+import { TrackingEvent } from '../types/TrackingEvent';
 
 export interface EventTextProps {
-  event: TrainEvent;
+  event: TrackingEvent;
 }
 
 export default function EventText({ event }: EventTextProps) {

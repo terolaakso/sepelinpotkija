@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { TrainEvent } from '../types/TrainEvent';
+import { TrackingEvent } from '../types/TrackingEvent';
 import { fetchWikiPage, getRelevantNonTrainEvent } from '../utils/wikipedia';
 
 export interface WikipediaContentProps {
-  events: TrainEvent[];
+  events: TrackingEvent[];
 }
 
 export default function WikipediaContent({ events }: WikipediaContentProps) {

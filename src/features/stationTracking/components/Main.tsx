@@ -7,13 +7,13 @@ import { useTrainDataStore } from '@/stores/trainData';
 import { Station } from '@/types/Station';
 import { isNotNil } from '@/utils/misc';
 
-import useStalledTrainsRescue from '../hooks/useStalledTrainsRescue';
+import useStalledTrainsRescue from '../../../hooks/useStalledTrainsRescue';
 import { calculateCurrentEventsForStation } from '../utils/stationTracking';
 
 import Content from './Content';
 import TopBar from './TopBar';
 
-const StationTracking = () => {
+function StationTracking() {
   const [isTracking, setIsTracking] = useState(false);
   const { stationCode = null } = useParams();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const StationTracking = () => {
   }, [stationCode]);
 
   function showLocation(pickedStation: Station) {
-    if (stationCode != pickedStation.shortCode) {
+    if (stationCode !== pickedStation.shortCode) {
       navigate(`/asema/${pickedStation.shortCode}`);
     } else {
       setIsTracking(true);
@@ -38,7 +38,7 @@ const StationTracking = () => {
   }
 
   return (
-    <div className="h-dvh bg-gray-900 text-gray-300 flex flex-col">
+    <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">
       <TopBar
         isTracking={isTracking}
         trackedStationCode={stationCode}
@@ -48,6 +48,6 @@ const StationTracking = () => {
       <BottomBar isTracking={isTracking} stopTracking={() => setIsTracking(false)}></BottomBar>
     </div>
   );
-};
+}
 
 export default StationTracking;

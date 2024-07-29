@@ -7,16 +7,18 @@ import { TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
 import { calculateLateMins, timetableExpiresAt } from '@/utils/timetableCalculation';
 
-import { StationEvent, StationEventType } from '../types/StationEvent';
+import { TrainEvent, TrainEventType } from '../../../types/TrainEvent';
+
+const MAX_EVENTS_IN_FUTURE = 5;
 
 export function calculateCurrentEventsForStation(
   trains: Train[],
   stationCode: string | null
-): StationEvent[] {
+): TrainEvent[] {
   if (isNil(stationCode)) {
     return [];
   }
-  const allEvents: StationEvent[] = trains
+  const allEvents: TrainEvent[] = trains
     .flatMap((train) => train.timetableRows.map((row, i) => ({ train, row, i })))
     .map(({ train, row, i }) => {
       if (row.stationShortCode === stationCode) {
@@ -31,7 +33,7 @@ export function calculateCurrentEventsForStation(
 
   const withoutDuplicatePassings = allEvents.filter((event, i, arr) => {
     return (
-      event.eventType !== StationEventType.Passing ||
+      event.eventType !== TrainEventType.Passing ||
       i === 0 ||
       arr[i - 1].name !== event.name ||
       arr[i - 1].time.toMillis() !== event.time.toMillis()
@@ -40,19 +42,19 @@ export function calculateCurrentEventsForStation(
 
   const now = DateTime.now();
   const nextInFuture = withoutDuplicatePassings.findIndex((event) => event.time > now);
-  const result = withoutDuplicatePassings.slice(Math.max(nextInFuture - 5, 0));
+  const result = withoutDuplicatePassings.slice(Math.max(nextInFuture - MAX_EVENTS_IN_FUTURE, 0));
   return result;
 }
 
-function calculateEventType(rows: TimetableRow[], index: number): StationEventType {
+function calculateEventType(rows: TimetableRow[], index: number): TrainEventType {
   const row = rows[index];
   const isArrival = index % 2 === 1;
   const otherRow =
     index === 0 || index === rows.length - 1 ? null : isArrival ? rows[index + 1] : rows[index - 1];
   if (isNotNil(otherRow) && row.time.toMillis() === otherRow.time.toMillis()) {
-    return StationEventType.Passing;
+    return TrainEventType.Passing;
   }
-  return isArrival ? StationEventType.Arrival : StationEventType.Departure;
+  return isArrival ? TrainEventType.Arrival : TrainEventType.Departure;
 }
 
 function getExpiration(train: Train, time: DateTime): DateTime | null {
@@ -64,8 +66,8 @@ function createEvent(
   train: Train,
   time: DateTime,
   index: number,
-  eventType: StationEventType
-): StationEvent {
+  eventType: TrainEventType
+): TrainEvent {
   const stations = useTrainDataStore.getState().stations;
   const origin = stations[train.timetableRows[0].stationShortCode]?.name ?? '';
   const destination =

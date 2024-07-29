@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
-import { TrainEvent, TrainEventType } from '../types/TrainEvent';
+import { TrackingEvent, TrainEventType } from '../types/TrackingEvent';
 
 export interface EventProgressProps {
-  event: TrainEvent;
+  event: TrackingEvent;
 }
 
 export default function EventProgress({ event }: EventProgressProps) {

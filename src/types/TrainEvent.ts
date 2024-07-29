@@ -2,10 +2,10 @@ import { DateTime } from 'luxon';
 
 import { LateCause } from '@/features/lateCauses';
 
-export interface StationEvent {
+export interface TrainEvent {
   name: string;
   time: DateTime;
-  eventType: StationEventType;
+  eventType: TrainEventType;
   lineId: string | null;
   track: string | null;
   lateMinutes: number | null;
@@ -14,7 +14,7 @@ export interface StationEvent {
   expiresAt: DateTime | null;
 }
 
-export enum StationEventType {
+export enum TrainEventType {
   Arrival = 'Saapuu',
   Departure = 'Lähtee',
   Passing = 'Ohittaa',

@@ -1,15 +1,15 @@
 import { DateTime } from 'luxon';
 
-import { TrainEvent, TrainEventType } from '../types/TrainEvent';
+import { TrackingEvent, TrainEventType } from '../types/TrackingEvent';
 
-export function trainEventFixture(props?: Partial<TrainEvent>): TrainEvent {
+export function trainEventFixture(props?: Partial<TrackingEvent>): TrackingEvent {
   return {
     ...defaultEvent,
     ...props,
   };
 }
 
-const defaultEvent: TrainEvent = {
+const defaultEvent: TrackingEvent = {
   countdown: '',
   departureTime: null,
   eventType: TrainEventType.Stop,

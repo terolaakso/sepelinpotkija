@@ -6,7 +6,7 @@ import { TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
 import { timetableExpiresAt } from '@/utils/timetableCalculation';
 
-import { TrainEvent, TrainEventType } from '../types/TrainEvent';
+import { TrackingEvent, TrainEventType } from '../types/TrackingEvent';
 
 import { getTimetableSegmentIntersection } from './timetableIntersection';
 
@@ -20,7 +20,10 @@ const SHOW_ALL_OTHER_FUTURE_TRAINS_FOR: DurationLike = { minutes: 10 };
 const TOTAL_TRAIN_EVENT_MAX_COUNT = 3;
 const PAST_EVENT_MIN_COUNT = 1;
 
-export function getOtherTrains(forTrain: Train): { result: TrainEvent[]; nextTrain: Train | null } {
+export function getOtherTrains(forTrain: Train): {
+  result: TrackingEvent[];
+  nextTrain: Train | null;
+} {
   const otherTrains = Object.values(useTrainDataStore.getState().trains).filter(
     (train): train is Train =>
       isNotNil(train) &&
@@ -112,7 +115,7 @@ export function filterTrains(encounters: EncounterResult[]): {
   };
 }
 
-function createTrainEvent(train: Train, time: DateTime): TrainEvent {
+function createTrainEvent(train: Train, time: DateTime): TrackingEvent {
   const stations = useTrainDataStore.getState().stations;
   const origin = stations[train.timetableRows[0].stationShortCode]?.name ?? '';
   const destination =

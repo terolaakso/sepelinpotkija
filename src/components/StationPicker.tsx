@@ -15,7 +15,7 @@ export interface StationPickerProps {
   groupName: string;
   stationsForGroup: Station[];
   isLoading: boolean;
-  selectedStation: Station | null;
+  defaultStation: Station | null;
   onSelectedStationChange: (station: Station | null) => void;
 }
 
@@ -49,7 +49,7 @@ function StationPicker({
   groupName,
   stationsForGroup,
   isLoading,
-  selectedStation,
+  defaultStation,
   onSelectedStationChange,
 }: StationPickerProps) {
   const [stations, setStations] = useState<StationGroup[]>([]);
@@ -101,9 +101,9 @@ function StationPicker({
     <EmotionCacheProvider>
       <Select<StationOption, false, StationGroup>
         id={id}
-        defaultValue={
-          isNotNil(selectedStation)
-            ? { label: selectedStation.name, value: selectedStation.shortCode }
+        value={
+          isNotNil(defaultStation)
+            ? { label: defaultStation.name, value: defaultStation.shortCode }
             : null
         }
         options={stations}
@@ -113,6 +113,7 @@ function StationPicker({
         isLoading={isLoading}
         filterOption={createFilter({ ignoreAccents: false, matchFrom: 'start' })}
         classNames={{
+          container: () => 'h-fit',
           control: () =>
             'bg-gray-900 text-gray-300 rounded-none border-gray-500 hover:border-gray-400 shadow-none',
           input: () => 'text-gray-300',

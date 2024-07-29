@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
 
-import { TrainEvent, TrainEventType } from '../types/TrainEvent';
+import { TrackingEvent, TrainEventType } from '../types/TrackingEvent';
 import { WikipediaApiPage } from '../types/Wikipedia';
 
-export function getRelevantNonTrainEvent(events: TrainEvent[], currentEventId: string) {
+export function getRelevantNonTrainEvent(events: TrackingEvent[], currentEventId: string) {
   const nonTrainEvents = events.filter((e) => e.eventType !== TrainEventType.Train);
   const now = DateTime.now();
   const nextIndex = nonTrainEvents.findIndex((e) => e.time > now);

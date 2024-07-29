@@ -9,7 +9,7 @@ import BottomBar from '../../../components/BottomBar';
 import useTrackSegmentExtras from '../hooks/useTrackSegmentExtras';
 import useTrain from '../hooks/useTrain';
 import useTrainDigitrafficLocationWatch from '../hooks/useTrainDigitrafficLocationWatch';
-import { TrainEvent } from '../types/TrainEvent';
+import { TrackingEvent } from '../types/TrackingEvent';
 import { calculateCurrentEventsForTrain } from '../utils/trainTracking';
 
 import Content from './Content';
@@ -17,7 +17,7 @@ import TopBar from './TopBar';
 
 export default function TrainTracking() {
   const [trainNumber, setTrainNumber] = useState(1);
-  const [events, setEvents] = useState<TrainEvent[]>([]);
+  const [events, setEvents] = useState<TrackingEvent[]>([]);
   const [isTracking, setIsTracking] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [nextStationCode, setNextStationCode] = useState<string | null>(null);
@@ -68,7 +68,7 @@ export default function TrainTracking() {
   }
 
   return (
-    <div className="h-dvh bg-gray-900 text-gray-300 flex flex-col">
+    <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">
       <TopBar startTracking={startTracking} train={train} isTracking={isTracking} />
       <ErrorBar errorMessage={errorMessage} />
       <Content events={events} />

@@ -156,11 +156,3 @@ div.mw-parser-output h3 {
 div.mw-parser-output div.thumbcaption {
   font-style: italic
 }
-
-
-/* Material Design overrides */
-
-.material-icons {
-  font-size: inherit !important;
-  line-height: inherit !important;
-}

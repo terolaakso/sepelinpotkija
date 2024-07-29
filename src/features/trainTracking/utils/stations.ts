@@ -4,13 +4,13 @@ import { useTrainDataStore } from '@/stores/trainData';
 import { StopType, TimetableRow, Train } from '@/types/Train';
 import { isNotNil } from '@/utils/misc';
 
-import { TrainEvent, TrainEventType } from '../types/TrainEvent';
+import { TrackingEvent, TrainEventType } from '../types/TrackingEvent';
 
-export function getCurrentCommercialStops(train: Train, nextRowIndex: number): TrainEvent[] {
+export function getCurrentCommercialStops(train: Train, nextRowIndex: number): TrackingEvent[] {
   return getStops(train, nextRowIndex, (row) => row.stopType === StopType.Commercial, false);
 }
 
-export function getCurrentStations(train: Train, nextRowIndex: number): TrainEvent[] {
+export function getCurrentStations(train: Train, nextRowIndex: number): TrackingEvent[] {
   return getStops(train, nextRowIndex, () => true, true);
 }
 
@@ -19,7 +19,7 @@ function getStops(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TrainEvent[] {
+): TrackingEvent[] {
   const rows = train.timetableRows;
   const previous = findPrevious(rows, nextRowIndex, criteria, includePast);
   const current = findCurrent(rows, nextRowIndex, criteria, includePast);
@@ -32,7 +32,7 @@ function findPrevious(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TrainEvent | null {
+): TrackingEvent | null {
   if (includePast && nextRowIndex > 0 && nextRowIndex <= rows.length) {
     const stepToPrevious =
       nextRowIndex === rows.length ||
@@ -59,7 +59,7 @@ function findCurrent(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TrainEvent | null {
+): TrackingEvent | null {
   if (
     nextRowIndex === 0 ||
     (nextRowIndex >= rows.length && includePast) ||
@@ -78,7 +78,7 @@ function findNext(
   nextRowIndex: number,
   criteria: (row: TimetableRow) => boolean,
   includePast: boolean
-): TrainEvent | null {
+): TrackingEvent | null {
   const index = findIndex(
     rows,
     (row, i) =>
@@ -94,7 +94,7 @@ function findNext(
   return null;
 }
 
-function createTimetableRowEvent(rows: TimetableRow[], index: number): TrainEvent {
+function createTimetableRowEvent(rows: TimetableRow[], index: number): TrackingEvent {
   const stations = useTrainDataStore.getState().stations;
   const row = rows[index];
   const departureTime =

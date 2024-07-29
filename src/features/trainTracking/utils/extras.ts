@@ -6,6 +6,7 @@ import { StationCollection } from '@/types/Station';
 import { LatLon, nearestPointSegment } from '@/utils/geography';
 import { isNotNil } from '@/utils/misc';
 
+import { TrackingEvent, TrainEventType } from '../types/TrackingEvent';
 import {
   FileExtras,
   FileTrackSegment,
@@ -14,7 +15,6 @@ import {
   LocationExtraInfo,
   TrackSegmentCollection,
 } from '../types/TrackSegmentExtras';
-import { TrainEvent, TrainEventType } from '../types/TrainEvent';
 
 export async function loadExtras(stations: StationCollection): Promise<TrackSegmentCollection> {
   const url = '/ratainfo.json';
@@ -108,9 +108,9 @@ function calculateLocationFromCoords(
   return location.location;
 }
 
-export function generateExtras(items: TrainEvent[]): TrainEvent[] {
+export function generateExtras(items: TrackingEvent[]): TrackingEvent[] {
   const extras = useTrainDataStore.getState().extras;
-  let eventsWithExtras: TrainEvent[] = [];
+  let eventsWithExtras: TrackingEvent[] = [];
   for (let i = 0; i + 1 < items.length; i++) {
     const fromItem = items[i];
     const toItem = items[i + 1];
@@ -177,14 +177,14 @@ function getExtrasForSegment(
 
 function createLocationExtraEvent(
   currentInfo: LocationExtraInfo,
-  fromItem: TrainEvent,
-  toItem: TrainEvent
-): TrainEvent {
+  fromItem: TrackingEvent,
+  toItem: TrackingEvent
+): TrackingEvent {
   const fromTime = isNotNil(fromItem.departureTime) ? fromItem.departureTime : fromItem.time;
   const segmentDuration = toItem.time.diff(fromTime);
   const segmentPortion = currentInfo.position;
 
-  const result: TrainEvent = {
+  const result: TrackingEvent = {
     name: currentInfo.name,
     time: fromTime.plus(segmentDuration.mapUnits((x) => x * segmentPortion)),
     eventType: TrainEventType.Detail,

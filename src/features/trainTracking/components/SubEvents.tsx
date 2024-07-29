@@ -1,9 +1,9 @@
-import { TrainEvent } from '../types/TrainEvent';
+import { TrackingEvent } from '../types/TrackingEvent';
 
 import EventContent from './EventContent';
 
 export interface SubEventsProps {
-  mainEvent: TrainEvent;
+  mainEvent: TrackingEvent;
 }
 
 export default function SubEvents({ mainEvent }: SubEventsProps) {

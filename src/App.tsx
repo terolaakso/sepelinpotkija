@@ -6,6 +6,7 @@ import { Connector } from '@/features/mqtt';
 import { TrainTracking } from '@/features/trainTracking';
 
 import MainMenu from './components/MainMenu';
+import { LineTracking } from './features/lineTracking';
 import { StationTracking } from './features/stationTracking';
 
 function App() {
@@ -18,6 +19,11 @@ function App() {
             <Route path="/juna" element={<TrainTracking />} />
             <Route path="/asema" element={<StationTracking></StationTracking>} />
             <Route path="/asema/:stationCode" element={<StationTracking></StationTracking>} />
+            <Route path="/linja" element={<LineTracking></LineTracking>} />
+            <Route
+              path="/linja/:stationCode1/:stationCode2/:location"
+              element={<LineTracking></LineTracking>}
+            />
           </Routes>
         </BrowserRouter>
       </Connector>

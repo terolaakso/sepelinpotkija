@@ -3,14 +3,14 @@ import { DateTime } from 'luxon';
 
 import { Train } from '@/types/Train';
 
-import { TrainEvent, TrainEventType } from '../types/TrainEvent';
+import { TrackingEvent, TrainEventType } from '../types/TrackingEvent';
 
 import { generateExtras } from './extras';
 import { getOtherTrains } from './otherTrains';
 import { getCurrentCommercialStops, getCurrentStations } from './stations';
 
 export function calculateCurrentEventsForTrain(train: Train): {
-  events: TrainEvent[];
+  events: TrackingEvent[];
   nextStationCode: string | null;
   nextTrain: Train | null;
 } {
@@ -33,7 +33,7 @@ export function calculateCurrentEventsForTrain(train: Train): {
   return { events: withCountdown, nextStationCode, nextTrain: encounters.nextTrain };
 }
 
-function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
+function calculateCountdown(events: TrackingEvent[]): TrackingEvent[] {
   const result = events.map((event, i) => {
     const countdown = countdownUntilTime(getRelevantTimeOfEvent(event));
     const previousEvent = i > 0 ? events[i - 1] : null;
@@ -49,7 +49,7 @@ function calculateCountdown(events: TrainEvent[]): TrainEvent[] {
   return result;
 }
 
-function getRelevantTimeOfEvent(event: TrainEvent): DateTime {
+function getRelevantTimeOfEvent(event: TrackingEvent): DateTime {
   const now = DateTime.now();
   const time = event.departureTime && event.time < now ? event.departureTime : event.time;
   return time;
@@ -84,7 +84,7 @@ function nextTimetableRowIndex(train: Train): number {
   return index >= 0 ? index : train.timetableRows.length;
 }
 
-function mergeTrains(stations: TrainEvent[], encounters: TrainEvent[]): TrainEvent[] {
+function mergeTrains(stations: TrackingEvent[], encounters: TrackingEvent[]): TrackingEvent[] {
   const result = encounters.reduce(
     (acc, cur) => {
       const matchingIndex = stations.findIndex(
@@ -108,7 +108,7 @@ function mergeTrains(stations: TrainEvent[], encounters: TrainEvent[]): TrainEve
         };
       }
     },
-    { stationEvents: stations, encountersOnLine: [] as TrainEvent[] }
+    { stationEvents: stations, encountersOnLine: [] as TrackingEvent[] }
   );
 
   return [...result.stationEvents, ...result.encountersOnLine];

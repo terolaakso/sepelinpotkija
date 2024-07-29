@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 
 import { LateCause } from '@/features/lateCauses';
 
-export interface TrainEvent {
+export interface TrackingEvent {
   id: string;
   name: string;
   time: DateTime;
@@ -15,7 +15,7 @@ export interface TrainEvent {
   expiresAt: DateTime | null;
   countdown: string;
   relativeProgress: number;
-  subEvents: TrainEvent[];
+  subEvents: TrackingEvent[];
 }
 
 export enum TrainEventType {
