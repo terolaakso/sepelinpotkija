@@ -26,7 +26,7 @@ export default function TrainNumberInputForm({
   }
 
   return (
-    <form className="mb-1" onSubmit={startTracking}>
+    <form className="p-1" onSubmit={startTracking}>
       <label htmlFor="numberInput">Junan numero</label>
       <input
         id="numberInput"

@@ -21,7 +21,7 @@ export default function TrainHeader({ train, isExpired }: TrainHeaderProps) {
     stations[train.timetableRows[train.timetableRows.length - 1].stationShortCode]?.name ?? '';
 
   return (
-    <>
+    <div className="px-1">
       <div className="flex space-x-1">
         <DifferenceBadge difference={train.lateMinutes} />
         {isExpired && <div>❗️</div>}
@@ -41,6 +41,6 @@ export default function TrainHeader({ train, isExpired }: TrainHeaderProps) {
       <div>
         <LateCauses causes={train.currentLateCauses} />
       </div>
-    </>
+    </div>
   );
 }

@@ -17,7 +17,7 @@ export default function TopBar({ train, isTracking, startTracking }: TopBarProps
   const expiresAt = train !== null ? timetableExpiresAt(train) : null;
   const isTimetableExpired = expiresAt !== null && DateTime.now() > expiresAt;
 
-  const className = classNames('px-1', 'mb-1', {
+  const className = classNames('mb-1', {
     'bg-red-800': isTimetableExpired,
     'bg-gray-800': !isTimetableExpired,
   });
