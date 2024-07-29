@@ -37,7 +37,8 @@ function App() {
             lisenssi <a href="http://creativecommons.org/licenses/by/4.0/">CC 4.0 BY</a>
           </div>
           <div>
-            <a href="mailto:junailija@tee.pp.fi">junailija@tee.pp.fi</a>
+            <a href="mailto:junailija@tee.pp.fi">junailija@tee.pp.fi</a> /{' '}
+            <a href="https://github.com/terolaakso/sepelinpotkija">GitHub</a>
           </div>
         </small>
       </footer>
