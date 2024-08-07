@@ -8915,5 +8915,77 @@
         "info": null
       }
     ]
+  },
+  "OV-OVK": {
+    "locations": [
+      {
+        "name": "Orivesi",
+        "info": "Oriveden_rautatieasema"
+      },
+      {
+        "name": "Tähtiniemi",
+        "lat": 61.665734,
+        "lon": 24.37333,
+        "info": null
+      },
+      {
+        "name": "Orivesi keskusta",
+        "info": "Oriveden_keskustan_seisake"
+      }
+    ]
+  },
+  "JJ-OVK": {
+    "locations": [
+      {
+        "name": "Juupajoki",
+        "info": "Juupajoen_seisake"
+      },
+      {
+        "name": "Hirsilä",
+        "lat": 61.7433482,
+        "lon": 24.3309060,
+        "info": "Hirsilän_rautatieasema"
+      },
+      {
+        "name": "Ahola",
+        "lat": 61.731689167,
+        "lon": 24.335199444,
+        "info": null
+      },
+      {
+        "name": "Pentura",
+        "lat": 61.714705,
+        "lon": 24.355354,
+        "info": null
+      },
+      {
+        "name": "Nihua",
+        "lat": 61.7035453,
+        "lon": 24.3488606,
+        "info": null
+      },
+      {
+        "name": "Oripohja",
+        "lat": 61.686833333,
+        "lon": 24.365886667,
+        "info": null
+      },
+      {
+        "name": "Orivesi keskusta",
+        "info": "Oriveden_keskustan_seisake"
+      }
+    ]
+  },
+  "JJ-KAS": {
+    "locations": [
+      {
+        "name": "Juupajoki",
+        "info": "Juupajoen_seisake"
+      },
+      {
+        "name": "Korkeakoski",
+        "info": "Korkeakosken_rautatieasema"
+      }
+    ]
   }
 }
