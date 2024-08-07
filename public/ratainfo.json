@@ -8855,5 +8855,65 @@
         "info": "Kemin_rautatieasema"
       }
     ]
+  },
+  "SJ-TPET": {
+    "locations": [
+      {
+        "name": "Sääksjärvi",
+        "info": "Sääksjärven_rautatieasema"
+      },
+      {
+        "name": "Multisilta",
+        "lat": 61.4348630,
+        "lon": 23.7439095,
+        "info": "Multisillan_seisake"
+      },
+      {
+        "name": "Rukkamäki",
+        "lat": 61.4585620,
+        "lon": 23.7476363,
+        "info": "Rukkamäen_seisake"
+      },
+      {
+        "name": "Tampere tavara",
+        "info": null
+      }
+    ]
+  },
+  "TPET-VKA": {
+    "locations": [
+      {
+        "name": "Tampere tavara",
+        "info": null
+      },
+      {
+        "name": "Rantaperkiö",
+        "lat": 61.4716514,
+        "lon": 23.7649690,
+        "info": "Rantaperkiön_seisake"
+      },
+      {
+        "name": "Tampere Viinikka",
+        "info": null
+      }
+    ]
+  },
+  "JVS-VKA": {
+    "locations": [
+      {
+        "name": "Tampere Järvensivu",
+        "info": null
+      },
+      {
+        "name": "Hatanpää",
+        "lat": 61.4833395,
+        "lon": 23.7720682,
+        "info": null
+      },
+      {
+        "name": "Tampere Viinikka",
+        "info": null
+      }
+    ]
   }
 }
