@@ -29,14 +29,14 @@ export default function IntroContent() {
           <li>Raisio - Naantali</li>
           <li>Tampere - Vammala</li>
           <li>Harjavalta - Mäntyluoto</li>
-          <li>Seinäjoki - Kauhava</li>
+          <li>Seinäjoki - Raunio</li>
           <li>Ylivieska - Oulu</li>
           <li>Tuomioja - Raahe</li>
           <li>Seinäjoki - Kaskinen</li>
           <li>Seinäjoki - Vaasa</li>
           <li>Tampere - Orivesi</li>
           <li>Jyväskylä - Pieksämäki</li>
-          <li>Haapamäki - Seinäjoki</li>
+          <li>Orivesi - Seinäjoki</li>
           <li>Haapamäki - Jyväskylä</li>
           <li>Jyväskylä - Saarijärvi</li>
           <li>Oulu - Laurila</li>
