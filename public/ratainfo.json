@@ -8987,5 +8987,95 @@
         "info": "Korkeakosken_rautatieasema"
       }
     ]
+  },
+  "KAS-VLP": {
+    "locations": [
+      {
+        "name": "Korkeakoski",
+        "info": "Korkeakosken_rautatieasema"
+      },
+      {
+        "name": "Heinämäki",
+        "lat": 61.8364877,
+        "lon": 24.4221449,
+        "info": null
+      },
+      {
+        "name": "Pirttikangas",
+        "lat": 61.8563722,
+        "lon": 24.4667769,
+        "info": null
+      },
+      {
+        "name": "Lyly",
+        "lat": 61.885588889,
+        "lon": 24.478815000,
+        "info": "Lylyn_rautatieasema"
+      },
+      {
+        "name": "Koivio",
+        "lat": 61.956036111,
+        "lon": 24.485113056,
+        "info": null
+      },
+      {
+        "name": "Pynnönen",
+        "lat": 61.9821347,
+        "lon": 24.4823168,
+        "info": null
+      },
+      {
+        "name": "Suomela",
+        "lat": 62.018754,
+        "lon": 24.507389,
+        "info": null
+      },
+      {
+        "name": "Vilppula",
+        "info": "Vilppulan_rautatieasema"
+      }
+    ]
+  },
+  "KLO-VLP": {
+    "locations": [
+      {
+        "name": "Kolho",
+        "info": "Kolhon_rautatieasema"
+      },
+      {
+        "name": "Halla-aho",
+        "lat": 62.1108354,
+        "lon": 24.5058240,
+        "info": null
+      },
+      {
+        "name": "Vilppula",
+        "info": "Vilppulan_rautatieasema"
+      }
+    ]
+  },
+  "HPK-KLO": {
+    "locations": [
+      {
+        "name": "Haapamäki",
+        "info": "Haapamäen_rautatieasema"
+      },
+      {
+        "name": "Ristimäki",
+        "lat": 62.1933853,
+        "lon": 24.4967637,
+        "info": "Ristimäen_seisake"
+      },
+      {
+        "name": "Kaarela",
+        "lat": 62.1426961,
+        "lon": 24.5062051,
+        "info": null
+      },
+      {
+        "name": "Kolho",
+        "info": "Kolhon_rautatieasema"
+      }
+    ]
   }
 }
