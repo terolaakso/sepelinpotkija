@@ -8046,7 +8046,7 @@
       }
     ]
   },
-  "NII-SK": {
+  "NII-RLA": {
     "locations": [
       {
         "name": "Niinimaa",
@@ -8090,14 +8090,14 @@
       },
       {
         "name": "Rahkola",
-        "lat": 62.7542932,
-        "lon": 22.9537003,
         "info": null
-      },
+      }
+    ]
+  },
+  "RLA-SK": {
+    "locations": [
       {
-        "name": "Kiikunmäki",
-        "lat": 62.7629955,
-        "lon": 22.9242604,
+        "name": "Rahkola",
         "info": null
       },
       {
@@ -9075,6 +9075,42 @@
       {
         "name": "Kolho",
         "info": "Kolhon_rautatieasema"
+      }
+    ]
+  },
+  "KHA-RIO": {
+    "locations": [
+      {
+        "name": "Kauhava",
+        "info": "Kauhavan_rautatieasema"
+      },
+      {
+        "name": "Ilmailukoulu",
+        "lat": 63.1120214,
+        "lon": 23.0237247,
+        "info": null
+      },
+      {
+        "name": "Hopiavuori",
+        "lat": 63.1319646,
+        "lon": 23.0042940,
+        "info": null
+      },
+      {
+        "name": "Mikkilä",
+        "lat": 63.153816111,
+        "lon": 22.986132222,
+        "info": null
+      },
+      {
+        "name": "Lammi",
+        "lat": 63.156675556,
+        "lon": 22.981340833,
+        "info": null
+      },
+      {
+        "name": "Raunio",
+        "info": "Raunion_rautatieasema"
       }
     ]
   }
