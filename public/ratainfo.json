@@ -9113,5 +9113,173 @@
         "info": "Raunion_rautatieasema"
       }
     ]
+  },
+  "KON-VKT": {
+    "locations": [
+      {
+        "name": "Kontiomäki",
+        "info": "Kontiomäen_rautatieasema"
+      },
+      {
+        "name": "Varpasuo",
+        "lat": 64.3120121,
+        "lon": 28.1679275,
+        "info": null
+      },
+      {
+        "name": "Paakki",
+        "lat": 64.2775088,
+        "lon": 28.2114931,
+        "info": null
+      },
+      {
+        "name": "Tuulimäki",
+        "lat": 64.2567376,
+        "lon": 28.2357252,
+        "info": null
+      },
+      {
+        "name": "Vihtamo",
+        "lat": 64.2147654,
+        "lon": 28.2862835,
+        "info": null
+      },
+      {
+        "name": "Naapurinvaara",
+        "lat": 64.1758270,
+        "lon": 28.2847462,
+        "info": null
+      },
+      {
+        "name": "Vuokatti",
+        "info": "Vuokatin_rautatieasema"
+      }
+    ]
+  },
+  "MLK-VKT": {
+    "locations": [
+      {
+        "name": "Maanselkä",
+        "info": "Maanselän_rautatieasema"
+      },
+      {
+        "name": "Kalliojärvi",
+        "lat": 63.9163517,
+        "lon": 28.4702613,
+        "info": null
+      },
+      {
+        "name": "Saviaho",
+        "lat": 63.9555061,
+        "lon": 28.4201575,
+        "info": null
+      },
+      {
+        "name": "Pohjankoski",
+        "lat": 64.0060946,
+        "lon": 28.3903073,
+        "info": null
+      },
+      {
+        "name": "Kivijoki",
+        "lat": 64.0227918,
+        "lon": 28.3620260,
+        "info": null
+      },
+      {
+        "name": "Juurikkalahti",
+        "lat": 64.0540970,
+        "lon": 28.3105262,
+        "info": null
+      },
+      {
+        "name": "Laajamäki",
+        "lat": 64.0853422,
+        "lon": 28.3106979,
+        "info": null
+      },
+      {
+        "name": "Käkinotko",
+        "lat": 64.1172081,
+        "lon": 28.3115133,
+        "info": null
+      },
+      {
+        "name": "Latu",
+        "lat": 64.1365722,
+        "lon": 28.2834896,
+        "info": "Ladun_seisake"
+      },
+      {
+        "name": "Vuokatti",
+        "info": "Vuokatin_rautatieasema"
+      }
+    ]
+  },
+  "MLK-VLM": {
+    "locations": [
+      {
+        "name": "Maanselkä",
+        "info": "Maanselän_rautatieasema"
+      },
+      {
+        "name": "Rumo",
+        "lat": 63.8209566,
+        "lon": 28.5829783,
+        "info": null
+      },
+      {
+        "name": "Lampela",
+        "lat": 63.8047640,
+        "lon": 28.5994578,
+        "info": null
+      },
+      {
+        "name": "Louhela",
+        "lat": 63.7982275,
+        "lon": 28.6238766,
+        "info": null
+      },
+      {
+        "name": "Omenamäki",
+        "lat": 63.7883536,
+        "lon": 28.6428452,
+        "info": null
+      },
+      {
+        "name": "Kiusanmäki",
+        "lat": 63.7787514,
+        "lon": 28.6572684,
+        "info": null
+      },
+      {
+        "name": "Puukari",
+        "lat": 63.7523634,
+        "lon": 28.6758937,
+        "info": null
+      },
+      {
+        "name": "Välijoki",
+        "lat": 63.7371378,
+        "lon": 28.7050332,
+        "info": null
+      },
+      {
+        "name": "Nuolijärvi",
+        "lat": 63.7256278,
+        "lon": 28.7409105,
+        "info": null
+      },
+      {
+        "name": "Nuolikoski",
+        "lat": 63.7077644,
+        "lon": 28.7633184,
+        "info": null
+      },
+      {
+        "name": "Valtimo",
+        "info": "Valtimon_rautatieasema"
+      }
+    ]
   }
 }
