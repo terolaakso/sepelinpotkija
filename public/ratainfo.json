@@ -9635,5 +9635,101 @@
         "info": "Uimaharjun_rautatieasema"
       }
     ]
+  },
+  "KOI-R855": {
+    "locations": [
+      {
+        "name": "Kovjoki",
+        "info": "Kovjoen_rautatieasema"
+      },
+      {
+        "name": "Lukus",
+        "lat": 63.5311671,
+        "lon": 22.7081533,
+        "info": null
+      },
+      {
+        "name": "Träskkulla",
+        "lat": 63.5804473,
+        "lon": 22.7691787,
+        "info": null
+      },
+      {
+        "name": "Pännäinen (R855)",
+        "info": null
+      }
+    ]
+  },
+  "PTS-R855": {
+    "locations": [
+      {
+        "name": "Pietarsaari",
+        "info": "Pietarsaaren_rautatieasema"
+      },
+      {
+        "name": "Ruusulehto",
+        "lat": 63.6652331,
+        "lon": 22.7151186,
+        "info": null
+      },
+      {
+        "name": "Hietasalmi",
+        "lat": 63.6486565,
+        "lon": 22.7377560,
+        "info": null
+      },
+      {
+        "name": "Lehtisaari",
+        "lat": 63.6097699,
+        "lon": 22.7735903,
+        "info": null
+      },
+      {
+        "name": "Mäki",
+        "lat": 63.5982999,
+        "lon": 22.7763929,
+        "info": null
+      },
+      {
+        "name": "Pännäinen (R855)",
+        "info": null
+      }
+    ]
+  },
+  "PNÄ-PTS": {
+    "locations": [
+      {
+        "name": "Pännäinen",
+        "info": "Pietarsaari-Pedersören_rautatieasema"
+      },
+      {
+        "name": "Mäki",
+        "lat": 63.5982999,
+        "lon": 22.7763929,
+        "info": null
+      },
+      {
+        "name": "Lehtisaari",
+        "lat": 63.6097699,
+        "lon": 22.7735903,
+        "info": null
+      },
+      {
+        "name": "Hietasalmi",
+        "lat": 63.6486565,
+        "lon": 22.7377560,
+        "info": null
+      },
+      {
+        "name": "Ruusulehto",
+        "lat": 63.6652331,
+        "lon": 22.7151186,
+        "info": null
+      },
+      {
+        "name": "Pietarsaari",
+        "info": "Pietarsaaren_rautatieasema"
+      }
+    ]
   }
 }
