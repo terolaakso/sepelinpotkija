@@ -9437,5 +9437,203 @@
         "info": "Lieksan_rautatieasema"
       }
     ]
+  },
+  "LIS-VSL": {
+    "locations": [
+      {
+        "name": "Lieksa",
+        "info": "Lieksan_rautatieasema"
+      },
+      {
+        "name": "Sokojoki",
+        "lat": 63.3071473,
+        "lon": 30.0294248,
+        "info": null
+      },
+      {
+        "name": "Pokronlampi",
+        "lat": 63.2992423,
+        "lon": 30.0489513,
+        "info": null
+      },
+      {
+        "name": "Lamminkylä",
+        "lat": 63.2906407,
+        "lon": 30.0677911,
+        "info": null
+      },
+      {
+        "name": "Yrjölä",
+        "lat": 63.2753019,
+        "lon": 30.0916521,
+        "info": null
+      },
+      {
+        "name": "Tiensuu",
+        "lat": 63.2599936,
+        "lon": 30.1119081,
+        "info": "Tiensuun_rautatieasema"
+      },
+      {
+        "name": "Koiralampi",
+        "lat": 63.2336628,
+        "lon": 30.0761596,
+        "info": null
+      },
+      {
+        "name": "Siikasuo",
+        "lat": 63.2118343,
+        "lon": 30.0365488,
+        "info": null
+      },
+      {
+        "name": "Lapalie",
+        "lat": 63.1959118,
+        "lon": 30.0155632,
+        "info": "Lapalien_seisake"
+      },
+      {
+        "name": "Törmälä",
+        "lat": 63.1798643,
+        "lon": 30.0099842,
+        "info": null
+      },
+      {
+        "name": "Vuonislahti",
+        "info": "Vuonislahden_rautatieasema"
+      }
+    ]
+  },
+  "UIM-VSL": {
+    "locations": [
+      {
+        "name": "Uimaharju",
+        "info": "Uimaharjun_rautatieasema"
+      },
+      {
+        "name": "Laukkala",
+        "lat": 62.9364749,
+        "lon": 30.2214411,
+        "info": null
+      },
+      {
+        "name": "Ukkola",
+        "lat": 62.9578280,
+        "lon": 30.1889542,
+        "info": "Ukkolan_rautatieasema"
+      },
+      {
+        "name": "Kattilajoki",
+        "lat": 62.9793801,
+        "lon": 30.1591709,
+        "info": null
+      },
+      {
+        "name": "Haapalahti",
+        "lat": 62.9971088,
+        "lon": 30.1397926,
+        "info": "Haapalahden_seisake"
+      },
+      {
+        "name": "Saunaniemi",
+        "lat": 63.0192550,
+        "lon": 30.1229698,
+        "info": null
+      },
+      {
+        "name": "Kyyrönlampi",
+        "lat": 63.0407617,
+        "lon": 30.1149876,
+        "info": null
+      },
+      {
+        "name": "Vorna",
+        "lat": 63.0539693,
+        "lon": 30.1164467,
+        "info": null
+      },
+      {
+        "name": "Kelvä",
+        "lat": 63.0770051,
+        "lon": 30.0848181,
+        "info": "Kelvän_laiturivaihde"
+      },
+      {
+        "name": "Ahovaara",
+        "lat": 63.1043327,
+        "lon": 30.0549490,
+        "info": null
+      },
+      {
+        "name": "Kupparinmäki",
+        "lat": 63.1266302,
+        "lon": 30.0149519,
+        "info": null
+      },
+      {
+        "name": "Hassila",
+        "lat": 63.1335935,
+        "lon": 30.0071413,
+        "info": null
+      },
+      {
+        "name": "Rekiniemi",
+        "lat": 63.1448398,
+        "lon": 29.9987728,
+        "info": null
+      },
+      {
+        "name": "Vuonislahti",
+        "info": "Vuonislahden_rautatieasema"
+      }
+    ]
+  },
+  "ENO-UIM": {
+    "locations": [
+      {
+        "name": "Eno",
+        "info": "Enon_rautatieasema"
+      },
+      {
+        "name": "Karhunsalo",
+        "lat": 62.8177799,
+        "lon": 30.1868140,
+        "info": null
+      },
+      {
+        "name": "Muuraisniemi",
+        "lat": 62.8275806,
+        "lon": 30.1974570,
+        "info": null
+      },
+      {
+        "name": "Hiirenniemi",
+        "lat": 62.8432158,
+        "lon": 30.2009760,
+        "info": null
+      },
+      {
+        "name": "Paukkaja",
+        "lat": 62.8650408,
+        "lon": 30.2043035,
+        "info": "Paukkajan_seisake"
+      },
+      {
+        "name": "Rahkee",
+        "lat": 62.8954418,
+        "lon": 30.2116420,
+        "info": null
+      },
+      {
+        "name": "Uimasalmen silta",
+        "lat": 62.907594722,
+        "lon": 30.226354167,
+        "info": "Uimaharjun_rautatiesilta"
+      },
+      {
+        "name": "Uimaharju",
+        "info": "Uimaharjun_rautatieasema"
+      }
+    ]
   }
 }
