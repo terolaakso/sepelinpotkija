@@ -9341,5 +9341,101 @@
         "info": "Kohtavaaran_seisake"
       }
     ]
+  },
+  "HÖL-VK": {
+    "locations": [
+      {
+        "name": "Höljäkkä",
+        "info": "Höljäkän_rautatieasema"
+      },
+      {
+        "name": "Konna",
+        "lat": 63.4374572,
+        "lon": 29.5007033,
+        "info": null
+      },
+      {
+        "name": "Mätäsvaara",
+        "lat": 63.4463832,
+        "lon": 29.5603393,
+        "info": "Mätäsvaaran_seisake"
+      },
+      {
+        "name": "Viekki",
+        "info": "Viekin_rautatieasema"
+      }
+    ]
+  },
+  "KYN-VK": {
+    "locations": [
+      {
+        "name": "Kylänlahti",
+        "info": "Kylänlahden_rautatieasema"
+      },
+      {
+        "name": "Rovastila",
+        "lat": 63.3651160,
+        "lon": 29.7095880,
+        "info": null
+      },
+      {
+        "name": "Linnava",
+        "lat": 63.3998216,
+        "lon": 29.6820363,
+        "info": null
+      },
+      {
+        "name": "Lonkka",
+        "lat": 63.4087556,
+        "lon": 29.6431550,
+        "info": null
+      },
+      {
+        "name": "Viekki",
+        "info": "Viekin_rautatieasema"
+      }
+    ]
+  },
+  "KYN-LIS": {
+    "locations": [
+      {
+        "name": "Kylänlahti",
+        "info": "Kylänlahden_rautatieasema"
+      },
+      {
+        "name": "Tupakkala",
+        "lat": 63.3639910,
+        "lon": 29.8366851,
+        "info": null
+      },
+      {
+        "name": "Jamali",
+        "lat": 63.3510974,
+        "lon": 29.8868103,
+        "info": "Jamalin_seisake"
+      },
+      {
+        "name": "Vartiala",
+        "lat": 63.3364071,
+        "lon": 29.9385232,
+        "info": null
+      },
+      {
+        "name": "Honkalahti",
+        "lat": 63.3298778,
+        "lon": 29.9573631,
+        "info": null
+      },
+      {
+        "name": "Kevätniemi",
+        "lat": 63.3237709,
+        "lon": 29.9866743,
+        "info": null
+      },
+      {
+        "name": "Lieksa",
+        "info": "Lieksan_rautatieasema"
+      }
+    ]
   }
 }
