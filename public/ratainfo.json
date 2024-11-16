@@ -4554,7 +4554,7 @@
       }
     ]
   },
-  "NRM-POR": {
+  "NRM-PTK": {
     "locations": [
       {
         "name": "Nurmes",
@@ -4562,14 +4562,8 @@
       },
       {
         "name": "Porokylä",
-        "info": "Porokylän_rautatieasema"
-      }
-    ]
-  },
-  "POR-PTK": {
-    "locations": [
-      {
-        "name": "Porokylä",
+        "lat": 63.555704,
+        "lon": 29.099679,
         "info": "Porokylän_rautatieasema"
       },
       {
@@ -9279,6 +9273,72 @@
       {
         "name": "Valtimo",
         "info": "Valtimon_rautatieasema"
+      }
+    ]
+  },
+  "KOH-NRM": {
+    "locations": [
+      {
+        "name": "Kohtavaara",
+        "info": "Kohtavaaran_seisake"
+      },
+      {
+        "name": "Saarela",
+        "lat": 63.5217538,
+        "lon": 29.2461365,
+        "info": null
+      },
+      {
+        "name": "Revonoja",
+        "lat": 63.5308984,
+        "lon": 29.2329615,
+        "info": null
+      },
+      {
+        "name": "Hyvärilä",
+        "lat": 63.5366936,
+        "lon": 29.1984147,
+        "info": null
+      },
+      {
+        "name": "Bomba",
+        "lat": 63.5367892,
+        "lon": 29.1821068,
+        "info": "Bomban_seisake"
+      },
+      {
+        "name": "Nurmes",
+        "info": "Nurmeksen_rautatieasema"
+      }
+    ]
+  },
+  "HÖL-KOH": {
+    "locations": [
+      {
+        "name": "Höljäkkä",
+        "info": "Höljäkän_rautatieasema"
+      },
+      {
+        "name": "Koivula",
+        "lat": 63.4759925,
+        "lon": 29.3999967,
+        "info": null
+      },
+      {
+        "name": "Kopras",
+        "lat": 63.4949402,
+        "lon": 29.3307743,
+        "info": "Kopraksen_laituri"
+      },
+      {
+        "name": "Pyssy",
+        "lat": 63.5019873,
+        "lon": 29.3154964,
+        "info": null
+      },
+      {
+        "name": "Kohtavaara",
+        "info": "Kohtavaaran_seisake"
       }
     ]
   }
