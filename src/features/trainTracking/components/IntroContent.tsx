@@ -52,7 +52,7 @@ export default function IntroContent() {
           <li>Imatra - Parikkala</li>
           <li>Lappeenranta - Mustolan satama</li>
           <li>Parikkala - Savonlinna</li>
-          <li>Nurmes - Valtimo</li>
+          <li>Eno - Kontiomäki</li>
           <li>Kontiomäki - Oulu</li>
           <li>Kontiomäki - Ämmänsaari</li>
         </ul>
