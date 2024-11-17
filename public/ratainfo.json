@@ -9731,5 +9731,77 @@
         "info": "Pietarsaaren_rautatieasema"
       }
     ]
+  },
+  "KPI-PNÄ": {
+    "locations": [
+      {
+        "name": "Kolppi",
+        "info": "Kolpin_rautatieasema"
+      },
+      {
+        "name": "Torppa",
+        "lat": 63.616630278,
+        "lon": 22.872454722,
+        "info": null
+      },
+      {
+        "name": "Nikki",
+        "lat": 63.6141444,
+        "lon": 22.8536330,
+        "info": null
+      },
+      {
+        "name": "Katteri",
+        "lat": 63.6071250,
+        "lon": 22.8236781,
+        "info": null
+      },
+      {
+        "name": "Pännäinen",
+        "info": "Pietarsaari-Pedersören_rautatieasema"
+      }
+    ]
+  },
+  "KPI-KPY": {
+    "locations": [
+      {
+        "name": "Kolppi",
+        "info": "Kolpin_rautatieasema"
+      },
+      {
+        "name": "Pohjoiskylä",
+        "lat": 63.6861649,
+        "lon": 22.9877005,
+        "info": null
+      },
+      {
+        "name": "Kruunupyy",
+        "info": "Kruunupyyn_rautatieasema"
+      }
+    ]
+  },
+  "KOK-KPY": {
+    "locations": [
+      {
+        "name": "Kokkola",
+        "info": "Kokkolan_rautatieasema"
+      },
+      {
+        "name": "Matalamaa",
+        "lat": 63.8176820,
+        "lon": 23.1062232,
+        "info": null
+      },
+      {
+        "name": "Jänismäki",
+        "lat": 63.7277522,
+        "lon": 23.0427968,
+        "info": null
+      },
+      {
+        "name": "Kruunupyy",
+        "info": "Kruunupyyn_rautatieasema"
+      }
+    ]
   }
 }
