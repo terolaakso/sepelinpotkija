@@ -30,7 +30,9 @@ export default function IntroContent() {
           <li>Tampere - Vammala</li>
           <li>Harjavalta - Mäntyluoto</li>
           <li>Seinäjoki - Raunio</li>
+          <li>Pännäinen - Kokkola</li>
           <li>Ylivieska - Oulu</li>
+          <li>Kovjoki - Pietarsaari</li>
           <li>Tuomioja - Raahe</li>
           <li>Seinäjoki - Kaskinen</li>
           <li>Seinäjoki - Vaasa</li>
