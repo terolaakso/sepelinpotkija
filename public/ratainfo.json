@@ -9971,5 +9971,107 @@
         "info": null
       }
     ]
+  },
+  "HPJ-PP": {
+    "locations": [
+      {
+        "name": "Haapajärvi",
+        "info": "Haapajärven_rautatieasema"
+      },
+      {
+        "name": "Välilä",
+        "lat": 63.7337765,
+        "lon": 25.3623818,
+        "info": null
+      },
+      {
+        "name": "Haittaperä",
+        "lat": 63.7213721,
+        "lon": 25.3722523,
+        "info": null
+      },
+      {
+        "name": "Kumiseva",
+        "lat": 63.7035089,
+        "lon": 25.3867422,
+        "info": null
+      },
+      {
+        "name": "Lohijoki",
+        "lat": 63.6890749,
+        "lon": 25.3839527,
+        "info": null
+      },
+      {
+        "name": "Vuorten-Vuori",
+        "lat": 63.6575982,
+        "lon": 25.3665074,
+        "info": "Vuorten-Vuoren_linjavaihde"
+      },
+      {
+        "name": "Iivari",
+        "lat": 63.6455054,
+        "lon": 25.3617778,
+        "info": null
+      },
+      {
+        "name": "Hinkua",
+        "lat": 63.6359907,
+        "lon": 25.3605227,
+        "info": null
+      },
+      {
+        "name": "Karhunpiilo",
+        "lat": 63.5966570,
+        "lon": 25.3438449,
+        "info": null
+      },
+      {
+        "name": "Muuras",
+        "lat": 63.5581500,
+        "lon": 25.3545111,
+        "info": null
+      },
+      {
+        "name": "Penttilä",
+        "lat": 63.5411587,
+        "lon": 25.3664145,
+        "info": null
+      },
+      {
+        "name": "Seikka",
+        "lat": 63.5105676,
+        "lon": 25.3839239,
+        "info": null
+      },
+      {
+        "name": "Lehtoperä",
+        "lat": 63.4753791,
+        "lon": 25.3815022,
+        "info": null
+      },
+      {
+        "name": "Seppälä",
+        "lat": 63.4590589,
+        "lon": 25.3834996,
+        "info": null
+      },
+      {
+        "name": "Alvajärvi",
+        "lat": 63.4350504,
+        "lon": 25.4109086,
+        "info": null
+      },
+      {
+        "name": "Häyhtiö",
+        "lat": 63.4115687,
+        "lon": 25.4708614,
+        "info": null
+      },
+      {
+        "name": "Pihtipudas",
+        "info": null
+      }
+    ]
   }
 }
