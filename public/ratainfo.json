@@ -9803,5 +9803,173 @@
         "info": "Kruunupyyn_rautatieasema"
       }
     ]
+  },
+  "KSI-SRJ": {
+    "locations": [
+      {
+        "name": "Kannonkoski",
+        "info": null
+      },
+      {
+        "name": "Kannonkoski kk",
+        "lat": 62.9757542,
+        "lon": 25.2587803,
+        "info": null
+      },
+      {
+        "name": "Kannonsaha",
+        "lat": 62.9450228,
+        "lon": 25.2265467,
+        "info": null
+      },
+      {
+        "name": "Enonjärvi",
+        "lat": 62.9307894,
+        "lon": 25.2036299,
+        "info": "Enonjärven_rautatieasema"
+      },
+      {
+        "name": "Kannonjärvi",
+        "lat": 62.9045302,
+        "lon": 25.1976647,
+        "info": null
+      },
+      {
+        "name": "Sapra",
+        "lat": 62.8517042,
+        "lon": 25.1967897,
+        "info": null
+      },
+      {
+        "name": "Kympinkallio",
+        "lat": 62.7959922,
+        "lon": 25.1989856,
+        "info": null
+      },
+      {
+        "name": "Kolkanlahti",
+        "lat": 62.7546580,
+        "lon": 25.1988198,
+        "info": null
+      },
+      {
+        "name": "Saarijärvi kk",
+        "lat": 62.7083583,
+        "lon": 25.2562920,
+        "info": null
+      },
+      {
+        "name": "Saarijärvi",
+        "info": null
+      }
+    ]
+  },
+  "KSI-KTP": {
+    "locations": [
+      {
+        "name": "Kannonkoski",
+        "info": null
+      },
+      {
+        "name": "Piilola",
+        "lat": 63.0016059,
+        "lon": 25.3022788,
+        "info": null
+      },
+      {
+        "name": "Luomajärvi",
+        "lat": 63.0133513,
+        "lon": 25.3154968,
+        "info": null
+      },
+      {
+        "name": "Kennää",
+        "lat": 63.0291094,
+        "lon": 25.3245912,
+        "info": null
+      },
+      {
+        "name": "Kalapuro",
+        "lat": 63.0507046,
+        "lon": 25.3319876,
+        "info": null
+      },
+      {
+        "name": "Varanen",
+        "lat": 63.0751192,
+        "lon": 25.3237101,
+        "info": "Varanen"
+      },
+      {
+        "name": "Kinanen",
+        "lat": 63.1329424,
+        "lon": 25.3798550,
+        "info": null
+      },
+      {
+        "name": "Koivulahti",
+        "lat": 63.1427737,
+        "lon": 25.4423826,
+        "info": null
+      },
+      {
+        "name": "Kutemainen",
+        "lat": 63.1505472,
+        "lon": 25.4697626,
+        "info": null
+      },
+      {
+        "name": "Hevosjärvi",
+        "lat": 63.1622907,
+        "lon": 25.5007904,
+        "info": null
+      },
+      {
+        "name": "Keitelepohja",
+        "info": null
+      }
+    ]
+  },
+  "KTP-PP": {
+    "locations": [
+      {
+        "name": "Keitelepohja",
+        "info": null
+      },
+      {
+        "name": "Tuomela",
+        "lat": 63.2054989,
+        "lon": 25.5510864,
+        "info": null
+      },
+      {
+        "name": "Korpinen",
+        "lat": 63.2391086,
+        "lon": 25.5320248,
+        "info": null
+      },
+      {
+        "name": "Löytänä",
+        "lat": 63.2552391,
+        "lon": 25.5372605,
+        "info": null
+      },
+      {
+        "name": "Seläntaus",
+        "lat": 63.3012073,
+        "lon": 25.5564007,
+        "info": null
+      },
+      {
+        "name": "Suvannonlahti",
+        "lat": 63.3159573,
+        "lon": 25.5559033,
+        "info": null
+      },
+      {
+        "name": "Pihtipudas",
+        "info": null
+      }
+    ]
   }
 }
