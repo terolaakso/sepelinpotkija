@@ -15,9 +15,7 @@ export interface FileExtras extends ExtrasBase {
   lon?: number;
 }
 
-export interface FileTrackSegment {
-  locations: FileExtras[] | LegacyFileExtras[];
-}
+export type FileTrackSegment = FileExtras[] | LegacyFileExtras[];
 
 export interface FileTrackSegmentCollection {
   [key: string]: FileTrackSegment | undefined;

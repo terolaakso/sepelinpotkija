@@ -28,7 +28,7 @@ function mapExtrasFileContents(
   stations: StationCollection
 ): TrackSegmentCollection {
   const result = mapValues(infos, (info, key) => {
-    const segmentLocations = (info as FileTrackSegment).locations;
+    const segmentLocations = info as FileTrackSegment;
     const needsMappingOnly = isNotNil(segmentLocations[0].km);
     const locations = needsMappingOnly
       ? segmentLocations.map(
