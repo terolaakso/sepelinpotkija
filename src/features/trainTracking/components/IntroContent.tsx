@@ -40,7 +40,7 @@ export default function IntroContent() {
           <li>Jyväskylä - Pieksämäki</li>
           <li>Orivesi - Seinäjoki</li>
           <li>Haapamäki - Jyväskylä</li>
-          <li>Jyväskylä - Saarijärvi</li>
+          <li>Jyväskylä - Haapajärvi</li>
           <li>Oulu - Laurila</li>
           <li>Laurila - Haaparanta</li>
           <li>Riihimäki - Kouvola</li>
