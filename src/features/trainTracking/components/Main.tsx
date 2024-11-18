@@ -68,7 +68,7 @@ export default function TrainTracking() {
   }
 
   return (
-    <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">
+    <div className="h-screen flex flex-col">
       <TopBar startTracking={startTracking} train={train} isTracking={isTracking} />
       <ErrorBar errorMessage={errorMessage} />
       <Content events={events} />

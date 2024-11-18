@@ -44,7 +44,7 @@ function LineTracking() {
   }
 
   return (
-    <div className="h-screen bg-gray-900 text-gray-300 flex flex-col">
+    <div className="h-screen flex flex-col">
       <TopBar
         isTracking={isTracking}
         trackedStationCode1={stationCode1}

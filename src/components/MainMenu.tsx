@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function MainMenu() {
   return (
-    <div className="h-screen bg-gray-900 text-gray-300 p-1">
+    <div className="h-screen p-1">
       <p className="mb-2">
         Sepelinpotkija on edistyksellinen junaliikenteen seurantatyökalu. Se on tarkoitettu
         rautatieharrastajalle tai junamatkustajalle, joka haluaa tietää vastauksen kysymykseen
