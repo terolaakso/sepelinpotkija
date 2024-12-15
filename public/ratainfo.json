@@ -9397,5 +9397,77 @@
       "name": "Pihtipudas",
       "info": null
     }
+  ],
+  "VMA-ÄS": [
+    {
+      "name": "Vammala",
+      "info": "Vammalan_rautatieasema"
+    },
+    {
+      "name": "Liuhala",
+      "lat": 61.3475723,
+      "lon": 22.8394206,
+      "info": null
+    },
+    {
+      "name": "Kiikka",
+      "lat": 61.3221728,
+      "lon": 22.7899174,
+      "info": null
+    },
+    {
+      "name": "Meskala",
+      "lat": 61.3152317,
+      "lon": 22.7682452,
+      "info": null
+    },
+    {
+      "name": "Äetsä",
+      "info": "Äetsän_rautatieasema"
+    }
+  ],
+  "AHV-ÄS": [
+    {
+      "name": "Ahvenus",
+      "info": null
+    },
+    {
+      "name": "Kauvatsa",
+      "lat": 61.3070363,
+      "lon": 22.5314695,
+      "info": "Kauvatsan_rautatieasema"
+    },
+    {
+      "name": "Karhi",
+      "lat": 61.3019260,
+      "lon": 22.6066142,
+      "info": null
+    },
+    {
+      "name": "Äetsä",
+      "info": "Äetsän_rautatieasema"
+    }
+  ],
+  "AHV-KKI": [
+    {
+      "name": "Ahvenus",
+      "info": null
+    },
+    {
+      "name": "Kyttälä",
+      "lat": 61.2839310,
+      "lon": 22.4635920,
+      "info": "Kyttälän_rautatieasema"
+    },
+    {
+      "name": "Pahakosken silta",
+      "lat": 61.266463056,
+      "lon": 22.433970556,
+      "info": "Pahakosken_rautatiesilta"
+    },
+    {
+      "name": "Kokemäki",
+      "info": "Kokemäen_rautatieasema"
+    }
   ]
 }
