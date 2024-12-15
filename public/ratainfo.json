@@ -9469,5 +9469,33 @@
       "name": "Kokemäki",
       "info": "Kokemäen_rautatieasema"
     }
+  ],
+  "HVA-KKI": [
+    {
+      "name": "Harjavalta",
+      "info": "Harjavallan_rautatieasema"
+    },
+    {
+      "name": "Hiirijärvi",
+      "lat": 61.3074938,
+      "lon": 22.1386230,
+      "info": null
+    },
+    {
+      "name": "Merstola",
+      "lat": 61.2993336,
+      "lon": 22.1580207,
+      "info": "Merstolan_rautatieasema"
+    },
+    {
+      "name": "Järilä",
+      "lat": 61.2709725,
+      "lon": 22.2357803,
+      "info": null
+    },
+    {
+      "name": "Kokemäki",
+      "info": "Kokemäen_rautatieasema"
+    }
   ]
 }

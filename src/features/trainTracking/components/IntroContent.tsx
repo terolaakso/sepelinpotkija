@@ -27,8 +27,7 @@ export default function IntroContent() {
           <li>Toijala - Turku</li>
           <li>Turku - Hangonsaari</li>
           <li>Raisio - Naantali</li>
-          <li>Tampere - Vammala</li>
-          <li>Harjavalta - Mäntyluoto</li>
+          <li>Tampere - Mäntyluoto</li>
           <li>Seinäjoki - Raunio</li>
           <li>Pännäinen - Kokkola</li>
           <li>Ylivieska - Oulu</li>
