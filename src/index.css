@@ -90,11 +90,9 @@ select {
   font-size: 16px;
 }
 
-
 /* Small (sm) */
 
-@media (min-width: 640px) and (orientation: portrait),
-(min-width: 768px) {
+@media (min-width: 640px) and (orientation: portrait), (min-width: 768px) {
   .responsive-font-size {
     font-size: 20px;
   }
@@ -104,56 +102,64 @@ select {
   }
 }
 
-
 /* Medium (md) */
 
-@media (min-width: 768px) and (orientation: portrait),
-(min-width: 1024px) {
+@media (min-width: 768px) and (orientation: portrait), (min-width: 1024px) {
   .responsive-font-size {
     font-size: 24px;
   }
 }
 
-
 /* Large (lg) */
 
-@media (min-width: 1024px) and (orientation: portrait),
-(min-width: 1280px) {
+@media (min-width: 1024px) and (orientation: portrait), (min-width: 1280px) {
   .responsive-font-size {
     font-size: 28px;
   }
 }
 
-
 /* Extra Large (xl) */
 
-@media (min-width: 1280px) and (orientation: portrait),
-(min-width: 1920px) {
+@media (min-width: 1280px) and (orientation: portrait), (min-width: 1920px) {
   .responsive-font-size {
     font-size: 32px;
   }
 }
 
-
 /* Wikipedia styles */
 
 div.mw-parser-output table.infobox,
+div.mw-parser-output .navbox,
 div.mw-parser-output ul.gallery,
 div.mw-parser-output .noprint,
 div.mw-parser-output table.metadata,
 div.mw-parser-output div.NavFrame,
-div.mw-parser-output span.mw-cite-backlink div.mv-parser-output sup.plainlinks {
+div.mw-parser-output sup.reference,
+div.mw-parser-output span.mw-cite-backlink {
   display: none;
 }
 
 div.mw-parser-output h2 {
   font-size: 1rem;
+  padding-top: 0.2rem;
 }
 
 div.mw-parser-output h3 {
   font-size: 0.9rem;
+  padding-top: 0.2rem;
 }
 
-div.mw-parser-output div.thumbcaption {
-  font-style: italic
+div.mw-parser-output div.thumbcaption,
+div.mw-parser-output figcaption {
+  font-style: italic;
+}
+
+div.mw-parser-output p {
+  padding-block: 0.1rem;
+}
+
+div.mw-parser-output ol,
+div.mw-parser-output ul {
+  list-style-type: disc !important;
+  padding-left: 1rem;
 }
