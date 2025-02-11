@@ -729,59 +729,62 @@
   "ALV-TUU": [
     {
       "name": "Alavus",
-      "km": 373.445,
       "info": "Alavuden_rautatieasema"
     },
     {
       "name": "Kärppäkoski",
-      "km": 372,
+      "lat": 62.6173268,
+      "lon": 23.6306199,
       "info": null
     },
     {
       "name": "Lehmiportti",
-      "km": 369.888,
+      "lat": 62.6123129,
+      "lon": 23.6675700,
       "info": null
     },
     {
       "name": "Tuuri",
-      "km": 366.962,
       "info": "Tuurin_rautatieasema"
     }
   ],
   "TUU-ÄHT": [
     {
       "name": "Tuuri",
-      "km": 366.962,
       "info": "Tuurin_rautatieasema"
     },
     {
       "name": "Korpituuri",
-      "km": 364,
+      "lat": 62.5915402,
+      "lon": 23.7928989,
       "info": null
     },
     {
       "name": "Hakojärvi",
-      "km": 360,
+      "lat": 62.6033909,
+      "lon": 23.8603605,
       "info": null
     },
     {
       "name": "Töysä",
-      "km": 356.397,
+      "lat": 62.6028776,
+      "lon": 23.9116886,
       "info": "Töysän_rautatieasema"
     },
     {
       "name": "Kortelampi",
-      "km": 352,
+      "lat": 62.5733372,
+      "lon": 23.9971721,
       "info": null
     },
     {
       "name": "Kytösaari",
-      "km": 348,
+      "lat": 62.5717360,
+      "lon": 24.0353668,
       "info": null
     },
     {
       "name": "Ähtäri",
-      "km": 346.067,
       "info": "Ähtärin_rautatieasema"
     }
   ],
@@ -2666,200 +2669,218 @@
   "LAI-VS": [
     {
       "name": "Laihia",
-      "km": 0,
       "info": "Laihian_rautatieasema"
     },
     {
       "name": "Potila",
-      "km": 112,
+      "lat": 62.9962560,
+      "lon": 21.9704720,
       "info": null
     },
     {
       "name": "Pihkamäki",
-      "km": 304,
+      "lat": 63.0159493,
+      "lon": 21.9259258,
       "info": null
     },
     {
       "name": "Rintakorpi",
-      "km": 409,
+      "lat": 63.0273580,
+      "lon": 21.9025799,
       "info": null
     },
     {
       "name": "Tuovila",
-      "km": 586,
-      "info": null
+      "lat": 63.0442097,
+      "lon": 21.8594929,
+      "info": "Tuovilan_rautatieasema"
     },
     {
       "name": "Höstvesi",
-      "km": 856,
+      "lat": 63.0698034,
+      "lon": 21.7760117,
       "info": null
     },
     {
       "name": "Mustasaari",
-      "km": 1066,
+      "lat": 63.0758202,
+      "lon": 21.7245135,
       "info": null
     },
     {
       "name": "Huutoniemi",
-      "km": 1290,
+      "lat": 63.0838253,
+      "lon": 21.6588959,
       "info": null
     },
     {
       "name": "Vaasa",
-      "km": 1422,
       "info": "Vaasan_rautatieasema"
     }
   ],
   "LAI-TK": [
     {
       "name": "Laihia",
-      "km": 0,
       "info": "Laihian_rautatieasema"
     },
     {
       "name": "Vedenoja",
-      "km": 367,
+      "lat": 62.9907878,
+      "lon": 22.0611814,
       "info": null
     },
     {
       "name": "Höysälä",
-      "km": 641,
+      "lat": 62.9949582,
+      "lon": 22.1037535,
       "info": null
     },
     {
       "name": "Sillasto",
-      "km": 788,
+      "lat": 62.9982902,
+      "lon": 22.1263269,
       "info": null
     },
     {
       "name": "Vähäkyrö",
-      "km": 852,
+      "lat": 62.9993034,
+      "lon": 22.1359829,
       "info": null
     },
     {
       "name": "Tervajoki",
-      "km": 1075,
       "info": "Tervajoen_rautatieasema"
     }
   ],
   "IKY-TK": [
     {
       "name": "Isokyrö",
-      "km": 0,
       "info": "Isonkyrön_rautatieasema"
     },
     {
       "name": "Valtaala",
-      "km": 178,
+      "lat": 62.9573604,
+      "lon": 22.3704745,
       "info": null
     },
     {
       "name": "Napue",
-      "km": 390,
+      "lat": 62.9634864,
+      "lon": 22.3409916,
       "info": null
     },
     {
       "name": "Ventälä",
-      "km": 689,
+      "lat": 62.9746851,
+      "lon": 22.2971992,
       "info": "Ventälän_seisake"
     },
     {
       "name": "Ikola",
-      "km": 909,
+      "lat": 62.9823671,
+      "lon": 22.2690467,
       "info": null
     },
     {
       "name": "Hevonkoski",
-      "km": 1047,
+      "lat": 62.9884879,
+      "lon": 22.2464303,
       "info": null
     },
     {
       "name": "Tervajoki",
-      "km": 1578,
       "info": "Tervajoen_rautatieasema"
     }
   ],
   "IKY-YST": [
     {
       "name": "Isokyrö",
-      "km": 0,
       "info": "Isonkyrön_rautatieasema"
     },
     {
       "name": "Vuorensyrjä",
-      "km": 281,
+      "lat": 62.9415625,
+      "lon": 22.4337614,
       "info": null
     },
     {
       "name": "Käyppälä",
-      "km": 445,
+      "lat": 62.9361357,
+      "lon": 22.4564520,
       "info": null
     },
     {
       "name": "Holkkola",
-      "km": 592,
+      "lat": 62.9311622,
+      "lon": 22.4770946,
       "info": null
     },
     {
       "name": "Ylistaro",
-      "km": 992,
       "info": "Ylistaron_rautatieasema"
     }
   ],
   "SK-YST": [
     {
       "name": "Seinäjoki",
-      "km": 0,
       "info": "Seinäjoen_rautatieasema"
     },
     {
       "name": "Mäenpää",
-      "km": 217,
+      "lat": 62.8141378,
+      "lon": 22.7959137,
       "info": null
     },
     {
       "name": "Impivaara",
-      "km": 273,
+      "lat": 62.8208045,
+      "lon": 22.7859224,
       "info": null
     },
     {
       "name": "Hippi",
-      "km": 375,
+      "lat": 62.8322698,
+      "lon": 22.7648939,
       "info": null
     },
     {
       "name": "Munakka",
-      "km": 475,
+      "lat": 62.8443183,
+      "lon": 22.7470840,
       "info": "Munakan_pysäkki"
     },
     {
       "name": "Lintala",
-      "km": 569,
+      "lat": 62.8552997,
+      "lon": 22.7280003,
       "info": null
     },
     {
       "name": "Tuppela",
-      "km": 961,
+      "lat": 62.8915389,
+      "lon": 22.6340157,
       "info": null
     },
     {
       "name": "Pääkkönen",
-      "km": 1034,
+      "lat": 62.8986038,
+      "lon": 22.6166685,
       "info": null
     },
     {
       "name": "Ylirantala",
-      "km": 1119,
+      "lat": 62.9063058,
+      "lon": 22.5960262,
       "info": null
     },
     {
       "name": "Tenkkula",
-      "km": 1167,
+      "lat": 62.9100974,
+      "lon": 22.5831087,
       "info": null
     },
     {
       "name": "Ylistaro",
-      "km": 1323,
       "info": "Ylistaron_rautatieasema"
     }
   ],
