@@ -9614,5 +9614,59 @@
       "name": "Köykkäri",
       "info": null
     }
+  ],
+  "KÖK-VT": [
+    {
+      "name": "Köykkäri",
+      "info": null
+    },
+    {
+      "name": "Kojola",
+      "lat": 63.3160504,
+      "lon": 22.8099151,
+      "info": null
+    },
+    {
+      "name": "Voltti",
+      "info": "Voltin_rautatieasema"
+    }
+  ],
+  "HM-VT": [
+    {
+      "name": "Härmä",
+      "info": "Härmän_rautatieasema"
+    },
+    {
+      "name": "Ala-Kunnari",
+      "lat": 63.2485213,
+      "lon": 22.8702468,
+      "info": null
+    },
+    {
+      "name": "Ojanperä",
+      "lat": 63.2638550,
+      "lon": 22.8558702,
+      "info": null
+    },
+    {
+      "name": "Voltti",
+      "info": "Voltin_rautatieasema"
+    }
+  ],
+  "HM-RIO": [
+    {
+      "name": "Härmä",
+      "info": "Härmän_rautatieasema"
+    },
+    {
+      "name": "Markkula",
+      "lat": 63.2165138,
+      "lon": 22.8992549,
+      "info": null
+    },
+    {
+      "name": "Raunio",
+      "info": "Raunion_rautatieasema"
+    }
   ]
 }
