@@ -28,10 +28,10 @@ export default function IntroContent() {
           <li>Turku - Hangonsaari</li>
           <li>Raisio - Naantali</li>
           <li>Tampere - Mäntyluoto</li>
-          <li>Seinäjoki - Raunio</li>
-          <li>Pännäinen - Kokkola</li>
+          <li>Seinäjoki - Kokkola</li>
           <li>Ylivieska - Oulu</li>
-          <li>Kovjoki - Pietarsaari</li>
+          <li>Pännäinen - Pietarsaari</li>
+          <li>Kokkola - Ykspihlaja</li>
           <li>Tuomioja - Raahe</li>
           <li>Seinäjoki - Kaskinen</li>
           <li>Seinäjoki - Vaasa</li>

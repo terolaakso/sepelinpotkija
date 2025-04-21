@@ -9668,5 +9668,25 @@
       "name": "Raunio",
       "info": "Raunion_rautatieasema"
     }
+  ],
+  "SK-SKT": [
+    {
+      "name": "Seinäjoki",
+      "info": "Seinäjoen_rautatieasema"
+    },
+    {
+      "name": "Seinäjoki tavara",
+      "info": null
+    }
+  ],
+  "RLA-SKT": [
+    {
+      "name": "Rahkola",
+      "info": null
+    },
+    {
+      "name": "Seinäjoki tavara",
+      "info": "Seinäjoen_rautatieasema"
+    }
   ]
 }
