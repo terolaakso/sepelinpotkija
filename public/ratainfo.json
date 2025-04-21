@@ -9572,5 +9572,47 @@
       "name": "Pännäinen",
       "info": "Pietarsaari-Pedersören_rautatieasema"
     }
+  ],
+  "KOI-RJR": [
+    {
+      "name": "Kovjoki",
+      "info": "Kovjoen_rautatieasema"
+    },
+    {
+      "name": "Sorvisto",
+      "lat": 63.4980102,
+      "lon": 22.6762942,
+      "info": null
+    },
+    {
+      "name": "Riijärvi",
+      "info": null
+    }
+  ],
+  "JPA-RJR": [
+    {
+      "name": "Jepua",
+      "info": "Jepuan_rautatieasema"
+    },
+    {
+      "name": "Riijärvi",
+      "info": null
+    }
+  ],
+  "JPA-KÖK": [
+    {
+      "name": "Jepua",
+      "info": "Jepuan_rautatieasema"
+    },
+    {
+      "name": "Mietala",
+      "lat": 63.3829556,
+      "lon": 22.7026773,
+      "info": null
+    },
+    {
+      "name": "Köykkäri",
+      "info": null
+    }
   ]
 }
