@@ -9518,5 +9518,59 @@
       "name": "Kokemäki",
       "info": "Kokemäen_rautatieasema"
     }
+  ],
+  "YKST-YKSV": [
+    {
+      "name": "Ykspihlaja tavara",
+      "info": "Ykspihlajan_rautatieasema"
+    },
+    {
+      "name": "Ykspihlaja väliratapiha",
+      "info": null
+    }
+  ],
+  "KOK-YKST": [
+    {
+      "name": "Kokkola",
+      "info": "Kokkolan_rautatieasema"
+    },
+    {
+      "name": "Patamäki",
+      "lat": 63.836829,
+      "lon": 23.09622,
+      "info": null
+    },
+    {
+      "name": "Haukioja",
+      "lat": 63.8391823,
+      "lon": 23.0782811,
+      "info": null
+    },
+    {
+      "name": "Ykspihlaja tavara",
+      "info": "Ykspihlajan_rautatieasema"
+    }
+  ],
+  "KOI-PNÄ": [
+    {
+      "name": "Kovjoki",
+      "info": "Kovjoen_rautatieasema"
+    },
+    {
+      "name": "Lukus",
+      "lat": 63.5311671,
+      "lon": 22.7081533,
+      "info": null
+    },
+    {
+      "name": "Träskkulla",
+      "lat": 63.5804473,
+      "lon": 22.7691787,
+      "info": null
+    },
+    {
+      "name": "Pännäinen",
+      "info": "Pietarsaari-Pedersören_rautatieasema"
+    }
   ]
 }
