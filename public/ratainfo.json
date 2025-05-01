@@ -3089,24 +3089,20 @@
   "R702-SAM": [
     {
       "name": "R702",
-      "km": 0,
       "info": null
     },
     {
       "name": "Sammalisto",
-      "km": 1,
       "info": "Sammaliston_seisake"
     }
   ],
   "R702-RI": [
     {
       "name": "R702",
-      "km": 0,
       "info": null
     },
     {
       "name": "Riihimäki",
-      "km": 1,
       "info": "Riihimäen_rautatieasema"
     }
   ],
