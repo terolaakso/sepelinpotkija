@@ -9684,5 +9684,47 @@
       "name": "Seinäjoki tavara",
       "info": "Seinäjoen_rautatieasema"
     }
+  ],
+  "JNS-PLT": [
+    {
+      "name": "Joensuu",
+      "info": "Joensuun_rautatieasema"
+    },
+    {
+      "name": "Peltola",
+      "info": null
+    }
+  ],
+  "PLT-SUL": [
+    {
+      "name": "Peltola",
+      "info": null
+    },
+    {
+      "name": "Niinivaara",
+      "lat": 62.5895451,
+      "lon": 29.7728631,
+      "info": null
+    },
+    {
+      "name": "Sulkulahti",
+      "info": null
+    }
+  ],
+  "KPP-SUL": [
+    {
+      "name": "Koppola",
+      "info": null
+    },
+    {
+      "name": "Sulkuniemi",
+      "lat": 62.5771973,
+      "lon": 29.7831627,
+      "info": null
+    },
+    {
+      "name": "Sulkulahti",
+      "info": null
+    }
   ]
 }
