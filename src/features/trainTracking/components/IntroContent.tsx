@@ -51,6 +51,7 @@ export default function IntroContent() {
           <li>Ylivieska - Iisalmi</li>
           <li>Lappeenranta - Joutseno</li>
           <li>Imatra - Parikkala</li>
+          <li>Joensuu - Saari</li>
           <li>Lappeenranta - Mustolan satama</li>
           <li>Parikkala - Savonlinna</li>
           <li>Eno - Kontiomäki</li>

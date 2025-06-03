@@ -9876,5 +9876,35 @@
       "name": "Puhos",
       "info": "Puhoksen_rautatieasema"
     }
+  ],
+  "KTI-PUS": [
+    {
+      "name": "Kesälahti",
+      "info": "Kesälahden_rautatieasema"
+    },
+    {
+      "name": "Puhos",
+      "info": "Puhoksen_rautatieasema"
+    }
+  ],
+  "KTI-POI": [
+    {
+      "name": "Kesälahti",
+      "info": "Kesälahden_rautatieasema"
+    },
+    {
+      "name": "Poiksilta",
+      "info": "Poiksillan_rautatieasema"
+    }
+  ],
+  "POI-SR": [
+    {
+      "name": "Poiksilta",
+      "info": "Poiksillan_rautatieasema"
+    },
+    {
+      "name": "Saari",
+      "info": "Saaren_rautatieasema"
+    }
   ]
 }
