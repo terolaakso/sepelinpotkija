@@ -9726,5 +9726,107 @@
       "name": "Sulkulahti",
       "info": null
     }
+  ],
+  "KPP-NTH": [
+    {
+      "name": "Koppola",
+      "info": null
+    },
+    {
+      "name": "Hakolahti",
+      "lat": 62.5627739,
+      "lon": 29.8074908,
+      "info": null
+    },
+    {
+      "name": "Haapaniemi",
+      "lat": 62.5546850,
+      "lon": 29.8193354,
+      "info": null
+    },
+    {
+      "name": "Hernesuo",
+      "lat": 62.5431399,
+      "lon": 29.8235336,
+      "info": null
+    },
+    {
+      "name": "Mulo",
+      "lat": 62.5297860,
+      "lon": 29.8286763,
+      "info": "Mulon_rautatieasema"
+    },
+    {
+      "name": "Niittylahti",
+      "info": "Niittylahden_rautatieasema"
+    }
+  ],
+  "HSL-NTH": [
+    {
+      "name": "Hammaslahti",
+      "info": "Hammaslahden_rautatieasema"
+    },
+    {
+      "name": "Kuusenjuuri",
+      "lat": 62.4438383,
+      "lon": 29.9407873,
+      "info": null
+    },
+    {
+      "name": "Kettämö",
+      "lat": 62.4629511,
+      "lon": 29.9140939,
+      "info": null
+    },
+    {
+      "name": "Suhmura",
+      "lat": 62.4764000,
+      "lon": 29.8953828,
+      "info": null
+    },
+    {
+      "name": "Haapakko",
+      "lat": 62.4898826,
+      "lon": 29.8761138,
+      "info": null
+    },
+    {
+      "name": "Vehkapuro",
+      "lat": 62.4994753,
+      "lon": 29.8624668,
+      "info": null
+    },
+    {
+      "name": "Niittylahti",
+      "info": "Niittylahden_rautatieasema"
+    }
+  ],
+  "HSL-TKK": [
+    {
+      "name": "Hammaslahti",
+      "info": "Hammaslahden_rautatieasema"
+    },
+    {
+      "name": "Lotokka",
+      "lat": 62.4171860,
+      "lon": 29.9916802,
+      "info": null
+    },
+    {
+      "name": "Sarakangas",
+      "lat": 62.4008276,
+      "lon": 30.0215063,
+      "info": null
+    },
+    {
+      "name": "Kostamo",
+      "lat": 62.3769399,
+      "lon": 30.0624047,
+      "info": null
+    },
+    {
+      "name": "Tikkala",
+      "info": "Tikkalan_rautatieasema"
+    }
   ]
 }
