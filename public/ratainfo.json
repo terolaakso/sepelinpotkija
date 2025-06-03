@@ -9828,5 +9828,53 @@
       "name": "Tikkala",
       "info": "Tikkalan_rautatieasema"
     }
+  ],
+  "SÄ-TKK": [
+    {
+      "name": "Säkäniemi",
+      "info": "Säkäniemen_vaihde"
+    },
+    {
+      "name": "Särkilahti",
+      "lat": 62.3313493,
+      "lon": 30.1150850,
+      "info": null
+    },
+    {
+      "name": "Saunakari",
+      "lat": 62.3461986,
+      "lon": 30.1051456,
+      "info": null
+    },
+    {
+      "name": "Tikkala",
+      "info": "Tikkalan_rautatieasema"
+    }
+  ],
+  "KIT-SÄ": [
+    {
+      "name": "Kitee",
+      "info": "Kiteen_rautatieasema"
+    },
+    {
+      "name": "Onkamo",
+      "lat": 62.3091938,
+      "lon": 30.1236710,
+      "info": "Onkamon_seisake"
+    },
+    {
+      "name": "Säkäniemi",
+      "info": "Säkäniemen_vaihde"
+    }
+  ],
+  "KIT-PUS": [
+    {
+      "name": "Kitee",
+      "info": "Kiteen_rautatieasema"
+    },
+    {
+      "name": "Puhos",
+      "info": "Puhoksen_rautatieasema"
+    }
   ]
 }
