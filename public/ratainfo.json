@@ -9906,5 +9906,25 @@
       "name": "Saari",
       "info": "Saaren_rautatieasema"
     }
+  ],
+  "KAJ-LAM": [
+    {
+      "name": "Kajaani",
+      "info": "Kajaanin_rautatieasema"
+    },
+    {
+      "name": "Lamminniemi",
+      "info": "Lamminniemen_ratapiha"
+    }
+  ],
+  "LHN-VKT": [
+    {
+      "name": "Lahnaslampi",
+      "info": "Lahnaslammin_ratapiha"
+    },
+    {
+      "name": "Vuokatti",
+      "info": "Vuokatin_rautatieasema"
+    }
   ]
 }
