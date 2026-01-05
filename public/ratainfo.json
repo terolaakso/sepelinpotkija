@@ -1487,10 +1487,20 @@
       "info": "Pasilan_rautatieasema"
     }
   ],
-  "KÄP-PSL": [
+  "KÄP-LOP": [
     {
       "name": "Käpylä",
       "info": "Käpylän_rautatieasema"
+    },
+    {
+      "name": "Louhenpuisto",
+      "info": null
+    }
+  ],
+  "LOP-PSL": [
+    {
+      "name": "Louhenpuisto",
+      "info": null
     },
     {
       "name": "Fredriksbergin laituri",
@@ -1513,13 +1523,23 @@
       "info": "Oulunkylän_rautatieasema"
     }
   ],
-  "OLK-PMK": [
+  "OLK-VRJ": [
     {
       "name": "Oulunkylä",
       "info": "Oulunkylän_rautatieasema"
     },
     {
+      "name": "Veräjälaakso",
+      "info": "Pukinmäen_rautatieasema"
+    }
+  ],
+  "PMK-VRJ": [
+    {
       "name": "Pukinmäki",
+      "info": "Pukinmäen_rautatieasema"
+    },
+    {
+      "name": "Veräjälaakso",
       "info": "Pukinmäen_rautatieasema"
     }
   ],
