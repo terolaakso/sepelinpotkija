@@ -7565,46 +7565,6 @@
       "info": "Seinäjoen_rautatieasema"
     }
   ],
-  "PSK-ÄM": [
-    {
-      "name": "Pesiökylä",
-      "info": "Pesiökylän_rautatieasema"
-    },
-    {
-      "name": "Kuvaja-aho",
-      "lat": 64.934614,
-      "lon": 28.584179,
-      "info": null
-    },
-    {
-      "name": "Raappana",
-      "lat": 64.920924,
-      "lon": 28.662887,
-      "info": null
-    },
-    {
-      "name": "Vähä",
-      "lat": 64.9103594,
-      "lon": 28.7445194,
-      "info": null
-    },
-    {
-      "name": "Kurimo",
-      "lat": 64.902808,
-      "lon": 28.805587,
-      "info": null
-    },
-    {
-      "name": "Siikaranta",
-      "lat": 64.894354,
-      "lon": 28.846432,
-      "info": null
-    },
-    {
-      "name": "Ämmänsaari",
-      "info": "Ämmänsaaren_rautatieasema"
-    }
-  ],
   "HYS-PSK": [
     {
       "name": "Hyrynsalmi",
