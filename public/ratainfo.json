@@ -5707,21 +5707,43 @@
       "info": "Runnin_seisake"
     }
   ],
-  "KRV-PYE": [
+  "KOM-PYE": [
     {
-      "name": "Kiuruvesi",
-      "info": "Kiuruveden_rautatieasema"
+      "name": "Komu",
+      "info": "Komun_rautatieasema"
     },
     {
-      "name": "Martikkala",
-      "lat": 63.649971944,
-      "lon": 26.566666667,
+      "name": "Ruotanen",
+      "lat": 63.675162778,
+      "lon": 26.051351667,
       "info": null
     },
     {
-      "name": "Niemiskylä",
-      "lat": 63.6532804,
-      "lon": 26.5242757,
+      "name": "Pyhäkumpu erkanemisvaihde",
+      "info": null
+    }
+  ],
+  "KOM-KRV": [
+    {
+      "name": "Komu",
+      "info": "Komun_rautatieasema"
+    },
+    {
+      "name": "Lavapuro",
+      "lat": 63.666505278,
+      "lon": 26.300009722,
+      "info": null
+    },
+    {
+      "name": "Aittojärvi",
+      "lat": 63.665880278,
+      "lon": 26.385968333,
+      "info": "Aittojärven_rautatieasema"
+    },
+    {
+      "name": "Kylmälä",
+      "lat": 63.656659722,
+      "lon": 26.48138,
       "info": null
     },
     {
@@ -5731,38 +5753,20 @@
       "info": null
     },
     {
-      "name": "Kylmälä",
-      "lat": 63.656659722,
-      "lon": 26.48138,
+      "name": "Niemiskylä",
+      "lat": 63.6532804,
+      "lon": 26.5242757,
       "info": null
     },
     {
-      "name": "Aittojärvi",
-      "lat": 63.6658902,
-      "lon": 26.3860931,
-      "info": "Aittojärven_rautatieasema"
-    },
-    {
-      "name": "Lavapuro",
-      "lat": 63.6665256,
-      "lon": 63.6665256,
+      "name": "Martikkala",
+      "lat": 63.649971944,
+      "lon": 26.566666667,
       "info": null
     },
     {
-      "name": "Komu",
-      "lat": 63.6635651,
-      "lon": 26.1541336,
-      "info": "Komun_rautatieasema"
-    },
-    {
-      "name": "Ruotanen",
-      "lat": 63.6750901,
-      "lon": 26.0513693,
-      "info": null
-    },
-    {
-      "name": "Pyhäkumpu erkanemisvaihde",
-      "info": null
+      "name": "Kiuruvesi",
+      "info": "Kiuruveden_rautatieasema"
     }
   ],
   "PHÄ-PYE": [
